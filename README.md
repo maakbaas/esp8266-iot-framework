@@ -1,4 +1,4 @@
-# esp8266-firmware
+# ESP8266 Generic Firmware
 Generic Firmware to use as a starting point for different ESP8266 projects
 
 The current initial version of the firmware contains the following functionality:
