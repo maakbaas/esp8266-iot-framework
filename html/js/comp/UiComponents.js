@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { normalize } from 'styled-normalize'
 
@@ -12,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     * {
-        font-family: Arial;
+        font-family: Arial, sans-serif;
     }
 
     a {
@@ -59,4 +60,14 @@ export const Submit = styled.input.attrs({
     type: 'submit'
 })`
     ${buttonStyle}  
+`;
+
+export const FileLabel = styled.label`
+    ${buttonStyle}  
+
+    min-width:0px !important;
+
+    input[type="file"] {
+        display: none;
+    } 
 `;

@@ -16,7 +16,7 @@ export function WifiPage(props) {
             });
     }, []);
 
-    const forget = <a href={props.API + '/api/wifi/forget'} onClick={(e) => { fetch(props.API + '/api/wifi/forget'); e.preventDefault(); }}>Forget</a>;
+    const forget = <a href={props.API + '/api/wifi/forget'} onClick={(e) => { fetch(e.currentTarget.getAttribute('href')); e.preventDefault(); }}>Forget</a>;
 
     var connectStatus;
     if (state.received) {

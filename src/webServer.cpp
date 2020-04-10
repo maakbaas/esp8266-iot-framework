@@ -50,6 +50,34 @@ void webServer::bindAll()
 
         request->send(200, "text/html", JSON);
     });
+
+    //get file listing
+    server.on("/api/files/get", HTTP_GET, [](AsyncWebServerRequest *request) {
+        String JSON;
+        StaticJsonDocument<1000> jsonBuffer;
+        JsonArray files = jsonBuffer.createNestedArray("files");
+
+        //get file listing
+        Dir dir = SPIFFS.openDir("");
+        while (dir.next())
+            files.add(dir.fileName().substring(1));
+
+        //get used and total data
+        FSInfo fs_info;
+        SPIFFS.info(fs_info);
+        jsonBuffer["used"] = String(fs_info.usedBytes);
+        jsonBuffer["max"] = String(fs_info.totalBytes);
+
+        serializeJson(jsonBuffer, JSON);
+
+        request->send(200, "text/html", JSON);
+    });
+
+    //remove file
+    server.on("/api/files/remove", HTTP_GET, [](AsyncWebServerRequest *request) {
+        SPIFFS.remove("/" + request->arg("filename"));
+        request->send(200, "text/html", "");
+    });
 }
 
 // Callback for the html
@@ -66,10 +94,13 @@ void webServer::serveProgmem(AsyncWebServerRequest *request)
 
 void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
 {
-    File fsUploadFile;
-    
+    static File fsUploadFile;
+
     if (!index)
     {
+        Serial.println("Start file upload");
+        Serial.println(filename);
+
         if (!filename.startsWith("/"))
             filename = "/" + filename;
 
@@ -84,10 +115,6 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
     if (final)
     {
         fsUploadFile.close();
-
-        AsyncWebServerResponse *response = request->beginResponse(303);
-        response->addHeader("Location", "/");
-        request->send(response);
     }
 }
 
