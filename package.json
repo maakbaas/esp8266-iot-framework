@@ -32,6 +32,7 @@
   "dependencies": {
     "history": "^4.10.1",
     "preact": "^10.4.0",
+    "react-feather": "^2.0.4",
     "react-router-dom": "^5.1.2",
     "styled-components": "^5.1.0",
     "styled-normalize": "^8.0.7"

@@ -19,8 +19,7 @@ void webServer::begin()
     server.onNotFound(serveProgmem);
 
     //handle uploads
-    server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request) { request->send(200); },
-        handleFileUpload);
+    server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload);
 
     bindAll();
 }
@@ -29,13 +28,13 @@ void webServer::bindAll()
 {
     //update WiFi details
     server.on("/api/wifi/set", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", "");
+        request->send(200, "text/html", ""); //respond first because of wifi change
         WiFiManager.setNewWifi(request->arg("ssid"), request->arg("pass"));
     });
 
     //update WiFi details
     server.on("/api/wifi/forget", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", "");
+        request->send(200, "text/html", ""); //respond first because of wifi change
         WiFiManager.forget();
     });
 
@@ -114,7 +113,14 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
 
     if (final)
     {
-        fsUploadFile.close();
+        String JSON;
+        StaticJsonDocument<100> jsonBuffer;
+
+        jsonBuffer["success"] = fsUploadFile.isFile();
+        serializeJson(jsonBuffer, JSON);
+
+        request->send(200, "text/html", JSON);
+        fsUploadFile.close();        
     }
 }
 

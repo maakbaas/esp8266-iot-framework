@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
-import { Form, Submit } from './UiComponents'
+import { Form, Submit, Fetch } from './UiComponents'
+import { Wifi, Lock } from 'react-feather';
 
 export function WifiPage(props) {
-    const [state, setState] = useState({ captivePortal: false, ssid: '', received: false });
+    const [state, setState] = useState({ captivePortal: [], ssid: []});
 
     useEffect(() => {
         document.title = `WiFi Settings`;
@@ -12,44 +13,41 @@ export function WifiPage(props) {
                 return response.json();
             })
             .then((data) => {
-                setState(Object.assign(data, { received: true }));
+                setState(data);
             });
     }, []);
 
-    const forget = <a href={props.API + '/api/wifi/forget'} onClick={(e) => { fetch(e.currentTarget.getAttribute('href')); e.preventDefault(); }}>Forget</a>;
-
-    var connectStatus;
-    if (state.received) {
-        if (state.captivePortal) {
-            connectStatus = <><h3>Status</h3><p>{"Captive portal running"}</p></>;
-        }
-        else {
-            connectStatus = <><h3>Status</h3><p>{"Connected to " + state.ssid + " "} ({forget})</p></>;
-        }
+    function changeWifi(e) {
+        e.preventDefault();
+        fetch(props.API + '/api/wifi/set?ssid=' + e.target.ssid.value + '&pass=' + e.target.pass.value);
+        e.target.ssid.value = '';
+        e.target.pass.value = '';
     }
 
-    var form = <Form onSubmit={(e) => {changeWifi(e,props)}}>
-        <p><label for="ssid">SSID:</label>
+    var form = <Form onSubmit={changeWifi}>
+        <p><label for="ssid"><Wifi /> SSID:</label>
             <input type="text" name="ssid" />
         </p>
-        <p><label for="pass">Password:</label>
+        <p><label for="pass"><Lock /> Password:</label>
             <input type="text" name="pass" />
         </p>
         <Submit value="Save" />
     </Form>
+    
+    var page = <><h2>WiFi Settings</h2><h3>Status</h3></>;
+    
+    var connectedTo;
+    if (state.captivePortal === true) {
+        connectedTo = "captive portal";
+    }
+    else if (state.captivePortal === false) {
+        connectedTo = <>{state.ssid} (<Fetch href={props.API + '/api/wifi/forget'} text="Forget" />)</>;
+    }
+    
+    page = <>{page}<p>Connected to {connectedTo}</p></>;
 
-    return <>
-        <h2>WiFi Settings</h2>
-        {connectStatus}
-        <h3>Update credentials</h3>
-        {form}
-    </>;
+    page = <>{page}<h3>Update credentials</h3>{form}</>;
+
+    return page;
 }
 
-function changeWifi(e,props)
-{
-    e.preventDefault();
-    fetch(props.API + '/api/wifi/set?ssid=' + e.target.ssid.value + '&pass=' + e.target.pass.value);  
-    e.target.ssid.value = '';  
-    e.target.pass.value = '';  
-}
