@@ -4,6 +4,7 @@
 #include "config.h"
 #include "WiFiManager.h"
 #include "webServer.h"
+#include "updater.h"
 
 void setup() 
 {
@@ -18,4 +19,5 @@ void setup()
 void loop() 
 {
     WiFiManager.loop();
+    updater.loop();
 }

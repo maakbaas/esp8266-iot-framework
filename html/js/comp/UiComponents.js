@@ -112,7 +112,11 @@ export function Fetch(props)
         e.preventDefault();
         fetch(e.currentTarget.getAttribute('href'))
             .then((response) => { return response.status; })
-            .then((status) => { if (status==200) props.onFinished(); });
+            .then((status) => { 
+                if (status==200) 
+                    if (typeof props.onFinished === "function")
+                        props.onFinished(); 
+            });
     }}>{props.text}</a>;
 }
 

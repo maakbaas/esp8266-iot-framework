@@ -8,7 +8,7 @@ class WifiManager
 {
 
 private:
-    std::unique_ptr<DNSServer> dnsServer;
+    DNSServer dnsServer;
     String ssid;
     String pass;
     bool reconnect = false;

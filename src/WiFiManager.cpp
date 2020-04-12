@@ -117,11 +117,11 @@ void WifiManager::startCaptivePortal(char const *apName)
 
     WiFi.softAP(apName);
 
-    dnsServer.reset(new DNSServer());
+    dnsServer = DNSServer();
 
     /* Setup the DNS server redirecting all the domains to the apIP */
-    dnsServer->setErrorReplyCode(DNSReplyCode::NoError);
-    dnsServer->start(53, "*", WiFi.softAPIP());
+    dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
+    dnsServer.start(53, "*", WiFi.softAPIP());
 
     Serial.println("Opened a captive portal");
     Serial.println("192.168.4.1");
@@ -132,7 +132,7 @@ void WifiManager::startCaptivePortal(char const *apName)
 void WifiManager::stopCaptivePortal()
 {    
     WiFi.mode(WIFI_STA);
-    dnsServer.reset();
+    dnsServer.stop();
 
     inCaptivePortal = false;    
 }
@@ -155,7 +155,7 @@ void WifiManager::loop()
     if (inCaptivePortal)
     {
         //captive portal loop
-        dnsServer->processNextRequest();
+        dnsServer.processNextRequest();
     }
 
     if (reconnect)

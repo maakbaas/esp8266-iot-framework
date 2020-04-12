@@ -1,6 +1,7 @@
 
 #include "webServer.h"
 #include "ArduinoJson.h"
+#include <FS.h>
 
 // Include the header file we create with webpack
 #include "html.h"
@@ -76,6 +77,12 @@ void webServer::bindAll()
     server.on("/api/files/remove", HTTP_GET, [](AsyncWebServerRequest *request) {
         SPIFFS.remove("/" + request->arg("filename"));
         request->send(200, "text/html", "");
+    });
+
+    //update from SPIFFS
+    server.on("/api/update", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "text/html", "");
+        updater.requestStart("/" + request->arg("filename"));
     });
 }
 
