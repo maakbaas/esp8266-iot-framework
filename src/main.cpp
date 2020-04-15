@@ -5,6 +5,7 @@
 #include "WiFiManager.h"
 #include "webServer.h"
 #include "updater.h"
+#include "fetch.h"
 
 void setup() 
 {
@@ -13,7 +14,8 @@ void setup()
     SPIFFS.begin();
 
     GUI.begin();
-    WiFiManager.begin(PROJECT_NAME);
+    WiFiManager.begin(PROJECT_NAME); 
+    fetch.begin();
 }
 
 void loop() 
