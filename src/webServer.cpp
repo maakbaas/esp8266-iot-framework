@@ -1,4 +1,3 @@
-
 #include "webServer.h"
 #include "ArduinoJson.h"
 #include <FS.h>
@@ -13,14 +12,14 @@
 void webServer::begin()
 {
     //to enable testing and debugging of the interface
-    DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
+    DefaultHeaders::Instance().addHeader(PSTR("Access-Control-Allow-Origin"), PSTR("*"));
 
     server.begin();
 
     server.onNotFound(serveProgmem);
 
     //handle uploads
-    server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload);
+    server.on(PSTR("/upload"), HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload);
 
     bindAll();
 }
@@ -28,19 +27,19 @@ void webServer::begin()
 void webServer::bindAll()
 {
     //update WiFi details
-    server.on("/api/wifi/set", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", ""); //respond first because of wifi change
+    server.on(PSTR("/api/wifi/set"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
         WiFiManager.setNewWifi(request->arg("ssid"), request->arg("pass"));
     });
 
     //update WiFi details
-    server.on("/api/wifi/forget", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", ""); //respond first because of wifi change
+    server.on(PSTR("/api/wifi/forget"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
         WiFiManager.forget();
     });
 
     //get WiFi details
-    server.on("/api/wifi/get", HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/wifi/get"), HTTP_GET, [](AsyncWebServerRequest *request) {
         String JSON;
         StaticJsonDocument<200> jsonBuffer;
 
@@ -48,11 +47,11 @@ void webServer::bindAll()
         jsonBuffer["ssid"] = WiFiManager.SSID();
         serializeJson(jsonBuffer, JSON);
 
-        request->send(200, "text/html", JSON);
+        request->send(200, PSTR("text/html"), JSON);
     });
 
     //get file listing
-    server.on("/api/files/get", HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/files/get"), HTTP_GET, [](AsyncWebServerRequest *request) {
         String JSON;
         StaticJsonDocument<1000> jsonBuffer;
         JsonArray files = jsonBuffer.createNestedArray("files");
@@ -70,18 +69,18 @@ void webServer::bindAll()
 
         serializeJson(jsonBuffer, JSON);
 
-        request->send(200, "text/html", JSON);
+        request->send(200, PSTR("text/html"), JSON);
     });
 
     //remove file
-    server.on("/api/files/remove", HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/files/remove"), HTTP_GET, [](AsyncWebServerRequest *request) {
         SPIFFS.remove("/" + request->arg("filename"));
-        request->send(200, "text/html", "");
+        request->send(200, PSTR("text/html"), "");
     });
 
     //update from SPIFFS
-    server.on("/api/update", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", "");
+    server.on(PSTR("/api/update"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, PSTR("text/html"), "");
         updater.requestStart("/" + request->arg("filename"));
     });
 }
@@ -90,10 +89,10 @@ void webServer::bindAll()
 void webServer::serveProgmem(AsyncWebServerRequest *request)
 {    
     // Dump the byte array in PROGMEM with a 200 HTTP code (OK)
-    AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", html, html_len);
+    AsyncWebServerResponse *response = request->beginResponse_P(200, PSTR("text/html"), html, html_len);
 
     // Tell the browswer the content is Gzipped
-    response->addHeader("Content-Encoding", "gzip");
+    response->addHeader(PSTR("Content-Encoding"), PSTR("gzip"));
     
     request->send(response);    
 }
@@ -104,7 +103,7 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
 
     if (!index)
     {
-        Serial.println("Start file upload");
+        Serial.println(PSTR("Start file upload"));
         Serial.println(filename);
 
         if (!filename.startsWith("/"))
@@ -126,7 +125,7 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
         jsonBuffer["success"] = fsUploadFile.isFile();
         serializeJson(jsonBuffer, JSON);
 
-        request->send(200, "text/html", JSON);
+        request->send(200, PSTR("text/html"), JSON);
         fsUploadFile.close();        
     }
 }

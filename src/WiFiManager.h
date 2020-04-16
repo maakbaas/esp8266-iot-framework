@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include <DNSServer.h>
+#include <memory>
 
 class WifiManager
 {
 
 private:
-    DNSServer dnsServer;
+    std::unique_ptr<DNSServer> dnsServer;
     String ssid;
     String pass;
     bool reconnect = false;

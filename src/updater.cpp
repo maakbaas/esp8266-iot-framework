@@ -24,33 +24,32 @@ bool SPIFFSUpdater::flash(String filename)
 
     if (!file)
     {
-        Serial.println("Failed to open file for reading");
+        Serial.println(PSTR("Failed to open file for reading"));
         return false;
     }
 
-    Serial.println("Starting update..");
+    Serial.println(PSTR("Starting update.."));
 
     size_t fileSize = file.size();
 
     if (!Update.begin(fileSize))
     {
 
-        Serial.println("Not enough space for update");
-        
-    }
+        Serial.println(PSTR("Not enough space for update"));
+        }
     else
     {
         Update.writeStream(file);
 
         if (Update.end())
         {
-            Serial.println("Successful update");
+            Serial.println(PSTR("Successful update"));
             answer = true;
         }
         else
         {
 
-            Serial.println("Error Occurred: " + String(Update.getError()));
+            Serial.println(PSTR("Error Occurred: ") + String(Update.getError()));
         }        
     }
 

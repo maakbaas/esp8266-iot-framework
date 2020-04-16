@@ -28,7 +28,7 @@ void WifiManager::begin(char const *apName)
     if (WiFi.waitForConnectResult() == WL_CONNECTED)
     {
         //connected
-        Serial.println("Connected to stored WiFi details");
+        Serial.println(PSTR("Connected to stored WiFi details"));
         Serial.println(WiFi.localIP());
     }
     else
@@ -43,7 +43,7 @@ void WifiManager::forget()
 { 
     WiFi.disconnect();
     startCaptivePortal(captivePortalName);
-    Serial.println("Requested to forget WiFi. Started Captive portal.");
+    Serial.println(PSTR("Requested to forget WiFi. Started Captive portal."));
 }
 
 //function to request a connection to new WiFi credentials
@@ -77,18 +77,18 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
         if (WiFi.waitForConnectResult() != WL_CONNECTED)
         {
             
-            Serial.println("New connection unsuccessful");
+            Serial.println(PSTR("New connection unsuccessful"));
             if (!inCaptivePortal)
             {
                 WiFi.begin(oldSSID, oldPSK, 0, NULL, true);
                 if (WiFi.waitForConnectResult() != WL_CONNECTED)
                 {
-                    Serial.println("Reconnection failed too");
+                    Serial.println(PSTR("Reconnection failed too"));
                     startCaptivePortal(captivePortalName);
                 }
                 else 
                 {
-                    Serial.println("Reconnection successful");
+                    Serial.println(PSTR("Reconnection successful"));
                     Serial.println(WiFi.localIP());
                 }
             }
@@ -100,7 +100,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
                 stopCaptivePortal();
             }
 
-            Serial.println("New connection successful");
+            Serial.println(PSTR("New connection successful"));
             Serial.println(WiFi.localIP());
         }
     }
@@ -117,14 +117,14 @@ void WifiManager::startCaptivePortal(char const *apName)
 
     WiFi.softAP(apName);
 
-    dnsServer = DNSServer();
+    dnsServer.reset(new DNSServer());
 
     /* Setup the DNS server redirecting all the domains to the apIP */
-    dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
-    dnsServer.start(53, "*", WiFi.softAPIP());
+    dnsServer->setErrorReplyCode(DNSReplyCode::NoError);
+    dnsServer->start(53, "*", WiFi.softAPIP());
 
-    Serial.println("Opened a captive portal");
-    Serial.println("192.168.4.1");
+    Serial.println(PSTR("Opened a captive portal"));
+    Serial.println(PSTR("192.168.4.1"));
     inCaptivePortal = true;
 }
 
@@ -132,7 +132,7 @@ void WifiManager::startCaptivePortal(char const *apName)
 void WifiManager::stopCaptivePortal()
 {    
     WiFi.mode(WIFI_STA);
-    dnsServer.stop();
+    dnsServer.reset();
 
     inCaptivePortal = false;    
 }
@@ -155,7 +155,7 @@ void WifiManager::loop()
     if (inCaptivePortal)
     {
         //captive portal loop
-        dnsServer.processNextRequest();
+        dnsServer->processNextRequest();
     }
 
     if (reconnect)

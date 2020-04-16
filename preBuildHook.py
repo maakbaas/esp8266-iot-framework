@@ -88,4 +88,6 @@ if 0:
 #
 #
 
-os.system("npm run build")
+# change to 1 to enable gui update on each build
+if 0:
+    os.system("npm run build")

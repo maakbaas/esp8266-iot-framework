@@ -11,12 +11,9 @@ class HTTPRequest
 
 public:
     void begin();
-    int request(String url);
-    HTTPClient http;
+    int request(String url);    
 
-private:
-    BearSSL::WiFiClientSecure *httpsClient = new BearSSL::WiFiClientSecure();
-    WiFiClient httpClient;
+private:        
     CertStore certStore;
 };
 

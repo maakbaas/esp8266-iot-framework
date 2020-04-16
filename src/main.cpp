@@ -7,14 +7,15 @@
 #include "updater.h"
 #include "fetch.h"
 
+unsigned long prev_time_task;
+
 void setup() 
 {
     Serial.begin(115200);
 
     SPIFFS.begin();
-
     GUI.begin();
-    WiFiManager.begin(PROJECT_NAME); 
+    WiFiManager.begin(PSTR(PROJECT_NAME));
     fetch.begin();
 }
 
@@ -22,4 +23,14 @@ void loop()
 {
     WiFiManager.loop();
     updater.loop();
+
+    //background task
+    if (millis() - prev_time_task > 10000)
+    {
+        prev_time_task = millis();
+
+        //do task
+        Serial.println(ESP.getFreeHeap());
+        Serial.println(fetch.request("https://www.google.com"));        
+    }
 }
