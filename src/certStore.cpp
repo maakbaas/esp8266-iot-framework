@@ -23,7 +23,7 @@ const br_x509_trust_anchor *CertStore::findHashedTA(void *ctx, void *hashed_dn, 
     {
         if (!memcmp_P(hashed_dn, indices[i], 32))
         { 
-            Serial.println(FPSTR("Certificate found!"));
+            Serial.println(PSTR("Certificate found!"));
 
             uint16_t certSize[1];
             memcpy_P(certSize, certSizes+i, 2);

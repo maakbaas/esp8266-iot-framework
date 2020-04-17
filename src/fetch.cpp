@@ -14,9 +14,7 @@ void HTTPRequest::begin()
     struct tm timeinfo;
     gmtime_r(&now, &timeinfo);
     Serial.print(PSTR("Current GMT time: "));
-    Serial.print(asctime(&timeinfo));
-
-    //certStore.initCertStore(SPIFFS, PSTR("/certs.idx"), PSTR("/certs.ar"));    
+    Serial.print(asctime(&timeinfo)); 
 }
 
 int HTTPRequest::request(String url)
