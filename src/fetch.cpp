@@ -1,5 +1,6 @@
 #include "fetch.h"
-#include <ESP8266WiFi.h>
+#include <WiFiClientSecureBearSSL.h>
+#include <ESP8266HTTPClient.h>
 
 void HTTPRequest::begin()
 {

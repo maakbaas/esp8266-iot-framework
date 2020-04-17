@@ -2,8 +2,6 @@
 #define FETCH_H
 
 #include <Arduino.h>
-#include <ESP8266HTTPClient.h>
-
 #include "certStore.h"
 
 class HTTPRequest
