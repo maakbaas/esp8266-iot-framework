@@ -1,7 +1,7 @@
 {
-  "name": "can-dashboard",
+  "name": "esp",
   "version": "1.0.0",
-  "description": "Dashboard",
+  "description": "ESP8266",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --history-api-fallback",

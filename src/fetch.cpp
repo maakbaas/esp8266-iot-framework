@@ -15,7 +15,7 @@ void HTTPRequest::begin()
     Serial.print(PSTR("Current GMT time: "));
     Serial.print(asctime(&timeinfo));
 
-    certStore.initCertStore(SPIFFS, PSTR("/certs.idx"), PSTR("/certs.ar"));    
+    //certStore.initCertStore(SPIFFS, PSTR("/certs.idx"), PSTR("/certs.ar"));    
 }
 
 int HTTPRequest::request(String url)
