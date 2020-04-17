@@ -17,16 +17,9 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "CertStoreBearSSL.h"
+#include "certStore.h"
 #include "certificates.h"
 #include <memory>
-
-
-#ifdef DEBUG_ESP_SSL
-#define DEBUG_BSSL(fmt, ...)  DEBUG_ESP_PORT.printf_P((PGM_P)PSTR( "BSSL:" fmt), ## __VA_ARGS__)
-#else
-#define DEBUG_BSSL(...)
-#endif
 
 namespace BearSSL {
 
