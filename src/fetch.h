@@ -5,7 +5,6 @@
 #include <ESP8266HTTPClient.h>
 
 #include "certStore.h"
-#include <ESP8266WiFi.h>
 
 class HTTPRequest
 {
@@ -15,7 +14,7 @@ public:
     int request(String url);    
 
 private:        
-    CertStore certStore;
+    BearSSL::CertStore certStore;
 };
 
 extern HTTPRequest fetch;

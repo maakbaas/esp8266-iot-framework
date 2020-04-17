@@ -16,8 +16,8 @@ except:
     from io import StringIO
 
 #configuration
-rebuildHTML = True
-rebuildCertificates = True
+rebuildHTML = False
+rebuildCertificates = False
 
 #path to openssl
 openssl = "C:\\msys32\\usr\\bin\\openssl" 
