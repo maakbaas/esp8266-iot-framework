@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <ESP8266HTTPClient.h>
 
-#include "progmemCertStore.h"
+#include "certStore.h"
 #include <ESP8266WiFi.h>
 
 class HTTPRequest
