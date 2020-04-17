@@ -16,8 +16,8 @@ except:
     from io import StringIO
 
 #configuration
-rebuildHTML = False
-rebuildCertificates = False
+rebuildHTML = True
+rebuildCertificates = True
 
 #path to openssl
 openssl = "C:\\msys32\\usr\\bin\\openssl" 
@@ -32,11 +32,8 @@ if rebuildCertificates:
     # below script content is adapted from:
     # https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/BearSSL_CertStore/certs-from-mozilla.py
 
-    try:
-        f = open("src/certificates.h", "w", encoding="utf8")
-    except:
-        f = open("src/certificates.h", "w")
-
+    f = open("src/certificates.h", "w", encoding="utf8")
+    
     f.write("#ifndef CERT_H" + "\n")
     f.write("#define CERT_H" + "\n\n")
     f.write("#include <Arduino.h>" + "\n\n")
@@ -69,7 +66,7 @@ if rebuildCertificates:
     for i in range(0, len(pems)):
         certName = "ca_%03d.der" % (idx);
         thisPem = pems[i].replace("'", "")
-        print(dates[i] + " " + names[i] + " -> " + certName)
+        print(dates[i] + " -> " + certName)
         f.write(("//" + dates[i] + " " + names[i] + "\n"))
         
         ssl = Popen([openssl,'x509','-inform','PEM','-outform','DER','-out', certName], shell = False, stdin = PIPE)
