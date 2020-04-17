@@ -33,34 +33,17 @@ namespace BearSSL {
 
 class CertStore {
   public:
-    CertStore() { };
-    ~CertStore();
-
-    // Set the file interface instances, do preprocessing
-    int initCertStore(FS &fs, const char *indexFileName, const char *dataFileName);
+    CertStore() { };   
 
     // Installs the cert store into the X509 decoder (normally via static function callbacks)
     void installCertStore(br_x509_minimal_context *ctx);
 
   protected:
-    FS *_fs = nullptr;
-    char *_indexName = nullptr;
-    char *_dataName = nullptr;
     X509List *_x509 = nullptr;
 
     // These need to be static as they are callbacks from BearSSL C code
     static const br_x509_trust_anchor *findHashedTA(void *ctx, void *hashed_dn, size_t len);
     static void freeHashedTA(void *ctx, const br_x509_trust_anchor *ta);
-
-    // The binary format of the index file
-    class CertInfo {
-    public:
-      uint8_t sha256[32];
-      uint32_t offset;
-      uint32_t length;
-    };
-    static CertInfo _preprocessCert(uint32_t length, uint32_t offset, const void *raw);
-
 };
 
 };
