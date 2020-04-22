@@ -1,6 +1,6 @@
 #include "fetch.h"
+
 #include <WiFiClientSecureBearSSL.h>
-#include <ESP8266HTTPClient.h>
 
 void HTTPRequest::begin()
 {
@@ -18,30 +18,33 @@ void HTTPRequest::begin()
     Serial.print(asctime(&timeinfo)); 
 }
 
-int HTTPRequest::request(String url)
+int HTTPRequest::GET(String url, WiFiClient *&outputClient)
 {
-    HTTPClient *http = new HTTPClient();
-    WiFiClient *client = new WiFiClient();
-    BearSSL::WiFiClientSecure *httpsClient = new BearSSL::WiFiClientSecure();
+    http = new HTTPClient();
+    client = new WiFiClient();
+    httpsClient = new BearSSL::WiFiClientSecure();
 
     if (url[4] == 's')
     {        
         httpsClient->setCertStore(&certStore);
-        http->begin(dynamic_cast<WiFiClient &>(*httpsClient), url);
+        http->begin(*httpsClient, url);
+        outputClient = httpsClient;
     }
     else
     {
-        http->begin(*client, url);        
+        http->begin(*client, url);
+        outputClient = client;
     }
-            
-    int result = http->GET();
 
+    return http->GET();
+
+}
+
+void HTTPRequest::clean()
+{
     delete http;
     delete client;
-    delete httpsClient;    
-
-    return result;
-
+    delete httpsClient;
 }
 
 HTTPRequest fetch;

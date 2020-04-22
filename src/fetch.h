@@ -2,6 +2,8 @@
 #define FETCH_H
 
 #include <Arduino.h>
+#include <ESP8266HTTPClient.h>
+
 #include "certStore.h"
 
 class HTTPRequest
@@ -9,10 +11,15 @@ class HTTPRequest
 
 public:
     void begin();
-    int request(String url);    
+    void clean();
+    int GET(String url, WiFiClient *&outputClient);
 
 private:        
     BearSSL::CertStore certStore;
+
+    HTTPClient *http;
+    WiFiClient *client;
+    BearSSL::WiFiClientSecure *httpsClient;
 };
 
 extern HTTPRequest fetch;
