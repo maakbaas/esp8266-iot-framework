@@ -1,13 +1,19 @@
 #include <Arduino.h>
 #include <FS.h>
 
-#include "config.h"
 #include "WiFiManager.h"
 #include "webServer.h"
 #include "updater.h"
 #include "fetch.h"
+#include "configManager.h"
 
-unsigned long prev_time_task;
+struct task
+{    
+    unsigned long rate;
+    unsigned long previous;
+};
+
+task taskA = { .rate = 60000, .previous = 0 };
 
 void setup() 
 {
@@ -15,35 +21,36 @@ void setup()
 
     SPIFFS.begin();
     GUI.begin();
-    WiFiManager.begin(PSTR(PROJECT_NAME));
+    Serial.println("cfgmgr");
+    Serial.println(configManager.begin());
+    WiFiManager.begin(configManager.data.projectName);
     fetch.begin();
 }
 
 void loop() 
 {
+    //software interrupts
     WiFiManager.loop();
     updater.loop();
 
-    //background task
-    if (millis() - prev_time_task > 10000)
+    //task A
+    if (taskA.previous==0 || (millis() - taskA.previous > taskA.rate ))
     {
-        prev_time_task = millis();
+        taskA.previous = millis();
 
         //do task
         Serial.println(ESP.getFreeHeap());
         
-        fetch.GET("https://www.google.com");
+        // fetch.GET("https://www.google.com");
 
-        while (fetch.busy())
-        {
-            if (fetch.available())
-            {
-                Serial.write(fetch.read());           
-            }
-        }
+        // while (fetch.busy())
+        // {
+        //     if (fetch.available())
+        //     {
+        //         Serial.write(fetch.read());           
+        //     }
+        // }
         
-        fetch.clean();
-
-        delay(10000);
+        // fetch.clean();
     }
 }
