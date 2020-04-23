@@ -18,10 +18,10 @@ void HTTPRequest::begin()
     Serial.print(asctime(&timeinfo)); 
 }
 
-int HTTPRequest::GET(String url)
+void HTTPRequest::beginRequest(String &url) 
 {
     http = new HTTPClient();
-    
+
     if (url[4] == 's')
     {
         httpsClient = new BearSSL::WiFiClientSecure();
@@ -37,9 +37,18 @@ int HTTPRequest::GET(String url)
     }
 
     http->setReuse(false);
-    int status = http->GET();
-    return status;
+}
 
+int HTTPRequest::GET(String url)
+{
+    beginRequest(url);
+    return http->GET();
+}
+
+int HTTPRequest::POST(String url, String body)
+{
+    beginRequest(url);
+    return http->POST(body);
 }
 
 bool HTTPRequest::busy()

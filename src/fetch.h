@@ -13,6 +13,7 @@ public:
     void begin();
     void clean();
     int GET(String url);
+    int POST(String url, String body);
     bool busy();
     bool available();
     uint8_t read();
@@ -24,6 +25,8 @@ private :
     WiFiClient *client;
     WiFiClient *outputClient;
     BearSSL::WiFiClientSecure *httpsClient;
+
+    void beginRequest(String &url);
 };
 
 extern HTTPRequest fetch;
