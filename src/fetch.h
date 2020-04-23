@@ -23,7 +23,6 @@ private :
 
     HTTPClient *http;
     WiFiClient *client;
-    WiFiClient *outputClient;
     BearSSL::WiFiClientSecure *httpsClient;
 
     void beginRequest(String &url);

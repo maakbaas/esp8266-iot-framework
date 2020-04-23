@@ -32,7 +32,7 @@ void loop()
         //do task
         Serial.println(ESP.getFreeHeap());
         
-        fetch.GET("http://neverssl.com");
+        fetch.GET("https://www.google.com");
 
         while (fetch.busy())
         {
@@ -43,5 +43,7 @@ void loop()
         }
         
         fetch.clean();
+
+        delay(10000);
     }
 }

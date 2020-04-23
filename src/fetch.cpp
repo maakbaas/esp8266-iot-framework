@@ -27,13 +27,12 @@ void HTTPRequest::beginRequest(String &url)
         httpsClient = new BearSSL::WiFiClientSecure();
         httpsClient->setCertStore(&certStore);
         http->begin(*httpsClient, url);
-        outputClient = httpsClient;
+        client = httpsClient;
     }
     else
     {
         client = new WiFiClient();
         http->begin(*client, url);
-        outputClient = client;
     }
 
     http->setReuse(false);
@@ -53,24 +52,23 @@ int HTTPRequest::POST(String url, String body)
 
 bool HTTPRequest::busy()
 {
-    return (outputClient->connected() || outputClient->available());
+    return (client->connected() || client->available());
 }
 
 bool HTTPRequest::available()
 {
-    return outputClient->available();
+    return client->available();
 }
 
 uint8_t HTTPRequest::read()
 {
-    return outputClient->read();
+    return client->read();
 }
 
 void HTTPRequest::clean()
 {
     delete http;
     delete client;
-    delete httpsClient;
 }
 
 HTTPRequest fetch;
