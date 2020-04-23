@@ -12,13 +12,17 @@ class HTTPRequest
 public:
     void begin();
     void clean();
-    int GET(String url, WiFiClient *&outputClient);
+    int GET(String url);
+    bool busy();
+    bool available();
+    uint8_t read();
 
-private:        
+private : 
     BearSSL::CertStore certStore;
 
     HTTPClient *http;
     WiFiClient *client;
+    WiFiClient *outputClient;
     BearSSL::WiFiClientSecure *httpsClient;
 };
 

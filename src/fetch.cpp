@@ -18,26 +18,43 @@ void HTTPRequest::begin()
     Serial.print(asctime(&timeinfo)); 
 }
 
-int HTTPRequest::GET(String url, WiFiClient *&outputClient)
+int HTTPRequest::GET(String url)
 {
     http = new HTTPClient();
-    client = new WiFiClient();
-    httpsClient = new BearSSL::WiFiClientSecure();
-
+    
     if (url[4] == 's')
-    {        
+    {
+        httpsClient = new BearSSL::WiFiClientSecure();
         httpsClient->setCertStore(&certStore);
         http->begin(*httpsClient, url);
         outputClient = httpsClient;
     }
     else
     {
+        client = new WiFiClient();
         http->begin(*client, url);
         outputClient = client;
     }
 
-    return http->GET();
+    http->setReuse(false);
+    int status = http->GET();
+    return status;
 
+}
+
+bool HTTPRequest::busy()
+{
+    return (outputClient->connected() || outputClient->available());
+}
+
+bool HTTPRequest::available()
+{
+    return outputClient->available();
+}
+
+uint8_t HTTPRequest::read()
+{
+    return outputClient->read();
 }
 
 void HTTPRequest::clean()

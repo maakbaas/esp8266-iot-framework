@@ -31,10 +31,17 @@ void loop()
 
         //do task
         Serial.println(ESP.getFreeHeap());
-        WiFiClient *result = NULL;
-        fetch.GET("https://www.google.com", result);
-        while (result->available())
-            Serial.write(result->read());           
+        
+        fetch.GET("http://neverssl.com");
+
+        while (fetch.busy())
+        {
+            if (fetch.available())
+            {
+                Serial.write(fetch.read());           
+            }
+        }
+        
         fetch.clean();
     }
 }
