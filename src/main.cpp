@@ -21,8 +21,7 @@ void setup()
 
     SPIFFS.begin();
     GUI.begin();
-    Serial.println("cfgmgr");
-    Serial.println(configManager.begin());
+    configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
     fetch.begin();
 }

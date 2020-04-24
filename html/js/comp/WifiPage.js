@@ -34,17 +34,18 @@ export function WifiPage(props) {
         <Submit value="Save" />
     </Form>
     
-    var page = <><h2>WiFi Settings</h2><h3>Status</h3></>;
+    var page = <><h2>WiFi Settings</h2> 
+    <h3>Status</h3></>;
     
     var connectedTo;
     if (state.captivePortal === true) {
-        connectedTo = "captive portal";
+        connectedTo = "Captive portal running";
     }
     else if (state.captivePortal === false) {
-        connectedTo = <>{state.ssid} (<Fetch href={props.API + '/api/wifi/forget'} text="Forget" />)</>;
+        connectedTo = <>Connected to {state.ssid} (<Fetch href={props.API + '/api/wifi/forget'} text="Forget" />)</>;
     }
     
-    page = <>{page}<p>Connected to {connectedTo}</p></>;
+    page = <>{page}<p>{connectedTo}</p></>;
 
     page = <>{page}<h3>Update credentials</h3>{form}</>;
 

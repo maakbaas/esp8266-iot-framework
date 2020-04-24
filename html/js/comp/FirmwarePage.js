@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Fetch, Upload } from './UiComponents'
 import { File } from 'react-feather';

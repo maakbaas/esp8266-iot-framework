@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
 
-import {GlobalStyle, Menu} from './comp/UiComponents'
+import {GlobalStyle, Menu, Header, Page, Hamburger} from './comp/UiComponents'
 import { WifiPage } from './comp/WifiPage'
+import { ConfigPage } from './comp/ConfigPage'
 import { FilePage } from './comp/FilePage'
 import { FirmwarePage } from './comp/FirmwarePage'
 
@@ -12,34 +13,49 @@ if (process.env.NODE_ENV === 'production')
 else
     var url = 'http://192.168.1.54';
 
-var page = <>
-    <GlobalStyle />
+function Root() {
+    
+    const [menu, setMenu] = useState(false);
+
+    return <><GlobalStyle />
 
     <BrowserRouter>
 
-        <h1>ESP8266</h1>
+        <Header>
+            <h1>ESP8266</h1>
 
-        <Menu>
-            <li><Link to="/">WiFi Settings</Link></li>
-            <li><Link to="/files">File Manager</Link></li>
-            <li><Link to="/firmware">Firmware Update</Link></li>
-        </Menu>
+            <Hamburger onClick={() => setMenu(!menu)} />
+            <Menu className={menu ? "" : "menuHidden"}>
+                <li><NavLink onClick={() => setMenu(false)} exact to="/">WiFi Settings</NavLink></li>
+                <li><NavLink onClick={() => setMenu(false)} exact to="/config">Configuration</NavLink></li>
+                <li><NavLink onClick={() => setMenu(false)} exact to="/files">File Manager</NavLink></li>
+                <li><NavLink onClick={() => setMenu(false)} exact to="/firmware">Firmware Update</NavLink></li>
+            </Menu>
+
+        </Header>
         
-        <Switch>
-            <Route exact path="/files">
-                <FilePage API={url} />
-            </Route>
-            <Route exact path="/firmware">
-                <FirmwarePage API={url} />
-            </Route>
-            <Route path="/">
-                <WifiPage API={url} />
-            </Route>
-        </Switch>
+        <Page>
+            <Switch>
+                <Route exact path="/files">
+                    <FilePage API={url} />
+                </Route>
+                <Route exact path="/config">
+                    <ConfigPage API={url} />
+                </Route>
+                <Route exact path="/firmware">
+                    <FirmwarePage API={url} />
+                </Route>
+                <Route path="/">
+                    <WifiPage API={url} />
+                </Route>
+            </Switch>
+        </Page>
 
     </BrowserRouter>
-</>
+</>;
+
+}
 
 
 
-ReactDOM.render(page, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById('root'));
