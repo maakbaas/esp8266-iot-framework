@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import { Form, Submit, Fetch } from './UiComponents'
+import { Form, Button, Fetch, Confirmation } from './UiComponents'
 import { Wifi, Lock } from 'react-feather';
 
 export function WifiPage(props) {
     const [state, setState] = useState({ captivePortal: [], ssid: []});
+    const [forgetModal, setForgetModal] = useState(false);
+    const [saveModal, setSaveModal] = useState(false);
 
     useEffect(() => {
         document.title = `WiFi Settings`;
@@ -17,22 +19,22 @@ export function WifiPage(props) {
             });
     }, []);
 
-    function changeWifi(e) {
-        e.preventDefault();
-        fetch(props.API + '/api/wifi/set?ssid=' + e.target.ssid.value + '&pass=' + e.target.pass.value);
-        e.target.ssid.value = '';
-        e.target.pass.value = '';
+    function changeWifi() {
+        fetch(props.API + '/api/wifi/set?ssid=' + document.getElementById("ssid").value + '&pass=' + document.getElementById("pass").value);
+        document.getElementById("ssid").value = '';
+        document.getElementById("pass").value = '';
     }
 
-    var form = <Form onSubmit={changeWifi}>
+    var form = <><Form>
         <p><label for="ssid"><Wifi /> SSID:</label>
-            <input type="text" name="ssid" />
+            <input type="text" id="ssid" name="ssid" />
         </p>
         <p><label for="pass"><Lock /> Password:</label>
-            <input type="text" name="pass" />
-        </p>
-        <Submit value="Save" />
+            <input type="text" id="pass" name="pass" />
+        </p>        
     </Form>
+    <Button onClick={(e) => setSaveModal(true)}>Save</Button>
+    </>
     
     var page = <><h2>WiFi Settings</h2> 
     <h3>Status</h3></>;
@@ -42,12 +44,19 @@ export function WifiPage(props) {
         connectedTo = "Captive portal running";
     }
     else if (state.captivePortal === false) {
-        connectedTo = <>Connected to {state.ssid} (<Fetch href={props.API + '/api/wifi/forget'} text="Forget" />)</>;
+        connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>)</>;
     }
     
     page = <>{page}<p>{connectedTo}</p></>;
 
-    page = <>{page}<h3>Update credentials</h3>{form}</>;
+    page = <>{page}<h3>Update credentials</h3>{form}
+        <Confirmation active={forgetModal}
+            confirm={() => { fetch(props.API + '/api/wifi/forget'); setForgetModal(false) }}
+            cancel={() => setForgetModal(false)}>Are you sure? If you continue, a captive portal will be started.</Confirmation>
+        <Confirmation active={saveModal}
+            confirm={() => { changeWifi(); setSaveModal(false) }}
+            cancel={() => setSaveModal(false)}>Are you sure? If you continue, access from the current network will probably be lost.</Confirmation>
+    </>;
 
     return page;
 }

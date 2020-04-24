@@ -26,6 +26,7 @@ export const GlobalStyle = createGlobalStyle`
     a {
         color: ${cSecondary};
         text-decoration: none;
+        cursor:pointer;
     
         &:hover {
             color: ${cSecondaryHover};
@@ -59,7 +60,6 @@ export const Header = styled(HeaderSrc)`
         padding:0.6em;
         margin-left:1em;
         border-radius:3px;
-        cursor:pointer;
     }
 
     a:hover {
@@ -121,7 +121,7 @@ export const Menu = styled.ul`
 
         a {
             display:block;
-            line-height:3.2em;
+            line-height:3.5em;
             margin:0px -1em;
             padding:0px 1em;
             border-radius:0;
@@ -140,6 +140,55 @@ export const Menu = styled.ul`
     }
 `;
 
+const ConfirmationSrc = ({ active, confirm, cancel, className, children}) => (
+    active ? <div className={className}
+         onClick={() => cancel()}>
+        <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
+            <div>
+                <CancelButton onClick={() => cancel()}>Cancel</CancelButton> 
+                <Button onClick={() => confirm()}>Continue</Button>
+            </div>
+        </div>
+    </div> : ''
+);
+
+export const Confirmation = styled(ConfirmationSrc)`
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:2;
+    background-color:#000000e0;
+
+    div:first-child {
+        border-radius:6px;
+        text-align:center;
+        position:relative;
+        max-width:calc(100vw - 100px);
+        width:400px;
+        background-color:#fff;
+        padding:1em;
+        top:20vh;
+        margin:0px auto;
+        box-shadow: 0px 0px 50px;
+
+        p {
+            margin-top:0px;
+            padding:1em 0em;
+        }
+
+        div {
+            display:flex;
+            justify-content:flex-end;    
+            align-items: flex-end;
+
+            Button {
+                margin-left:0.6em;
+            }
+        }
+    }
+`;
 
 export const Form = styled.form` 
     label {
@@ -152,8 +201,8 @@ const buttonStyle = css`
     background-color: ${cPrimary};
     color:#fff;
     border:none;
-    padding:0.4em; 
-    border-radius:3px;
+    padding:0.5em; 
+    border-radius:4px;
     cursor:pointer;
 
     &:hover {
@@ -165,12 +214,24 @@ export const Button = styled.button`
     ${buttonStyle}
 `;
 
+export const CancelButton = styled(Button)` 
+    color:#aa2200;
+    background-color:#fff;
+    border:1px solid #aa2200;
+
+    :hover {
+        color:#bb3300;
+        background-color:#ffeeee;
+        border:1px solid #bb3300;
+    }
+`;
+
 export const Success = styled.span` 
     color:#a3dd00;
 `;
 
 export const Fail = styled.span` 
-    color:#dd2211;
+    color:#ffcc00;
 `;
 
 export const Submit = styled.input.attrs({
