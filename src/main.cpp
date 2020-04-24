@@ -13,7 +13,7 @@ struct task
     unsigned long previous;
 };
 
-task taskA = { .rate = 60000, .previous = 0 };
+task taskA = { .rate = 5000, .previous = 0 };
 
 void setup() 
 {

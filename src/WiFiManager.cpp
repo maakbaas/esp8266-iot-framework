@@ -117,7 +117,7 @@ void WifiManager::startCaptivePortal(char const *apName)
 
     WiFi.softAP(apName);
 
-    dnsServer.reset(new DNSServer());
+    dnsServer = new DNSServer();
 
     /* Setup the DNS server redirecting all the domains to the apIP */
     dnsServer->setErrorReplyCode(DNSReplyCode::NoError);
@@ -132,7 +132,7 @@ void WifiManager::startCaptivePortal(char const *apName)
 void WifiManager::stopCaptivePortal()
 {    
     WiFi.mode(WIFI_STA);
-    dnsServer.reset();
+    delete dnsServer;
 
     inCaptivePortal = false;    
 }
