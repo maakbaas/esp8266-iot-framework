@@ -32,6 +32,12 @@ export const GlobalStyle = createGlobalStyle`
             color: ${cSecondaryHover};
         }
     }
+
+    svg {
+        width:0.9em;
+        height:0.9em;
+        vertical-align: -0.05em;
+    }
   
 `
 
@@ -71,6 +77,7 @@ export const Header = styled(HeaderSrc)`
     background-color: #fff;
     color:${cHeader};
     }
+
 `;
 
 export const Page = styled.div`
@@ -78,12 +85,6 @@ export const Page = styled.div`
         padding:0em 1em;
         max-width:1024px;
         clear:both;
-
-        svg {
-            width:0.9em;
-            height:0.9em;
-            vertical-align: -0.05em;
-        }
 `;
 
 const HamburgerSrc = ({ className, onClick }) => (
@@ -96,6 +97,8 @@ export const Hamburger = styled(HamburgerSrc)`
 
     svg 
     {
+        width: 1em;
+        height: 1em;
         vertical-align:-0.25em;
     }
 
@@ -140,19 +143,7 @@ export const Menu = styled.ul`
     }
 `;
 
-const ConfirmationSrc = ({ active, confirm, cancel, className, children}) => (
-    active ? <div className={className}
-         onClick={() => cancel()}>
-        <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
-            <div>
-                <CancelButton onClick={() => cancel()}>Cancel</CancelButton> 
-                <Button onClick={() => confirm()}>Continue</Button>
-            </div>
-        </div>
-    </div> : ''
-);
-
-export const Confirmation = styled(ConfirmationSrc)`
+const modal = css`
     position:absolute;
     width:100%;
     height:100%;
@@ -190,6 +181,37 @@ export const Confirmation = styled(ConfirmationSrc)`
     }
 `;
 
+const ConfirmationSrc = ({ active, confirm, cancel, className, children }) => (
+    active ? <div className={className}
+        onClick={() => cancel()}>
+        <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
+            <div>
+                <CancelButton onClick={() => cancel()}>Cancel</CancelButton>
+                <Button onClick={() => confirm()}>Continue</Button>
+            </div>
+        </div>
+    </div> : ''
+);
+
+export const Confirmation = styled(ConfirmationSrc)`
+    ${modal}
+`;
+
+const AlertSrc = ({ active, confirm, className, children }) => (
+    active ? <div className={className}
+        onClick={() => confirm()}>
+        <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
+            <div>
+                <Button onClick={() => confirm()}>OK</Button>
+            </div>
+        </div>
+    </div> : ''
+);
+
+export const Alert = styled(AlertSrc)`
+    ${modal}
+`;
+
 export const Form = styled.form` 
     label {
         display: inline-block;
@@ -215,15 +237,29 @@ export const Button = styled.button`
 `;
 
 export const CancelButton = styled(Button)` 
-    color:#aa2200;
+    color:#cc2200;
     background-color:#fff;
-    border:1px solid #aa2200;
+    border:1px solid #cc2200;
 
     :hover {
         color:#bb3300;
         background-color:#ffeeee;
         border:1px solid #bb3300;
     }
+`;
+
+export const RedButton = styled(Button)` 
+    background-color:#cc2200;
+
+    :hover {
+        background-color:#bb3300;
+    }
+`;
+
+export const Flex = styled.div`
+    display:flex;
+    justify-content:space-between;  
+    align-items: center;
 `;
 
 export const Success = styled.span` 
@@ -243,17 +279,31 @@ export const Submit = styled.input.attrs({
 export const FileLabel = styled.label`
     ${buttonStyle}  
 
-    min-width:0px !important;
+    display:inline-block;
+    width:100px;
+    text-align:center;
+
+    &.busy 
+    {
+        cursor: default;
+        :hover
+        {
+            background-color: ${cPrimary};
+        }
+    }
+
+    svg {
+        width:1.2em;
+        height:1.2em;
+        vertical-align:-0.25em;
+    }
 
     input[type="file"] {
         display: none;
     } 
 `;
 
-export const Spinner = styled(Loader)`
-    width:1.3em;
-    height:1.3em;
-    vertical-align:-0.3em;
+export const Spinner = styled(Loader)`    
     animation-name: spin;
     animation-duration: 3000ms;
     animation-iteration-count: infinite;
@@ -271,16 +321,15 @@ export const Spinner = styled(Loader)`
 
 export function Fetch(props)
 {
-    return <a href={props.href} onClick={(e) => {
-        e.preventDefault();
-        fetch(e.currentTarget.getAttribute('href'))
+    return <span onClick={() => {
+        fetch(props.href)
             .then((response) => { return response.status; })
             .then((status) => { 
                 if (status==200) 
                     if (typeof props.onFinished === "function")
                         props.onFinished(); 
             });
-    }}>{props.text}</a>;
+    }}>{props.children}</span>;
 }
 
 export function Upload(props)
@@ -288,18 +337,20 @@ export function Upload(props)
     const [state, setState] = useState("");
 
     var status;
-    if (state=="ok")
-        status=<Success>Upload finished</Success>;
-    else if (state == "nok")
-        status = <Fail>Upload failed</Fail>;
-    else if (state == "busy")
-        status = <span>Uploading <Spinner /></span>;
-
+    if (state == "busy")
+        status = <><Spinner /></>;
+    else 
+        status = <>Upload File</>;
     
     var render = 
-    <form action={props.action} method="post" name="upload" enctype="multipart/form-data">
-        <FileLabel id="uploadLabel">Upload file<input type="file" id="file" onChange={(e) => {
-
+    <><form action={props.action} method="post" name="upload" enctype="multipart/form-data">
+        <FileLabel id="uploadLabel" className={state}>{status}<input type="file" id="file" 
+        onClick={(e) => {
+            if (state == "busy") {
+                e.preventDefault();
+            }
+        }}
+        onChange={(e) => {
             var form = document.forms.namedItem("upload");
             const files = e.target.files;
             const formData = new FormData();
@@ -325,8 +376,12 @@ export function Upload(props)
                     });
             }
         }} />
-        </FileLabel> {status}
-    </form>;
+        </FileLabel>
+    </form>
+    <Alert active={state == "nok"}
+        confirm={() => setState("")}>
+        The upload has failed. The file could be too large, or it's name too long (>32).</Alert>
+    </>;   
 
     return render;
 }

@@ -16,6 +16,8 @@ void webServer::begin()
 
     server.begin();
 
+    server.serveStatic("/download", SPIFFS, "/");
+
     server.onNotFound(serveProgmem);
 
     //handle uploads

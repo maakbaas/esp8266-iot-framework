@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
+import { Box } from 'react-feather';
 
 import {GlobalStyle, Menu, Header, Page, Hamburger} from './comp/UiComponents'
 import { WifiPage } from './comp/WifiPage'
@@ -22,7 +23,7 @@ function Root() {
     <BrowserRouter>
 
         <Header>
-            <h1>ESP8266</h1>
+            <h1><Box style={{verticalAlign:"-0.1em"}} /> ESP8266</h1>
 
             <Hamburger onClick={() => setMenu(!menu)} />
             <Menu className={menu ? "" : "menuHidden"}>

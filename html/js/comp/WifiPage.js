@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Form, Button, Fetch, Confirmation } from './UiComponents'
+import { Form, Button, Spinner, Confirmation } from './UiComponents'
 import { Wifi, Lock } from 'react-feather';
 
 export function WifiPage(props) {
@@ -47,7 +47,7 @@ export function WifiPage(props) {
         connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>)</>;
     }
     
-    page = <>{page}<p>{connectedTo}</p></>;
+    page = <>{page}<p>{connectedTo == null ? <Spinner /> : connectedTo}</p></>;
 
     page = <>{page}<h3>Update credentials</h3>{form}
         <Confirmation active={forgetModal}
@@ -55,7 +55,7 @@ export function WifiPage(props) {
             cancel={() => setForgetModal(false)}>Are you sure? If you continue, a captive portal will be started.</Confirmation>
         <Confirmation active={saveModal}
             confirm={() => { changeWifi(); setSaveModal(false) }}
-            cancel={() => setSaveModal(false)}>Are you sure? If you continue, access from the current network will probably be lost.</Confirmation>
+            cancel={() => setSaveModal(false)}>Are you sure? If you continue, device access from the current network will probably be lost.</Confirmation>
     </>;
 
     return page;
