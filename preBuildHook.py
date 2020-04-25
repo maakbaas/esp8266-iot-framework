@@ -16,7 +16,7 @@ except:
     from io import StringIO
 
 #configuration
-rebuildHTML = True
+rebuildHTML = False
 rebuildCertificates = False
 
 #path to openssl
