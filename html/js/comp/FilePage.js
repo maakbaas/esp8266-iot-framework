@@ -77,7 +77,7 @@ export function FilePage(props) {
     }    
 
     return <><h2>File Manager</h2><Flex>
-        <Upload action={props.API + '/upload'} onFinished={fetchData} />
+        <p><Upload action={props.API + '/upload'} onFinished={fetchData} /></p>
         {parseInt(state.max)>0 ? <p>{Math.round(state.used / 1000)} / {Math.round(state.max / 1000)} kB in use</p> : ""}
     </Flex>{list}</>;
     
