@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { normalize } from 'styled-normalize'
 import { Loader, Menu as MenuIcon } from 'react-feather';
 
-const cPrimary = '#0055ff'; 
-const cPrimaryHover = '#0066ee'; 
-const cHeader = '#111';
-const cHeaderHover = '#333'; 
-const cSecondary = '#ff00cc';
-const cSecondaryHover = '#cc0099'; 
+export const cPrimary = '#0055ff'; 
+export const cPrimaryHover = '#0066ee'; 
+export const cHeader = '#111';
+export const cHeaderHover = '#333'; 
+export const cSecondary = '#ff00cc';
+export const cSecondaryHover = '#cc0099'; 
 
 export const GlobalStyle = createGlobalStyle`
   
@@ -17,6 +17,11 @@ export const GlobalStyle = createGlobalStyle`
     body {
         font-size:1.2em;
         line-height:1.4em;
+
+        @media (max-width: 500px) 
+        { 
+            font-size:1em;
+        }
     }
 
     * {
@@ -85,6 +90,21 @@ export const Page = styled.div`
         padding:0em 1em;
         max-width:1024px;
         clear:both;
+`;
+
+export const Card = styled.div`
+
+    border-radius:5px;
+    border:1px solid #ddd;
+    box-shadow:0px 0px 4px #eee;
+    padding:2em;
+    margin-bottom:1em;
+
+    @media (max-width: 500px) 
+    { 
+        padding:1em;
+    }
+
 `;
 
 const HamburgerSrc = ({ className, onClick }) => (
@@ -219,7 +239,7 @@ export const Form = styled.form`
     }
 `;
 
-const buttonStyle = css` 
+export const buttonStyle = css` 
     background-color: ${cPrimary};
     color:#fff;
     border:none;
@@ -234,6 +254,15 @@ const buttonStyle = css`
 
 export const Button = styled.button` 
     ${buttonStyle}
+`;
+
+export const DisabledButton = styled.button`
+        ${buttonStyle}
+        cursor:not-allowed;
+        background-color:#bbddff;
+        :hover {
+            background-color:#bbddff;
+        }
 `;
 
 export const CancelButton = styled(Button)` 
@@ -276,33 +305,6 @@ export const Submit = styled.input.attrs({
     ${buttonStyle}  
 `;
 
-export const FileLabel = styled.label`
-    ${buttonStyle}  
-
-    display:inline-block;
-    width:100px;
-    text-align:center;
-
-    &.busy 
-    {
-        cursor: default;
-        :hover
-        {
-            background-color: ${cPrimary};
-        }
-    }
-
-    svg {
-        width:1.2em;
-        height:1.2em;
-        vertical-align:-0.25em;
-    }
-
-    input[type="file"] {
-        display: none;
-    } 
-`;
-
 export const Spinner = styled(Loader)`    
     animation-name: spin;
     animation-duration: 3000ms;
@@ -321,7 +323,8 @@ export const Spinner = styled(Loader)`
 
 export function Fetch(props)
 {
-    return <span onClick={() => {
+    return <span onClick={(e) => {
+        e.stopPropagation();
         fetch(props.href)
             .then((response) => { return response.status; })
             .then((status) => { 
@@ -330,58 +333,4 @@ export function Fetch(props)
                         props.onFinished(); 
             });
     }}>{props.children}</span>;
-}
-
-export function Upload(props)
-{
-    const [state, setState] = useState("");
-
-    var status;
-    if (state == "busy")
-        status = <><Spinner /></>;
-    else 
-        status = <>Upload File</>;
-    
-    var render = 
-    <><form action={props.action} method="post" name="upload" enctype="multipart/form-data">
-        <FileLabel id="uploadLabel" className={state}>{status}<input type="file" id="file" 
-        onClick={(e) => {
-            if (state == "busy") {
-                e.preventDefault();
-            }
-        }}
-        onChange={(e) => {
-            var form = document.forms.namedItem("upload");
-            const files = e.target.files;
-            const formData = new FormData();
-
-            if (files.length>0)
-            {
-                setState("busy");
-
-                formData.append('myFile', files[0]);
-
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                }).then((response) => { return response.json(); })
-                    .then((data) => { 
-                        if (data.success == true) 
-                        {
-                            setState("ok");
-                            props.onFinished(); 
-                        } else {
-                            setState("nok");
-                        }
-                    });
-            }
-        }} />
-        </FileLabel>
-    </form>
-    <Alert active={state == "nok"}
-        confirm={() => setState("")}>
-        The upload has failed. The file could be too large, or it's name too long (>32).</Alert>
-    </>;   
-
-    return render;
 }

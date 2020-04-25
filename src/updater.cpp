@@ -4,6 +4,7 @@
 
 void SPIFFSUpdater::requestStart(String filenameIn) 
 {
+    status = 254;
     filename = filenameIn;
     requestFlag = true;
 }
@@ -17,50 +18,51 @@ void SPIFFSUpdater::loop()
     }
 }
 
-bool SPIFFSUpdater::flash(String filename)
+uint8_t SPIFFSUpdater::getStatus() 
 {
-    bool answer = false;
+    return status;
+}
+
+void SPIFFSUpdater::flash(String filename)
+{    
+    bool answer = 0;
     File file = SPIFFS.open(filename, "r");
 
     if (!file)
     {
         Serial.println(PSTR("Failed to open file for reading"));
-        return false;
+        answer = 0;
     }
-
-    Serial.println(PSTR("Starting update.."));
-
-    size_t fileSize = file.size();
-
-    if (!Update.begin(fileSize))
-    {
-
-        Serial.println(PSTR("Not enough space for update"));
-        }
     else
     {
-        Update.writeStream(file);
+        Serial.println(PSTR("Starting update.."));
 
-        if (Update.end())
+        size_t fileSize = file.size();
+
+        if (!Update.begin(fileSize))
         {
-            Serial.println(PSTR("Successful update"));
-            answer = true;
+            Serial.println(PSTR("Not enough space for update"));
         }
         else
         {
+            Update.writeStream(file);
 
-            Serial.println(PSTR("Error Occurred: ") + String(Update.getError()));
-        }        
-    }
+            if (Update.end())
+            {
+                Serial.println(PSTR("Successful update"));
+                answer = 1;
+            }
+            else
+            {
 
-    file.close();
+                Serial.println(PSTR("Error Occurred: ") + String(Update.getError()));
+            }
+        }
 
-    if (answer==true)
-    {
-        ESP.restart();
+        file.close();
     }
     
-    return answer;
+    status = answer;
 }
 
 SPIFFSUpdater updater;

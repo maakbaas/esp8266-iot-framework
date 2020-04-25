@@ -28,6 +28,12 @@ void webServer::begin()
 
 void webServer::bindAll()
 {
+    //Restart the ESP
+    server.on(PSTR("/api/restart"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, PSTR("text/html"), ""); //respond first because of restart
+        ESP.restart();
+    });
+
     //update WiFi details
     server.on(PSTR("/api/wifi/set"), HTTP_GET, [](AsyncWebServerRequest *request) {
         request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
@@ -81,9 +87,20 @@ void webServer::bindAll()
     });
 
     //update from SPIFFS
-    server.on(PSTR("/api/update"), HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, PSTR("text/html"), "");
+    server.on(PSTR("/api/update"), HTTP_GET, [](AsyncWebServerRequest *request) {        
         updater.requestStart("/" + request->arg("filename"));
+        request->send(200, PSTR("text/html"), "");
+    });
+
+    //update status
+    server.on(PSTR("/api/update-status"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        String JSON;
+        StaticJsonDocument<200> jsonBuffer;
+
+        jsonBuffer["status"] = updater.getStatus();
+        serializeJson(jsonBuffer, JSON);
+
+        request->send(200, PSTR("text/html"), JSON);
     });
 }
 

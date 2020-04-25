@@ -9,11 +9,13 @@ class SPIFFSUpdater
 private:
     String filename;
     bool requestFlag = false;
-    bool flash(String filename);
+    uint8_t status = 255;
+    void flash(String filename);
 
 public:
     void requestStart(String filename);
     void loop();
+    uint8_t getStatus();
 };
 
 extern SPIFFSUpdater updater;
