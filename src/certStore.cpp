@@ -1,5 +1,5 @@
 #include "certStore.h"
-#include "certificates.h"
+#include "generated/certificates.h"
 #include <memory>
 
 namespace BearSSL {

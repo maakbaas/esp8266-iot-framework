@@ -192,7 +192,7 @@ function Upload(props) {
                 The upload has failed. The file could be too large, or it's name too long (>32).</Alert>
             <Alert active={state == "wrongtype"}
                 confirm={() => setState("")}>
-                The selected file is not of the correct type.</Alert>
+                The selected file is not of the correct type (.{props.filter})</Alert>
         </>;
 
     return render;

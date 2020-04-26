@@ -1,0 +1,23 @@
+[
+    {
+        "name": "projectName",
+        "type": "char",
+        "length": 32,
+        "value": "Generic ESP8266 Firmware"
+    },
+    {
+        "name": "dummyInt",
+        "type": "uint16_t",
+        "value": 1000
+    },
+    {
+        "name": "dummyBool",
+        "type": "bool",
+        "value": "true"
+    },    
+    {
+        "name": "dummyFloat",
+        "type": "float",
+        "value": 1.2345
+    }
+]

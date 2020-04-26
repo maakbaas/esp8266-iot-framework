@@ -235,7 +235,15 @@ export const Alert = styled(AlertSrc)`
 export const Form = styled.form` 
     label {
         display: inline-block;
-        min-width: 150px;
+        min-width: 250px;
+        padding-right:1em;
+    }
+
+    input[type=text] {
+        width:450px;
+        max-width:100%;
+        box-sizing: border-box;
+        padding:0.3em;
     }
 `;
 

@@ -39,7 +39,7 @@ void loop()
 
         //do task
         Serial.println(ESP.getFreeHeap());
-        
+                
         // fetch.GET("https://www.google.com");
 
         // while (fetch.busy())

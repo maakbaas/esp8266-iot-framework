@@ -97,7 +97,7 @@ module.exports = (env, argv) => ({
                 if (argv.mode === 'production')
                 {
                     var source = './dist/index.html.gz';
-                    var destination = './src/html.h';
+                    var destination = './src/generated/html.h';
 
                     var wstream = fs.createWriteStream(destination);
                     wstream.on('error', function (err) {

@@ -3,11 +3,11 @@
 #include <FS.h>
 
 // Include the header file we create with webpack
-#include "html.h"
+#include "generated/html.h"
 
 //Access to other classes for GUI functions
 #include "WiFiManager.h"
-
+#include "configManager.h"
 
 void webServer::begin()
 {
@@ -102,6 +102,38 @@ void webServer::bindAll()
 
         request->send(200, PSTR("text/html"), JSON);
     });
+
+    //send binary configuration data
+    server.on(PSTR("/api/config/get"), HTTP_GET, [](AsyncWebServerRequest *request) {
+        AsyncResponseStream *response = request->beginResponseStream(PSTR("application/octet-stream"));
+        response->write(reinterpret_cast<char*>(&configManager.data), sizeof(configManager.data));
+        request->send(response);
+    });
+
+    //receive binary configuration data from body
+    server.on(
+        PSTR("/api/config/set"), HTTP_POST,
+        [this](AsyncWebServerRequest *request) {},
+        [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {},
+        [this](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+            
+            static uint8_t buffer[sizeof(configManager.data)];
+            static uint32_t bufferIndex = 0;
+
+            for (size_t i = 0; i < len; i++)
+            {
+                buffer[bufferIndex] = data[i];
+                bufferIndex++;
+            }
+
+            if (index + len == total)
+            {
+                bufferIndex = 0;
+                configManager.saveRaw(buffer);
+                request->send(200, PSTR("text/html"), "");
+            }
+
+        });
 }
 
 // Callback for the html
