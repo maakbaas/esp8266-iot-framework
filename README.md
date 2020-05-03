@@ -1,4 +1,4 @@
-# ESP8266 Generic Firmware
+# ESP8266 IoT Framework
 Generic Firmware to use as a starting point for different ESP8266 projects
 
 The current initial version of the firmware contains the following functionality:
