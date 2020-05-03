@@ -3,7 +3,7 @@
 The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface and a configuration manager.
 
 1. The framework is built upon the ESP8266 Arduino libraries
-2. The framework will not include any functionality to control external hardware.
+2. The framework does not include any functionality to control external hardware.
 3. The framework is fully self-contained for easy deployment. SPIFFS storage is not needed for the framework.
 4. There is a strict split between the ESP8266 application and the web interface through an API.
 
