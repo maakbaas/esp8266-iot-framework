@@ -28,4 +28,14 @@ Coming soon
 
 ## Editing the web interface
 
-The web interface is contained in the `HTML` folder, and is developed using React and Webpack. To modify the provided interface you need to be familiar with these tools and have **NPM** installed. Of course you can also start your own GUI completely from scratch.
+The web interface is contained in the `HTML` folder, and is developed using React and Webpack. To modify the provided interface you need to be familiar with these tools and have [NPM](https://www.npmjs.com/get-npm) installed. Of course you can also start your own GUI completely from scratch.
+
+To start developing you can run `npm run dev` to start a Webpack Dev Server. The API urls will be adjusted automatically when developing off the device. To get this working you will need to edit the IP address at the top of `html/js/index.js`.
+
+```javascript
+if (process.env.NODE_ENV === 'production')
+    var url = window.location.origin;
+else
+    var url = 'http://192.168.1.54';
+```
+The command `npm run build` will generate a `html.h` file which contains the full bundle as a PROGMEM byte array to be included when building and flashing the framework to the ESP8266.
