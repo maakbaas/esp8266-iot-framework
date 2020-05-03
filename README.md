@@ -10,6 +10,7 @@ The ESP8266 IoT Framework is a set of modules to be used as a starting point in 
 In short, the framework aims to be unobtrusive, easy to deploy, and the web interface should be easy to modify and expand for different projects. The framework consists of five main parts. A web server including the interface it's serving, a WiFi manager, a configuration manager and classes for HTTP requests and OTA updates. The architecture of the framework is shown in the following diagram:
 
 ![Architecture](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/img/framework.png?raw=true)
+*Architecture of the framework shown in blue*
 
 ### Web Server
 The web server is based on ESPAsyncWebServer and presents the web interface which is needed to configure WiFi and other settings from the browser. This web interface is developed in React (currently ~40Kb gzipped), and communicates with the ESP8266 through an API. To be able to get and set information from this API, the web server class will interact with the other framework modules. The GUI content is merged into a single gzipped file, which is then converted into a byte array and stored in the ESP8266 PROGMEM.
