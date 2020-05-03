@@ -26,7 +26,7 @@ This build step generates the `config.c` and `config.h` files for the configurat
 
 This build step generates `certificates.h` containing a full root certificate store to enable arbitrary HTTPS requests with the ESP8266. More info on this process can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md).
 
-For this step OpenSSL is needed. On Linux this is probably availble by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows GIT client. If needed you can edit the path to OpenSSL at the top of the file:
+For this step OpenSSL is needed. On Linux this is probably availble by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL at the top of the file:
 
 ```python
 #path to openssl
