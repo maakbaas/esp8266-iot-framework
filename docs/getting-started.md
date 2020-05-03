@@ -1,4 +1,4 @@
-# Setup
+# Getting Started
 
 This section will describe how to use the framework, and what prerequisites are needed. To get started read below how you should build the framework. When you can build successfully you can simply start adding your own code in `main.c` which contains the familiar `setup()` and `loop()` functions. 
 
@@ -16,15 +16,22 @@ You can choose to comment these scripts, since all default artefacts generated b
 
 ### preBuildHTML.py
 
-Coming soon 
+This pre-build step will re-generate the web interface to `html.h` by simply calling `npm run build`. Read more details [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface).
 
 ### preBuildConfig.py
 
-Coming soon 
+This build step generates the `config.c` and `config.h` files for the configuration manager based on `html/js/configuration.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
 
 ### preBuildCertificates.py
 
-Coming soon 
+This build step generates `certificates.h` containing a full root certificate store to enable arbitrary HTTPS requests with the ESP8266. More info on this process can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md).
+
+For this step OpenSSL is needed. On Linux this is probably availble by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows GIT client. If needed you can edit the path to OpenSSL at the top of the file:
+
+```python
+#path to openssl
+openssl = "C:\\msys32\\usr\\bin\\openssl" 
+```
 
 ## Editing the web interface
 
