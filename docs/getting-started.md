@@ -33,6 +33,43 @@ For this step OpenSSL is needed. On Linux this is probably availble by default, 
 openssl = "C:\\msys32\\usr\\bin\\openssl" 
 ```
 
+## Getting started with main.c
+
+In the minimum example `main.c` file below you can see the mandatory functions to call and files to include for the framework to function. The high level includes include each of the framework classes. In the `setup()` function the `.begin()` functions are called to get everything set up correctly.
+
+In the `loop()` function a call must be made to the WiFi manager and the OTA update class. These are to trigger a call to certain functionality asynchronously.
+
+Of course if you do not want to use certain parts of the framework you can remove these from `main.c`.
+
+```c++
+#include <Arduino.h>
+#include <FS.h>
+
+#include "WiFiManager.h"
+#include "webServer.h"
+#include "updater.h"
+#include "fetch.h"
+#include "configManager.h"
+
+void setup() 
+{
+    Serial.begin(115200);
+
+    SPIFFS.begin();
+    GUI.begin();
+    configManager.begin();
+    WiFiManager.begin(configManager.data.projectName);
+    fetch.begin();
+}
+
+void loop() 
+{
+    //software interrupts
+    WiFiManager.loop();
+    updater.loop();
+}
+```
+
 ## Editing the web interface
 
 The web interface is contained in the `HTML` folder, and is developed using React and Webpack. To modify the provided interface you need to be familiar with these tools and have [NPM](https://www.npmjs.com/get-npm) installed. Of course you can also start your own GUI completely from scratch.
