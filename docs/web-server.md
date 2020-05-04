@@ -12,7 +12,7 @@ void begin();
 
 The web server has only one public method. Call this method in your setup fuction to initialize and start the web server.
 
-## Web server 
+## Web Server 
 
 The basic setup of the webserver is done with three simple rules, which are described below.
 
