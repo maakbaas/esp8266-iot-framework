@@ -10,6 +10,9 @@ public:
     configData data;
     bool begin(int numBytes = 512);
     void saveRaw(uint8_t test[]);
+    void reset();
+
+private:
     void save();
 };
 

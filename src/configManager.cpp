@@ -10,10 +10,8 @@ bool config::begin(int numBytes)
     uint32_t storedVersion;
     EEPROM.get(0, storedVersion);
     if (storedVersion != configVersion)
-    {
-        memcpy_P(&data, &defaults, sizeof(data));
-        save();
-
+    {        
+        reset();
         return false;
     }
     else
@@ -23,6 +21,12 @@ bool config::begin(int numBytes)
         return true;
     }
     
+}
+
+void config::reset()
+{
+    memcpy_P(&data, &defaults, sizeof(data));
+    save();
 }
 
 void config::saveRaw(uint8_t test[])
