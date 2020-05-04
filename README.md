@@ -2,7 +2,7 @@
 
 The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, WiFi manager, configuration manager and OTA updates.
 
-The unique advantage of this framework is that code generation at build time is used to provide different advantages. Code generation is used to dynamically generate a configuration struct, to incorporate the web interface into PROGMEM in the firmware and to bundle a full root certificate store in PROGMEM that allows the ESP8266 to do secure HTTPS requests to arbitrary URLs.
+The unique advantage of this framework is that code generation at build time is used to provide different advantages. Code generation is used to dynamically generate a configuration struct from a JSON file, to incorporate the web interface into PROGMEM in the firmware and to bundle a full root certificate store in PROGMEM that allows the ESP8266 to do secure HTTPS requests to arbitrary URLs.
 
 ## Documentation
 
