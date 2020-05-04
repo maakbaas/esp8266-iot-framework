@@ -27,4 +27,4 @@ The basic principles used in developing this framework are:
 3. The framework is fully self-contained for easy deployment. SPIFFS storage is not needed for the framework.
 4. There is a strict split between the ESP8266 application and the web interface through an API.
 
-In short, the framework aims to be unobtrusive, easy to deploy, and the web interface should be easy to modify and expand for different projects :). 
+In short, the framework aims to be unobtrusive, easy to deploy, with a modern web interface that's easy to modify and expand for different projects :). 
