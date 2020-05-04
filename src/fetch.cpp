@@ -65,6 +65,11 @@ uint8_t HTTPRequest::read()
     return client->read();
 }
 
+String HTTPRequest::readString()
+{
+    return client->readString();
+}
+
 void HTTPRequest::clean()
 {
     delete http;
