@@ -14,6 +14,12 @@ The ESP8266 IoT Framework is a set of modules to be used as a starting point in 
 
 Details beyond the documentation can be found at [maakbaas.com](https://maakbaas.com/esp8266-iot-framework/).
 
+## Screenshots
+
+| ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-wifi.png) | ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-config.png) | 
+|--|--|
+| ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-file.png) | ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-firmware.png) |
+
 ## Introduction
 
 The framework consists of five main parts. A web server including the interface it's serving, a WiFi manager, a configuration manager and classes for HTTP requests and OTA updates. The architecture of the framework is shown in the following diagram:
