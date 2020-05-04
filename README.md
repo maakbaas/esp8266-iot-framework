@@ -35,3 +35,5 @@ The basic principles used in developing this framework are:
 4. There is a strict split between the ESP8266 application and the web interface through an API.
 
 In short, the framework aims to be unobtrusive, easy to deploy, with a modern web interface that's easy to modify and expand for different projects :). 
+
+**Note:** The ESP32 is not supported by this framework right now, due to the reliance on BearSSL. BearSSL is part of the ESP8266 Arduino libraries, but not part of the ESP32 Arduino libraries.
