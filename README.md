@@ -1,6 +1,6 @@
 # ESP8266 IoT Framework
 
-The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface and a configuration manager.
+The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, a WiFi manager, configuration manager and OTA updates.
 
 ## Documentation
 
