@@ -16,9 +16,8 @@ Details beyond the documentation can be found at [maakbaas.com](https://maakbaas
 
 ## Screenshots
 
-| ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-wifi.png) | ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-config.png) | 
-|--|--|
-| ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-file.png) | ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-firmware.png) |
+<p align="center"><img width="49%" src="https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-wifi.png" /> &nbsp;<img width="49%" src="https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-config.png" />&nbsp;</p>
+<p align="center"><img width="49%" src="https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-file.png" /> &nbsp;<img width="49%" src="https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-firmware.png" />&nbsp;</p>
 
 ## Introduction
 
