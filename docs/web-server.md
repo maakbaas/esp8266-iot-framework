@@ -4,7 +4,7 @@ The web server is based on ESPAsyncWebServer and presents the web interface whic
 
 ## Class Methods
 
-#### begin()
+#### begin
 
 ```c++
 void begin();
