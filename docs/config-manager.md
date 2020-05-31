@@ -33,7 +33,21 @@ This method resets the EEPROM contents to the default values.
 ```c++
 configData data;
 ```
-This member is the structure containing the RAM mirror of the configuration data.    
+This member is the structure containing the RAM mirror of the configuration data.   
+
+## Note on partial updates
+
+You might have noticed that the API only gives a function to update the full configuration data, but with a custom page in the web interface you can still update only some variables of the configuration data. In Javascript you then need to:
+
+1. Read the binary data into an object with `bin2obj`
+2. Modify the resulting object
+3. Parse the modified object back to binary data with `obj2bin`.
+
+On the low level then the full block will be rewritten. The reason for this implementation is that typically nothing is gained by writing individual members. The ESP8266 has no real EEPROM. The EEPROM class will rather write the content to a flash block. Since Flash memory can only be erased in blocks you have to wipe the whole lot and rewrite it. To prevent abusing the flash by potentially looping over a save function for individual members, this function is simply not available, enforcing you to only write the entire block at once.
+
+## Updating from the C++ code
+
+Of course you can also update configuration information from your code rather than through the web interface. To do this you need to make a RAM mirror of the `configManager.data` object. After you have modified the content of this object, you can simply give a pointer to its contents as an argument to the `configManager.saveRaw` function to store the result in EEPROM. 
 
 ## Code Generation
 
