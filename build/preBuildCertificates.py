@@ -49,6 +49,7 @@ del pems[0] # Remove headers
 del dates[0] # Remove headers
 
 derFiles = []
+totalbytes = 0
 idx = 0
 # Process the text PEM using openssl into DER files
 sizes=[]
@@ -75,13 +76,15 @@ for i in range(0, len(pems)):
 
         f.write("const uint8_t cert_" + str(idx) + "[] PROGMEM = {")
         for j in range(0, len(bytestr)):
+            totalbytes+=1
             f.write(hex(bytestr[j]))
             if j<len(bytestr)-1:
                 f.write(", ")
-        f.write("};\n\n")
+        f.write("};\n")
 
         f.write("const uint8_t idx_" + str(idx) + "[] PROGMEM = {")
         for j in range(0, len(idxHash)):
+            totalbytes+=1
             f.write(hex(idxHash[j]))
             if j<len(idxHash)-1:
                 f.write(", ")
@@ -90,7 +93,7 @@ for i in range(0, len(pems)):
         der.close()
         idx = idx + 1
 
-f.write("//global variables for certificates\n")
+f.write("//global variables for certificates using " + str(totalbytes) + " bytes\n")
 f.write("const uint16_t numberOfCertificates PROGMEM = " + str(idx) + ";\n\n")
 
 f.write("const uint16_t certSizes[] PROGMEM = {")
