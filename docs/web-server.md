@@ -10,9 +10,9 @@ The web server is based on ESPAsyncWebServer and presents the web interface whic
 void begin();
 ```
 
-The web server has only one public method. Call this method in your setup fuction to initialize and start the web server.
+The web server has only one public method. Call this method in your setup function to initialize and start the web server.
 
-## Web Server 
+## Web Server
 
 The basic setup of the webserver is done with three simple rules, which are described below.
 
@@ -32,7 +32,7 @@ With a POST request to this URL you can upload a file to the SPIFFS filesystem
 
 #### onNotFound
 
-For all requested URL's that do not exist (this includes the root URL), the web interface will be loaded and served to the user. This web interface is served from a PROGMEM byte array which is generated with Webpack during the NPM build process. 
+For all requested URL's that do not exist (this includes the root URL), the web interface will be loaded and served to the user. This web interface is served from a PROGMEM byte array which is generated with Webpack during the NPM build process.
 
 ## API Implementation
 
