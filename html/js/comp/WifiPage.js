@@ -27,10 +27,10 @@ export function WifiPage(props) {
 
     var form = <><Form>
         <p><label for="ssid"><Wifi /> SSID:</label>
-            <input type="text" id="ssid" name="ssid" />
+            <input type="text" id="ssid" name="ssid" autocapitalize="none" />
         </p>
         <p><label for="pass"><Lock /> Password:</label>
-            <input type="text" id="pass" name="pass" />
+            <input type="text" id="pass" name="pass" autocapitalize="none" />
         </p>        
     </Form>
     <Button onClick={(e) => setSaveModal(true)}>Save</Button>
