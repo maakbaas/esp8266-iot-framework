@@ -20,7 +20,7 @@ export function WifiPage(props) {
     }, []);
 
     function changeWifi() {
-        fetch(props.API + '/api/wifi/set?ssid=' + document.getElementById("ssid").value + '&pass=' + document.getElementById("pass").value);
+        fetch(props.API + '/api/wifi/set?ssid=' + document.getElementById("ssid").value.trim() + '&pass=' + document.getElementById("pass").value.trim())
         document.getElementById("ssid").value = '';
         document.getElementById("pass").value = '';
     }
