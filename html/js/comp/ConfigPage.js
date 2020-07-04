@@ -87,6 +87,10 @@ export function ConfigPage(props) {
     else
     {
         for (var i = 0; i < Config.length; i++) {
+            if (Config[i].hidden) {
+                continue;
+            }
+
             var value; 
             if (typeof state[Config[i].name] !== 'undefined')
                 value = state[Config[i].name];
@@ -160,6 +164,10 @@ export function ConfigPage(props) {
         var newData = {};
 
         for (var i = 0; i < Config.length; i++) {
+            if (Config[i].hidden) {
+                newData[Config[i].name] = state[Config[i].name];
+                continue;
+            }
 
             switch (Config[i].type) {
                 case "bool":
