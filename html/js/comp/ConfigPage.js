@@ -64,10 +64,18 @@ export function ConfigPage(props) {
 
             const inputType = InputTypes[Config[i].type] || "text";
 
+            let conditionalAttributes = {};
+
+            switch (inputType) {
+                case "text":
+                    conditionalAttributes.maxlength = Config[i].length;
+                    break;
+            }
+
             confItems = <>{confItems}
                 <p>
                     <label for={Config[i].name}><b>{Config[i].name}</b>:</label>
-                    <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} />
+                    <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} />
                 </p>
             </>
         }
