@@ -58,6 +58,7 @@ As mentioned earlier, the configuration data is defined in the JSON file `html/j
 [
     {
         "name": "projectName",
+        "label": "Project Name",
         "type": "char",
         "length": 32,
         "value": "Generic ESP8266 Firmware"
@@ -71,11 +72,20 @@ As mentioned earlier, the configuration data is defined in the JSON file `html/j
         "name": "dummyBool",
         "type": "bool",
         "value": true
-    },
+    },    
     {
         "name": "dummyFloat",
         "type": "float",
+        "min": 1,
+        "max": 10,
         "value": 1.2345
+    },
+    {
+        "name": "dummyString",
+        "type": "char",
+        "hidden": true,
+        "length": 11,
+        "value": "invisible!"
     }
 ]
 ```
@@ -95,6 +105,7 @@ struct configData
 	uint16_t dummyInt;
 	bool dummyBool;
 	float dummyFloat;
+	char dummyString[11];
 };
 
 extern uint32_t configVersion;
@@ -108,14 +119,15 @@ extern const configData defaults;
 #include <Arduino.h>
 #include "config.h"
 
-uint32_t configVersion = 340847549; //generated identifier to compare config with EEPROM
+uint32_t configVersion = 2773241707; //generated identifier to compare config with EEPROM
 
 const configData defaults PROGMEM =
 {
 	"Generic ESP8266 Firmware",
 	1000,
 	true,
-	1.2345
+	1.2345,
+	"invisible!"
 };
 ```
 
