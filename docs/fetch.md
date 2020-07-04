@@ -3,6 +3,13 @@ Fetching or posting data to the internet is one of the core tasks of an IoT devi
 
 ## Class Methods
 
+#### begin
+
+```c++
+void begin();
+```
+This method must be called from the setup of the application and will setup the server time needed for SSL connections and potentially useful for other parts of the application.
+
 #### GET
 
 ```c++

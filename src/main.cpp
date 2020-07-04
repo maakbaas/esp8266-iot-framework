@@ -23,6 +23,7 @@ void setup()
     GUI.begin();
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
+    fetch.begin();
 }
 
 void loop() 

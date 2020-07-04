@@ -17,6 +17,7 @@ public:
     bool available();
     uint8_t read();
     String readString();
+    void begin();
 
 private : 
     BearSSL::CertStore certStore;
