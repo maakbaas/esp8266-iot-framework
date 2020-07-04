@@ -2,7 +2,7 @@
 Fetching or posting data to the internet is one of the core tasks of an IoT device. Doing so over HTTP is implemented quite well in the default ESP8266 Arduino libraries, but for HTTPS requests things are less straightforward. This class implements arbitrary HTTPS requests in a secure way, without requiring any specific certificates or fingerprints to be hard coded in the application. A full certificate store is automatically downloaded on build, and stored in PROGMEM.
 
 ## Class Methods
-    
+
 #### begin
 
 ```c++
@@ -70,7 +70,7 @@ while (fetch.busy())
 {
     if (fetch.available())
     {
-        Serial.write(fetch.read());           
+        Serial.write(fetch.read());
     }
 }
 
@@ -82,20 +82,20 @@ For reading in a shorter response you can simply use `readString()` instead:
 ```c++
 fetch.GET("https://www.google.com");
 
-Serial.write(fetch.readString());   
+Serial.write(fetch.readString());
 
 fetch.clean();
 ```
 
 ## Code Generation
 
-As mentioned earlier a full certificate store is saved in PROGMEM as part of the application. By default this store is located in `certificates.h`, and will be included in the build. These certificates will be used by the ESP8266 Arduino BearSSL class to establish a secure connection. 
+As mentioned earlier a full certificate store is saved in PROGMEM as part of the application. By default this store is located in `certificates.h`, and will be included in the build. These certificates will be used by the ESP8266 Arduino BearSSL class to establish a secure connection.
 
 If you ever want to update or rebuild the certificate store, you can do this by enabling or running the pre-build script `preBuildCertificates.py`. This script will read in all root certificates from the Mozilla certificate store and process these into a format that is compatible with the ESP8266 Arduino layer.
 
-For this step OpenSSL is needed. On Linux this is probably availble by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL at the top of the `preBuildCertificates.py` file:
+For this step OpenSSL is needed. On Linux this is probably available by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL at the top of the `preBuildCertificates.py` file:
 
 ```c++
 #path to openssl
-openssl = "C:\\msys32\\usr\\bin\\openssl" 
+openssl = "C:\\msys32\\usr\\bin\\openssl"
 ```

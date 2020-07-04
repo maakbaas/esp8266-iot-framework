@@ -1,5 +1,6 @@
 # Configuration Manager
-For whatever function a device with an ESP8266 might have, it could be that you want the user to change some settings or parameters, such as the speed of a motor, or the color of a LED. The configuration manager provides a method to modify parameters from the broswer which will be accessible from the software application. The parameters are generated from a JSON file. The configuration manager stores a struct with configuration data in the EEPROM. Structure can be changed at build time, data can be changed at runtime through the GUI which is also auto generated from the JSON.
+
+For whatever function a device with an ESP8266 might have, it could be that you want the user to change some settings or parameters, such as the speed of a motor, or the color of a LED. The configuration manager provides a method to modify parameters from the browser which will be accessible from the software application. The parameters are generated from a JSON file. The configuration manager stores a struct with configuration data in the EEPROM. Structure can be changed at build time, data can be changed at runtime through the GUI which is also auto generated from the JSON.
 
 Usage of this class is easy. See below how to define your configuration parameters. Once you have done this, these can be changed from the browser, and simply be called in the rest of your application as `configManager.data.parameterName`.
 
@@ -33,7 +34,7 @@ This method resets the EEPROM contents to the default values.
 ```c++
 configData data;
 ```
-This member is the structure containing the RAM mirror of the configuration data.   
+This member is the structure containing the RAM mirror of the configuration data.
 
 ## Note on partial updates
 
@@ -47,7 +48,7 @@ On the low level then the full block will be rewritten. The reason for this impl
 
 ## Updating from the C++ code
 
-Of course you can also update configuration information from your code rather than through the web interface. To do this you need to make a RAM mirror of the `configManager.data` object. After you have modified the content of this object, you can simply give a pointer to its contents as an argument to the `configManager.saveRaw` function to store the result in EEPROM. 
+Of course you can also update configuration information from your code rather than through the web interface. To do this you need to make a RAM mirror of the `configManager.data` object. After you have modified the content of this object, you can simply give a pointer to its contents as an argument to the `configManager.saveRaw` function to store the result in EEPROM.
 
 ## Code Generation
 
@@ -70,7 +71,7 @@ As mentioned earlier, the configuration data is defined in the JSON file `html/j
         "name": "dummyBool",
         "type": "bool",
         "value": "true"
-    },    
+    },
     {
         "name": "dummyFloat",
         "type": "float",
@@ -79,7 +80,7 @@ As mentioned earlier, the configuration data is defined in the JSON file `html/j
 ]
 ```
 
-Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct. 
+Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct.
 
 The `configVersion` is the CRC32 hash of the JSON file. This is added to the C code in order to detect if the JSON has changed compared to the content of the EEPROM, since the `configVersion` will also be stored in the EEPROM. This means that if a field is changed in the JSON, the application will know to reject the current content of the EEPROM since it might not be in accordance to the struct definitions it knows.
 
