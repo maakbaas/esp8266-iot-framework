@@ -10,7 +10,6 @@ class HTTPRequest
 {
 
 public:
-    void begin();
     void clean();
     int GET(String url);
     int POST(String url, String body);
