@@ -43,7 +43,12 @@ export const GlobalStyle = createGlobalStyle`
         height:0.9em;
         vertical-align: -0.05em;
     }
-  
+
+    label {
+        @media (max-width: 760px) {
+            display: block !important;
+        }
+    }
 `
 
 const HeaderSrc = ({ className, children }) => (
@@ -239,6 +244,7 @@ export const Form = styled.form`
         padding-right:1em;
     }
 
+    input[type=number],
     input[type=text] {
         width:450px;
         max-width:100%;

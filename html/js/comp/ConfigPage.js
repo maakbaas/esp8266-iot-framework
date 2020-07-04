@@ -11,6 +11,17 @@ const Grey = styled.span`
     color:#666;
 `;
 
+const InputTypes = {
+    char: "text",
+    uint8_t: "number",
+    int8_t: "number",
+    uint16_t: "number",
+    int16_t: "number",
+    uint32_t: "number",
+    int32_t: "number",
+    float: "text",
+};
+
 export function ConfigPage(props) {
     const [state, setState] = useState([]);
     const [binSize, setBinSize] = useState(0);
@@ -51,9 +62,12 @@ export function ConfigPage(props) {
             else 
                 size = '';
 
+            const inputType = InputTypes[Config[i].type] || "text";
+
             confItems = <>{confItems}
-                <p><label for={Config[i].name}><Grey>{Config[i].type}{size}</Grey>{" "}<b>{Config[i].name}</b>:</label>
-                    <input type="text" id={Config[i].name} name={Config[i].name} value={value} />
+                <p>
+                    <label for={Config[i].name}><b>{Config[i].name}</b>:</label>
+                    <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} />
                 </p>
             </>
         }
