@@ -16,7 +16,7 @@ export function obj2bin(obj, binSize) {
                 n += Config[i].length - obj[Config[i].name].length;
                 break;
             case "bool":
-                if (obj[Config[i].name] == 'true')
+                if (obj[Config[i].name] === true)
                     binDataView.setUint8(n, 1);
                 else
                     binDataView.setUint8(n, 0);
@@ -77,7 +77,7 @@ export function bin2obj(rawData) {
                 n = n + Config[i].length;
                 break;
             case "bool":
-                parsedData[Config[i].name] = Boolean(rawDataView.getUint8(n)).toString();
+                parsedData[Config[i].name] = !!rawDataView.getUint8(n);
                 n++;
                 break;
             case "uint8_t":

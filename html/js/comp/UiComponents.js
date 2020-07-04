@@ -43,7 +43,13 @@ export const GlobalStyle = createGlobalStyle`
         height:0.9em;
         vertical-align: -0.05em;
     }
-  
+
+    label {
+        @media (max-width: 760px) {
+            display: block !important;
+            max-width: initial !important;
+        }
+    }
 `
 
 const HeaderSrc = ({ className, children }) => (
@@ -236,14 +242,21 @@ export const Form = styled.form`
     label {
         display: inline-block;
         min-width: 250px;
+        max-width: 250px;
         padding-right:1em;
     }
 
+    input[type=number],
+    input[type=checkbox],
     input[type=text] {
         width:450px;
         max-width:100%;
         box-sizing: border-box;
         padding:0.3em;
+    }
+
+    input[type=checkbox] {
+        width: auto;
     }
 `;
 

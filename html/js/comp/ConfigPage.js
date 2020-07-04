@@ -9,7 +9,55 @@ import { obj2bin, bin2obj } from '../functions/configHelpers'
 
 const Grey = styled.span`
     color:#666;
+    font-size: 0.8em;
+    white-space: nowrap;
 `;
+
+const DefaultTypeAttributes = {
+    char: {
+        type: "text",
+    },
+    bool: {
+        type: "checkbox",
+    },
+    uint8_t: {
+        type: "number",
+        min: 0,
+        max: 255,
+        step: 1,
+    },
+    int8_t: {
+        type: "number",
+        min: -128,
+        max: 127,
+        step: 1,
+    },
+    uint16_t: {
+        type: "number",
+        min: 0,
+        max: 65535,
+        step: 1,
+    },
+    int16_t: {
+        type: "number",
+        min: -32768,
+        max: 32767,
+        step: 1,
+    },
+    uint32_t: "number",
+    int32_t: {
+        type: "number",
+        min: -2147483648,
+        max: 2147483647,
+        step: 1,
+    },
+    float: {
+        type: "number",
+        min: -3.4028235E+38,
+        max: 3.4028235E+38,
+        step: "any",
+    },
+};
 
 export function ConfigPage(props) {
     const [state, setState] = useState([]);
@@ -39,6 +87,10 @@ export function ConfigPage(props) {
     else
     {
         for (var i = 0; i < Config.length; i++) {
+            if (Config[i].hidden) {
+                continue;
+            }
+
             var value; 
             if (typeof state[Config[i].name] !== 'undefined')
                 value = state[Config[i].name];
@@ -51,9 +103,36 @@ export function ConfigPage(props) {
             else 
                 size = '';
 
+            const configInputAttributes = DefaultTypeAttributes[Config[i].type] || {};
+            const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
+
+            let conditionalAttributes = {};
+            let rangeInfo;
+
+            switch (inputType) {
+                case "text":
+                    conditionalAttributes.maxlength = Config[i].length;
+                    break;
+
+                case "checkbox":
+                    conditionalAttributes.checked = value;
+                    break;
+
+                case "number":
+                    conditionalAttributes.min = Config[i].min || configInputAttributes.min;
+                    conditionalAttributes.max = Config[i].max || configInputAttributes.max;
+                    conditionalAttributes.step = Config[i].step || configInputAttributes.step;
+
+                    rangeInfo = <>
+                        <Grey>({conditionalAttributes.min} &ndash; {conditionalAttributes.max})</Grey>
+                    </>
+                    break;
+            }
+
             confItems = <>{confItems}
-                <p><label for={Config[i].name}><Grey>{Config[i].type}{size}</Grey>{" "}<b>{Config[i].name}</b>:</label>
-                    <input type="text" id={Config[i].name} name={Config[i].name} value={value} />
+                <p>
+                    <label for={Config[i].name}><b>{Config[i].label || Config[i].name}</b>: {rangeInfo}</label>
+                    <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} />
                 </p>
             </>
         }
@@ -85,9 +164,19 @@ export function ConfigPage(props) {
         var newData = {};
 
         for (var i = 0; i < Config.length; i++) {
+            if (Config[i].hidden) {
+                newData[Config[i].name] = state[Config[i].name];
+                continue;
+            }
 
-            newData[Config[i].name] = document.getElementById(Config[i].name).value;
+            switch (Config[i].type) {
+                case "bool":
+                    newData[Config[i].name] = document.getElementById(Config[i].name).checked;
+                    break;
 
+                default:
+                    newData[Config[i].name] = document.getElementById(Config[i].name).value;
+            }
         }
         
         return obj2bin(newData, binSize);
