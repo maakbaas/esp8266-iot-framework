@@ -11,16 +11,50 @@ const Grey = styled.span`
     color:#666;
 `;
 
-const InputTypes = {
-    char: "text",
-    bool: "checkbox",
-    uint8_t: "number",
-    int8_t: "number",
-    uint16_t: "number",
-    int16_t: "number",
+const DefaultTypeAttributes = {
+    char: {
+        type: "text",
+    },
+    bool: {
+        type: "checkbox",
+    },
+    uint8_t: {
+        type: "number",
+        min: 0,
+        max: 255,
+        step: 1,
+    },
+    int8_t: {
+        type: "number",
+        min: -128,
+        max: 127,
+        step: 1,
+    },
+    uint16_t: {
+        type: "number",
+        min: 0,
+        max: 65535,
+        step: 1,
+    },
+    int16_t: {
+        type: "number",
+        min: -32768,
+        max: 32767,
+        step: 1,
+    },
     uint32_t: "number",
-    int32_t: "number",
-    float: "text",
+    int32_t: {
+        type: "number",
+        min: -2147483648,
+        max: 2147483647,
+        step: 1,
+    },
+    float: {
+        type: "number",
+        min: -3.4028235E+38,
+        max: 3.4028235E+38,
+        step: "any",
+    },
 };
 
 export function ConfigPage(props) {
@@ -63,7 +97,8 @@ export function ConfigPage(props) {
             else 
                 size = '';
 
-            const inputType = InputTypes[Config[i].type] || "text";
+            const configInputAttributes = DefaultTypeAttributes[Config[i].type] || {};
+            const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
 
             let conditionalAttributes = {};
 
@@ -77,9 +112,9 @@ export function ConfigPage(props) {
                     break;
 
                 case "number":
-                    conditionalAttributes.min = Config[i].min;
-                    conditionalAttributes.max = Config[i].max;
-                    conditionalAttributes.step = Config[i].step;
+                    conditionalAttributes.min = Config[i].min || configInputAttributes.min;
+                    conditionalAttributes.max = Config[i].max || configInputAttributes.max;
+                    conditionalAttributes.step = Config[i].step || configInputAttributes.step;
                     break;
             }
 
