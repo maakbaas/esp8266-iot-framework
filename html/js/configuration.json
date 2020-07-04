@@ -8,6 +8,9 @@
     {
         "name": "dummyInt",
         "type": "uint16_t",
+        "min": 500,
+        "max": 1500,
+        "step": 100,
         "value": 1000
     },
     {

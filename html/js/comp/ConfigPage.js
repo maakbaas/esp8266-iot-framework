@@ -70,6 +70,12 @@ export function ConfigPage(props) {
                 case "text":
                     conditionalAttributes.maxlength = Config[i].length;
                     break;
+
+                case "number":
+                    conditionalAttributes.min = Config[i].min;
+                    conditionalAttributes.max = Config[i].max;
+                    conditionalAttributes.step = Config[i].step;
+                    break;
             }
 
             confItems = <>{confItems}
