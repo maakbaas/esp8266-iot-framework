@@ -124,3 +124,10 @@ const configData defaults PROGMEM =
 The page in the web interface that is connected to the Configuration manager is shown below. The javascript generating that page will read directly from the JSON and interact with the web server API to get the currently stored values and to request to store new values.
 
 ![](https://raw.githubusercontent.com/maakbaas/esp8266-iot-framework/master/docs/img/screenshot-config.png)
+
+There are several configuration properties which will affect the UI of this page. None of these properties are validated server-side, they're only to adjust the web UI.
+
+- `disabled`: will disable the control
+- `hidden`: won't show an input control
+- `length`: sets the input `maxlength` attribute (strings only)
+- `min`/`max`/`step`: sets the corresponding input attributes (numbers only)
