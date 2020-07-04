@@ -111,7 +111,7 @@ export function ConfigPage(props) {
 
             switch (inputType) {
                 case "text":
-                    conditionalAttributes.maxlength = Config[i].length;
+                    conditionalAttributes.maxlength = Config[i].length-1;
                     break;
 
                 case "checkbox":
