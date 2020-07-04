@@ -13,6 +13,7 @@ const Grey = styled.span`
 
 const InputTypes = {
     char: "text",
+    bool: "checkbox",
     uint8_t: "number",
     int8_t: "number",
     uint16_t: "number",
@@ -71,6 +72,10 @@ export function ConfigPage(props) {
                     conditionalAttributes.maxlength = Config[i].length;
                     break;
 
+                case "checkbox":
+                    conditionalAttributes.checked = value;
+                    break;
+
                 case "number":
                     conditionalAttributes.min = Config[i].min;
                     conditionalAttributes.max = Config[i].max;
@@ -114,8 +119,14 @@ export function ConfigPage(props) {
 
         for (var i = 0; i < Config.length; i++) {
 
-            newData[Config[i].name] = document.getElementById(Config[i].name).value;
+            switch (Config[i].type) {
+                case "bool":
+                    newData[Config[i].name] = document.getElementById(Config[i].name).checked;
+                    break;
 
+                default:
+                    newData[Config[i].name] = document.getElementById(Config[i].name).value;
+            }
         }
         
         return obj2bin(newData, binSize);

@@ -245,11 +245,16 @@ export const Form = styled.form`
     }
 
     input[type=number],
+    input[type=checkbox],
     input[type=text] {
         width:450px;
         max-width:100%;
         box-sizing: border-box;
         padding:0.3em;
+    }
+
+    input[type=checkbox] {
+        width: auto;
     }
 `;
 

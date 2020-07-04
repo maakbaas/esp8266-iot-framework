@@ -70,7 +70,7 @@ As mentioned earlier, the configuration data is defined in the JSON file `html/j
     {
         "name": "dummyBool",
         "type": "bool",
-        "value": "true"
+        "value": true
     },
     {
         "name": "dummyFloat",

@@ -17,7 +17,7 @@
     {
         "name": "dummyBool",
         "type": "bool",
-        "value": "true"
+        "value": true
     },    
     {
         "name": "dummyFloat",

@@ -33,6 +33,9 @@ for item in data:
     if item['type'] == 'char':
         cpp.write("\t\"" + item['value'] + "\"")
         h.write("\tchar " + item['name'] + "[" + str(item['length']) + "];\n")
+    elif item['type'] == 'bool':
+        cpp.write("\t" + str(item['value']).lower())
+        h.write("\t" + item['type'] + " " + item['name'] +";\n")
     else:
         cpp.write("\t" + str(item['value']))
         h.write("\t" + item['type'] + " " + item['name'] +";\n")
