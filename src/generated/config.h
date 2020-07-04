@@ -7,6 +7,7 @@ struct configData
 	uint16_t dummyInt;
 	bool dummyBool;
 	float dummyFloat;
+	char dummyString[11];
 };
 
 extern uint32_t configVersion;
