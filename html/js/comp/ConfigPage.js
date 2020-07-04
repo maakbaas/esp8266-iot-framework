@@ -9,6 +9,8 @@ import { obj2bin, bin2obj } from '../functions/configHelpers'
 
 const Grey = styled.span`
     color:#666;
+    font-size: 0.8em;
+    white-space: nowrap;
 `;
 
 const DefaultTypeAttributes = {
@@ -101,6 +103,7 @@ export function ConfigPage(props) {
             const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
 
             let conditionalAttributes = {};
+            let rangeInfo;
 
             switch (inputType) {
                 case "text":
@@ -115,12 +118,16 @@ export function ConfigPage(props) {
                     conditionalAttributes.min = Config[i].min || configInputAttributes.min;
                     conditionalAttributes.max = Config[i].max || configInputAttributes.max;
                     conditionalAttributes.step = Config[i].step || configInputAttributes.step;
+
+                    rangeInfo = <>
+                        <Grey>({conditionalAttributes.min} &ndash; {conditionalAttributes.max})</Grey>
+                    </>
                     break;
             }
 
             confItems = <>{confItems}
                 <p>
-                    <label for={Config[i].name}><b>{Config[i].label || Config[i].name}</b>:</label>
+                    <label for={Config[i].name}><b>{Config[i].label || Config[i].name}</b>: {rangeInfo}</label>
                     <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} />
                 </p>
             </>
