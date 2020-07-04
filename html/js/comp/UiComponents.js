@@ -47,6 +47,7 @@ export const GlobalStyle = createGlobalStyle`
     label {
         @media (max-width: 760px) {
             display: block !important;
+            max-width: initial !important;
         }
     }
 `
@@ -241,6 +242,7 @@ export const Form = styled.form`
     label {
         display: inline-block;
         min-width: 250px;
+        max-width: 250px;
         padding-right:1em;
     }
 
