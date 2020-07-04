@@ -80,7 +80,7 @@ export function ConfigPage(props) {
 
             confItems = <>{confItems}
                 <p>
-                    <label for={Config[i].name}><b>{Config[i].name}</b>:</label>
+                    <label for={Config[i].name}><b>{Config[i].label || Config[i].name}</b>:</label>
                     <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} />
                 </p>
             </>
