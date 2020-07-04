@@ -1,4 +1,4 @@
-# Set Up (Walkthrough)
+# Installation Guide
 
 1. Install [PlatformIO](https://platformio.org/) or use their [VS Code extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide)
     - The extension will automatically install various dependencies (such as the necessary compilers). Be sure to reload the VS Code window according to the prompts.

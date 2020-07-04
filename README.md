@@ -7,6 +7,7 @@ The unique advantage of this framework is that code generation at build time is 
 ## Documentation
 
 * [Introduction](https://github.com/maakbaas/esp8266-iot-framework#introduction)
+* [Installation Guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md)
 * [Getting Started](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md)
 * [Web Server](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/web-server.md)
 * [WiFi Manager](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/wifi-manager.md)
