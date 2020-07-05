@@ -67,7 +67,7 @@ void webServer::bindAll()
         //get file listing
         Dir dir = LittleFS.openDir("");
         while (dir.next())
-            files.add(dir.fileName().substring(1));
+            files.add(dir.fileName());
 
         //get used and total data
         FSInfo fs_info;
