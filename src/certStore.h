@@ -8,7 +8,6 @@
 #include <Arduino.h>
 #include <BearSSLHelpers.h>
 #include <bearssl/bearssl.h>
-#include <FS.h>
 
 namespace BearSSL {
 

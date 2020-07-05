@@ -1,15 +1,15 @@
 #include "updater.h"
 
-#include <FS.h>
+#include "LittleFS.h"
 
-void SPIFFSUpdater::requestStart(String filenameIn) 
+void LittleFSUpdater::requestStart(String filenameIn)
 {
     status = 254;
     filename = filenameIn;
     requestFlag = true;
 }
 
-void SPIFFSUpdater::loop()
+void LittleFSUpdater::loop()
 {
     if (requestFlag==true)
     {
@@ -18,15 +18,15 @@ void SPIFFSUpdater::loop()
     }
 }
 
-uint8_t SPIFFSUpdater::getStatus() 
+uint8_t LittleFSUpdater::getStatus()
 {
     return status;
 }
 
-void SPIFFSUpdater::flash(String filename)
+void LittleFSUpdater::flash(String filename)
 {    
     bool answer = 0;
-    File file = SPIFFS.open(filename, "r");
+    File file = LittleFS.open(filename, "r");
 
     if (!file)
     {
@@ -65,5 +65,4 @@ void SPIFFSUpdater::flash(String filename)
     status = answer;
 }
 
-SPIFFSUpdater updater;
-
+LittleFSUpdater updater;

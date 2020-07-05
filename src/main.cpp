@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <FS.h>
+#include "LittleFS.h"
 
 #include "WiFiManager.h"
 #include "webServer.h"
@@ -19,7 +19,7 @@ void setup()
 {
     Serial.begin(115200);
 
-    SPIFFS.begin();
+    LittleFS.begin();
     GUI.begin();
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);

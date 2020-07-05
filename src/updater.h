@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-class SPIFFSUpdater
+class LittleFSUpdater
 {
 
 private:
@@ -18,6 +18,6 @@ public:
     uint8_t getStatus();
 };
 
-extern SPIFFSUpdater updater;
+extern LittleFSUpdater updater;
 
 #endif
