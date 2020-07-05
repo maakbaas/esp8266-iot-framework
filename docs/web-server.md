@@ -17,18 +17,18 @@ The web server has only one public method. Call this method in your setup functi
 The basic setup of the webserver is done with three simple rules, which are described below.
 
 ```c++
-server.serveStatic("/download", SPIFFS, "/");
+server.serveStatic("/download", LittleFS, "/");
 server.onNotFound(serveProgmem);
 server.on(PSTR("/upload"), HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload)
 ```
 
 #### /download/\*.\*
 
-Requests to URL's containing the download folder will attempt to load the filename `*.*` from the SPIFFS memory and serve it to the browser
+Requests to URL's containing the download folder will attempt to load the filename `*.*` from the LittleFS memory and serve it to the browser
 
 #### /upload
 
-With a POST request to this URL you can upload a file to the SPIFFS filesystem
+With a POST request to this URL you can upload a file to the LittleFS filesystem
 
 #### onNotFound
 
@@ -56,7 +56,7 @@ A request to this URL will return a JSON object containing a flag if the ESP8266
 
 #### /api/files/get
 
-A request to this URL will return an object containing all the filenames currently stored in the SPIFFS as well as the maximum and currently used memory in bytes.
+A request to this URL will return an object containing all the filenames currently stored in the LittleFS as well as the maximum and currently used memory in bytes.
 
 #### /api/files/remove
 

@@ -1,6 +1,6 @@
 #include "webServer.h"
 #include "ArduinoJson.h"
-#include <FS.h>
+#include "LittleFS.h"
 
 // Include the header file we create with webpack
 #include "generated/html.h"
@@ -16,7 +16,7 @@ void webServer::begin()
 
     server.begin();
 
-    server.serveStatic("/download", SPIFFS, "/");
+    server.serveStatic("/download", LittleFS, "/");
 
     server.onNotFound(serveProgmem);
 
@@ -65,13 +65,13 @@ void webServer::bindAll()
         JsonArray files = jsonBuffer.createNestedArray("files");
 
         //get file listing
-        Dir dir = SPIFFS.openDir("");
+        Dir dir = LittleFS.openDir("");
         while (dir.next())
-            files.add(dir.fileName().substring(1));
+            files.add(dir.fileName());
 
         //get used and total data
         FSInfo fs_info;
-        SPIFFS.info(fs_info);
+        LittleFS.info(fs_info);
         jsonBuffer["used"] = String(fs_info.usedBytes);
         jsonBuffer["max"] = String(fs_info.totalBytes);
 
@@ -82,11 +82,11 @@ void webServer::bindAll()
 
     //remove file
     server.on(PSTR("/api/files/remove"), HTTP_GET, [](AsyncWebServerRequest *request) {
-        SPIFFS.remove("/" + request->arg("filename"));
+        LittleFS.remove("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
     });
 
-    //update from SPIFFS
+    //update from LittleFS
     server.on(PSTR("/api/update"), HTTP_GET, [](AsyncWebServerRequest *request) {        
         updater.requestStart("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
@@ -160,7 +160,7 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
         if (!filename.startsWith("/"))
             filename = "/" + filename;
 
-        fsUploadFile = SPIFFS.open(filename, "w");
+        fsUploadFile = LittleFS.open(filename, "w");
     }
 
     for (size_t i = 0; i < len; i++)

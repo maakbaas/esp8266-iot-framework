@@ -1,5 +1,5 @@
 # OTA Updates
-Finally the framework provides a function to update the firmware on the ESP8266 from the browser. The firmware can be uploaded through the Browser to SPIFFS and then flashed to the device.
+Finally the framework provides a function to update the firmware on the ESP8266 from the browser. The firmware can be uploaded through the Browser to LittleFS and then flashed to the device.
 
 ## Class Methods
 
@@ -15,7 +15,7 @@ This method must be called from the main loop of the application and allows to u
 ```c++
 void requestStart(String filename);
 ```
-A call to this function will attempt to start the firmware update process to the SPIFFS file `filename`. 
+A call to this function will attempt to start the firmware update process to the LittleFS file `filename`. 
 
 #### getStatus 
 
