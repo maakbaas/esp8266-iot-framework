@@ -1,10 +1,43 @@
 #include "fetch.h"
 
+#include <TZ.h>
 #include <WiFiClientSecureBearSSL.h>
+#include <coredecls.h> // settimeofday_cb defined
+#include <PolledTimeout.h>
 
-void HTTPRequest::begin()
+int HTTPRequest::setTime(const char* tz, const char* server1, const char* server2, const char* server3)
 {
-    configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+    bool time_set = false;
+
+    settimeofday_cb([&time_set](){ time_set = true; }); // Set setimeofday() callback function
+    configTime(tz, server1, server2, server3);
+
+    using esp8266::polledTimeout::oneShotMs;
+    oneShotMs timeout(10000); // Timeout in 10s
+    while(!timeout)
+    {
+        if(time_set)
+       	{
+            return 0;
+        }
+	yield();
+    }
+    return -1;
+}
+
+int HTTPRequest::begin()
+{
+    return setTime(TZ_Etc_UTC, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
+}
+
+int HTTPRequest::begin(const char* tz)
+{
+    return setTime(tz, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
+}
+
+int HTTPRequest::begin(const char* tz, const char* server1, const char* server2, const char* server3)
+{
+    return setTime(tz, server1, server2, server3);
 }
 
 void HTTPRequest::beginRequest(String &url) 

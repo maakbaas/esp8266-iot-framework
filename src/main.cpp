@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "LittleFS.h"
+#include <TZ.h>
 
 #include "WiFiManager.h"
 #include "webServer.h"
@@ -23,7 +24,7 @@ void setup()
     GUI.begin();
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
-    fetch.begin();
+    fetch.begin(TZ_Europe_Amsterdam, "ntp.time.nl");
 }
 
 void loop() 
