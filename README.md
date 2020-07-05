@@ -34,7 +34,7 @@ The basic principles used in developing this framework are:
 
 1. The framework is built upon the ESP8266 Arduino libraries
 2. The framework does not include any functionality to control external hardware.
-3. The framework is fully self-contained for easy deployment. SPIFFS/LittleFS storage is not needed for the framework.
+3. The framework is fully self-contained for easy deployment. SPIFFS/LittleFS storage is not needed.
 4. There is a strict split between the ESP8266 application and the web interface through an API.
 
 In short, the framework aims to be unobtrusive, easy to deploy, with a modern web interface that's easy to modify and expand for different projects :). 
