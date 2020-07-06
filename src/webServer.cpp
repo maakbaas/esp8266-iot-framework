@@ -8,6 +8,7 @@
 //Access to other classes for GUI functions
 #include "WiFiManager.h"
 #include "configManager.h"
+#include "updater.h"
 
 void webServer::begin()
 {
