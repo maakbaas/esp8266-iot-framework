@@ -6,11 +6,11 @@ Fetching or posting data to the internet is one of the core tasks of an IoT devi
 #### begin
 
 ```c++
-int begin();
-int begin(const char* tz);
-int begin(const char* tz, const char* server1, const char* server2 = nullptr, const char* server3 = nullptr);
+fetch_status_t begin();
+fetch_status_t begin(const char* tz);
+fetch_status_t begin(const char* tz, const char* server1, const char* server2 = nullptr, const char* server3 = nullptr);
 ```
-This method must be called from the setup of the application and will setup the server time needed for SSL connections and potentially useful for other parts of the application. When called without parameters the timezone is set to UTC. A list of timezone values can be found in [TZ.h](https://raw.githubusercontent.com/esp8266/Arduino/master/cores/esp8266/TZ.h). When called without specifying NTP servers 0.pool.ntp.org, 1.pool.ntp.org and 2.pool.ntp.org are used. If the time has not been set within 10s the attempt will timeout and -1 will be returned.
+This method must be called from the setup of the application and will setup the server time needed for SSL connections and potentially useful for other parts of the application. When called without parameters the timezone is set to UTC. A list of timezone values can be found in [TZ.h](https://raw.githubusercontent.com/esp8266/Arduino/master/cores/esp8266/TZ.h). When called without specifying NTP servers 0.pool.ntp.org, 1.pool.ntp.org and 2.pool.ntp.org are used. If the time has not been set within 10s the attempt will timeout and FETCH\_TIME\_NOT\_SET will be returned otherwise FETCH\_TIME\_SET will be returned.
 
 #### GET
 

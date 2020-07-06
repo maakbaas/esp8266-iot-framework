@@ -5,6 +5,7 @@
 #include <ESP8266HTTPClient.h>
 
 #include "certStore.h"
+#include "fetch_definitions.h"
 
 class HTTPRequest
 {
@@ -17,9 +18,9 @@ public:
     bool available();
     uint8_t read();
     String readString();
-    int begin();
-    int begin(const char* tz);
-    int begin(const char* tz, const char* server1, const char* server2 = nullptr, const char* server3 = nullptr);
+    fetch_status_t begin();
+    fetch_status_t begin(const char* tz);
+    fetch_status_t begin(const char* tz, const char* server1, const char* server2 = nullptr, const char* server3 = nullptr);
 
 private : 
     BearSSL::CertStore certStore;
@@ -29,7 +30,7 @@ private :
     BearSSL::WiFiClientSecure *httpsClient;
 
     void beginRequest(String &url);
-    int setTime(const char* tz, const char* server1, const char* server2, const char* server3);
+    fetch_status_t setTime(const char* tz, const char* server1, const char* server2, const char* server3);
 };
 
 extern HTTPRequest fetch;

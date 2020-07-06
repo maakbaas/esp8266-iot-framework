@@ -5,7 +5,7 @@
 #include <coredecls.h> // settimeofday_cb defined
 #include <PolledTimeout.h>
 
-int HTTPRequest::setTime(const char* tz, const char* server1, const char* server2, const char* server3)
+fetch_status_t HTTPRequest::setTime(const char* tz, const char* server1, const char* server2, const char* server3)
 {
     bool time_set = false;
 
@@ -18,24 +18,24 @@ int HTTPRequest::setTime(const char* tz, const char* server1, const char* server
     {
         if(time_set)
        	{
-            return 0;
+            return FETCH_TIME_SET;
         }
 	yield();
     }
-    return -1;
+    return FETCH_TIME_NOT_SET;
 }
 
-int HTTPRequest::begin()
+fetch_status_t HTTPRequest::begin()
 {
     return setTime(TZ_Etc_UTC, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
 }
 
-int HTTPRequest::begin(const char* tz)
+fetch_status_t HTTPRequest::begin(const char* tz)
 {
     return setTime(tz, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
 }
 
-int HTTPRequest::begin(const char* tz, const char* server1, const char* server2, const char* server3)
+fetch_status_t HTTPRequest::begin(const char* tz, const char* server1, const char* server2, const char* server3)
 {
     return setTime(tz, server1, server2, server3);
 }
