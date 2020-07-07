@@ -4,7 +4,6 @@
 
 void HTTPRequest::begin()
 {
-    configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
 }
 
 void HTTPRequest::beginRequest(String &url) 

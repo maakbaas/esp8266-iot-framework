@@ -44,6 +44,7 @@ Of course if you do not want to use certain parts of the framework you can remov
 #include "updater.h"
 #include "fetch.h"
 #include "configManager.h"
+#include "timeSync.h"
 
 void setup()
 {
@@ -53,7 +54,7 @@ void setup()
     GUI.begin();
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
-    fetch.begin();
+    timeSync.begin();
 }
 
 void loop()

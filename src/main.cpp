@@ -6,6 +6,7 @@
 #include "updater.h"
 #include "fetch.h"
 #include "configManager.h"
+#include "timeSync.h"
 
 struct task
 {    
@@ -23,7 +24,7 @@ void setup()
     GUI.begin();
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
-    fetch.begin();
+    timeSync.begin();
 }
 
 void loop() 
