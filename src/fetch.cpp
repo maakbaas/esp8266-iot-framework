@@ -2,10 +2,6 @@
 
 #include <WiFiClientSecureBearSSL.h>
 
-void HTTPRequest::begin()
-{
-}
-
 void HTTPRequest::beginRequest(String &url) 
 {
     http = new HTTPClient();
