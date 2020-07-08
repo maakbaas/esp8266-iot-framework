@@ -1,7 +1,7 @@
 # HTTPS Requests
 Fetching or posting data to the internet is one of the core tasks of an IoT device. Doing so over HTTP is implemented quite well in the default ESP8266 Arduino libraries, but for HTTPS requests things are less straightforward. This class implements arbitrary HTTPS requests in a secure way, without requiring any specific certificates or fingerprints to be hard coded in the application. A full certificate store is automatically downloaded on build, and stored in PROGMEM.
 
-Certificates are only valid for a specific time period; therefore, in order to determine whether a certificate is valid, the ESP8266 must be set to the current date and time. This is usually accomplished using the SNTP protocol to get the current time from a NTP server. Because of this it is mandatory to initialize the time by calling `timeSync.begin()` before attempting any HTTPS requests. More information on the `timeSync` class can be found in it's [documentation](https://github.com/maakbaas/esp8266-iot-framework#introduction).
+Certificates are only valid for a specific time period; therefore, in order to determine whether a certificate is valid, the ESP8266 must be set to the current date and time. This is usually accomplished using the SNTP protocol to get the current time from a NTP server. Because of this it is mandatory to initialize the time by calling `timeSync.begin()` before attempting any HTTPS requests. More information on the `timeSync` class can be found in it's [documentation](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/time-sync.md).
 
 ## Class Methods
 
