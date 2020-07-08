@@ -6,12 +6,12 @@
 
 void NTPSync::begin()
 {
-    setTime(TZ_Etc_UTC, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
+    setTime(TZ_Etc_UTC, "0.pool.ntp.org", "1.pool.ntp.org", "2.pool.ntp.org");
 }
 
 void NTPSync::begin(const char* tz)
 {
-    setTime(tz, PSTR("0.pool.ntp.org"), PSTR("1.pool.ntp.org"), PSTR("2.pool.ntp.org"));
+    setTime(tz, "0.pool.ntp.org", "1.pool.ntp.org", "2.pool.ntp.org");
 }
 
 void NTPSync::begin(const char* tz, const char* server1, const char* server2, const char* server3)
