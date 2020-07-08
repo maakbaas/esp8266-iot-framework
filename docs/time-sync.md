@@ -1,6 +1,5 @@
 # NTP Time Sync
-Certificates are only valid for a specific time period; therefore, in order to determine whether a ceritifcate is valid the ESP8266 must be set to the current date and time. This is usually accomplished using the SNTP protocol to get the current time from a NTP server. This class provides methods to help sync with a NTP server and to verify that the time has been synced.
-
+Certificates are only valid for a specific time period; therefore, in order to determine whether a certificate is valid, the ESP8266 must be set to the current date and time. This is usually accomplished using the SNTP protocol to get the current time from a NTP server. This class provides methods to help sync with a NTP server and to verify that the time has been synced.
 
 ## Class Methods
 
