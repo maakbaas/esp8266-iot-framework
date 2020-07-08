@@ -34,6 +34,24 @@ int HTTPRequest::POST(String url, String body)
     return http->POST(body);
 }
 
+int HTTPRequest::PUT(String url, String body)
+{
+    beginRequest(url);
+    return http->PUT(body);
+}
+
+int HTTPRequest::PATCH(String url, String body)
+{
+    beginRequest(url);
+    return http->PATCH(body);
+}
+
+int HTTPRequest::DELETE(String url)
+{
+    beginRequest(url);
+    return http->sendRequest("DELETE");
+}
+
 bool HTTPRequest::busy()
 {
     return (client->connected() || client->available());
