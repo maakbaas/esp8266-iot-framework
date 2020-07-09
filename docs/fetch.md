@@ -19,6 +19,27 @@ int POST(String url, String body);
 ```
 This method starts a POST request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
 
+#### PUT
+
+```c++
+int PUT(String url, String body);
+```
+This method starts a PUT request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+
+#### PATCH
+
+```c++
+int PATCH(String url, String body);
+```
+This method starts a PATCH request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+
+#### DELETE
+
+```c++
+int DELETE(String url);
+```
+This method starts a DELETE request to the URL specified in `url`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+
 #### busy
 
 ```c++

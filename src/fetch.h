@@ -13,6 +13,9 @@ public:
     void clean();
     int GET(String url);
     int POST(String url, String body);
+    int PUT(String url, String body);
+    int PATCH(String url, String body);
+    int DELETE(String url);
     bool busy();
     bool available();
     uint8_t read();
