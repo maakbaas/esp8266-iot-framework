@@ -1,14 +1,15 @@
-import React from 'react'
-import styled, { createGlobalStyle, css } from 'styled-components'
-import { normalize } from 'styled-normalize'
-import { Loader, Menu as MenuIcon } from 'react-feather';
+import React from "react";
+import styled, { createGlobalStyle, css } from "styled-components";
+import { normalize } from "styled-normalize";
+import { Loader, Menu as MenuIcon } from "react-feather";
+import PropTypes from "prop-types";
 
-export const cPrimary = '#0055ff'; 
-export const cPrimaryHover = '#0066ee'; 
-export const cHeader = '#111';
-export const cHeaderHover = '#333'; 
-export const cSecondary = '#ff00cc';
-export const cSecondaryHover = '#cc0099'; 
+export const cPrimary = "#0055ff"; 
+export const cPrimaryHover = "#0066ee"; 
+export const cHeader = "#111";
+export const cHeaderHover = "#333"; 
+export const cSecondary = "#ff00cc";
+export const cSecondaryHover = "#cc0099"; 
 
 export const GlobalStyle = createGlobalStyle`
   
@@ -50,11 +51,17 @@ export const GlobalStyle = createGlobalStyle`
             max-width: initial !important;
         }
     }
-`
+`;
 
 const HeaderSrc = ({ className, children }) => (
     <div className={className}><div>{children}</div></div>
 );
+
+
+HeaderSrc.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.any,
+};
 
 export const Header = styled(HeaderSrc)`
     background-color: ${cHeader};    
@@ -116,6 +123,11 @@ export const Card = styled.div`
 const HamburgerSrc = ({ className, onClick }) => (
     <a onClick={onClick} className={className}><MenuIcon /></a>
 );
+
+HamburgerSrc.propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+};
 
 export const Hamburger = styled(HamburgerSrc)`
 
@@ -216,8 +228,16 @@ const ConfirmationSrc = ({ active, confirm, cancel, className, children }) => (
                 <Button onClick={() => confirm()}>Continue</Button>
             </div>
         </div>
-    </div> : ''
+    </div> : ""
 );
+
+ConfirmationSrc.propTypes = {
+    active: PropTypes.bool,
+    confirm: PropTypes.func,
+    cancel: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.any,
+};
 
 export const Confirmation = styled(ConfirmationSrc)`
     ${modal}
@@ -231,8 +251,15 @@ const AlertSrc = ({ active, confirm, className, children }) => (
                 <Button onClick={() => confirm()}>OK</Button>
             </div>
         </div>
-    </div> : ''
+    </div> : ""
 );
+
+AlertSrc.propTypes = {
+    active: PropTypes.bool,
+    confirm: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.any,
+};
 
 export const Alert = styled(AlertSrc)`
     ${modal}
@@ -321,7 +348,7 @@ export const Fail = styled.span`
 `;
 
 export const Submit = styled.input.attrs({
-    type: 'submit'
+    type: "submit",
 })`
     ${buttonStyle}  
 `;
@@ -342,16 +369,21 @@ export const Spinner = styled(Loader)`
     }
 `;
 
-export function Fetch(props)
-{
+export function Fetch(props) {
     return <span onClick={(e) => {
         e.stopPropagation();
         fetch(props.href)
             .then((response) => { return response.status; })
             .then((status) => { 
-                if (status==200) 
-                    if (typeof props.onFinished === "function")
-                        props.onFinished(); 
+                if (status == 200) {
+                    if (typeof props.onFinished === "function") {props.onFinished();}
+                } 
             });
     }}>{props.children}</span>;
 }
+
+Fetch.propTypes = {
+    href: PropTypes.string,
+    onFinished: PropTypes.func,
+    children: PropTypes.any,
+};

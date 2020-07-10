@@ -1,5 +1,6 @@
 module.exports = { // eslint-disable-line no-undef
     env: {
+        node: true,
         browser: true,
         es6: true,
     },

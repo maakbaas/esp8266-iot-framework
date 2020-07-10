@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-import { Fetch, Flex, RedButton, Button, buttonStyle, cPrimary, Alert, Spinner } from './UiComponents'
-import { File, Trash2, Download } from 'react-feather';
+import styled from "styled-components";
+
+import { Fetch, Flex, RedButton, Button, buttonStyle, cPrimary, Alert, Spinner } from "./UiComponents";
+import { File, Trash2, Download } from "react-feather";
 
 const FileLine = styled(Flex)`
     padding:0.35em 0em;
@@ -60,12 +62,12 @@ export function FileListing(props) {
     const [state, setState] = useState({ files: [], used: 0, max: 0});
 
     useEffect(() => {
-        document.title = `File Manager`;
+        document.title = "File Manager";
         fetchData();
     }, []);
 
     function fetchData() {
-        fetch(props.API + '/api/files/get')
+        fetch(`${props.API}/api/files/get`)
             .then((response) => {
                 return response.json();
             })
@@ -74,78 +76,72 @@ export function FileListing(props) {
             });
     }
 
-    var list;
+    let list;
         
-    if (state.max>0)
-    {
-        var filtered = 0;
-        for (var i = 0; i < state.files.length; i++) {
+    if (state.max > 0) {
+        let filtered = 0;
+        for (let i = 0; i < state.files.length; i++) {
             if (typeof props.filter === "undefined"
-                || state.files[i].substr(state.files[i].length - (props.filter.length+1)) == "." + props.filter)
-                filtered++;
+                || state.files[i].substr(state.files[i].length - (props.filter.length + 1)) == `.${props.filter}`) {filtered++;}
         }
 
-        if (filtered==0)
-        {
+        if (filtered == 0) {
             list = <FileLine><div>No files available</div></FileLine>;
-        } 
-        else
-        {
-            for (var i = 0; i < state.files.length; i++) {
+        } else {
+            for (let i = 0; i < state.files.length; i++) {
                 if (typeof props.filter === "undefined" ||
-                    state.files[i].substr(state.files[i].length - (props.filter.length + 1)) == "." + props.filter)
-                {       
-                    let name = state.files[i];         
+                    state.files[i].substr(state.files[i].length - (props.filter.length + 1)) == `.${props.filter}`) {       
+                    const name = state.files[i];         
                     list = <>{list}                        
-                        <FileLine className={props.selectable? "selectable" : ""} onClick={() => {if(typeof props.onSelect !== "undefined") props.onSelect(name)}}>
-                        <div><File /><span>{state.files[i]}</span></div>
-                        <div>
-                                <a href={props.API + '/download/' + state.files[i]} target="_blank" onClick={(e) => { e.stopPropagation()}}>
-                                <Button title="Download file"><Download /></Button>
-                            </a>                
-                            <Fetch href={props.API + '/api/files/remove?filename=' + state.files[i]} onFinished={fetchData}>
-                                <RedButton title="Remove file" ><Trash2 /></RedButton>
-                            </Fetch>   
-                        </div>
-                    </FileLine></>;
+                        <FileLine className={props.selectable ? "selectable" : ""} onClick={() => {if (typeof props.onSelect !== "undefined") {props.onSelect(name);}}}>
+                            <div><File /><span>{state.files[i]}</span></div>
+                            <div>
+                                <a href={`${props.API}/download/${state.files[i]}`} rel="noreferrer" target="_blank" onClick={(e) => { e.stopPropagation();}}>
+                                    <Button title="Download file"><Download /></Button>
+                                </a>                
+                                <Fetch href={`${props.API}/api/files/remove?filename=${state.files[i]}`} onFinished={fetchData}>
+                                    <RedButton title="Remove file" ><Trash2 /></RedButton>
+                                </Fetch>   
+                            </div>
+                        </FileLine></>;
                 }
             }   
         }  
-    }  
-    else
-    {
+    } else {
         list = <FileLine><div><Spinner /></div></FileLine>;
     }
 
 
-    var header;
-    if (props.selectable)
-    {
+    let header;
+    if (props.selectable) {
         header = "Select a file:";
-    }
-    else
-    {
+    } else {
         header = "File list";
     }
 
     return <><Flex>
-        <div><Upload action={props.API + '/upload'} onFinished={fetchData} filter={props.filter} /></div>
-        {parseInt(state.max)>0 ? <div>{Math.round(state.used / 1000)} / {Math.round(state.max / 1000)} kB used</div> : ""}
+        <div><Upload action={`${props.API}/upload`} onFinished={fetchData} filter={props.filter} /></div>
+        {parseInt(state.max) > 0 ? <div>{Math.round(state.used / 1000)} / {Math.round(state.max / 1000)} kB used</div> : ""}
     </Flex><h3>{header}</h3>{list}</>;
     
 }
 
+FileListing.propTypes = {
+    API: PropTypes.string,
+    onSelect: PropTypes.func,
+    filter: PropTypes.string,
+    selectable: PropTypes.bool,
+};
+
+
 function Upload(props) {
     const [state, setState] = useState("");
 
-    var status;
-    if (state == "busy")
-        status = <><Spinner /></>;
-    else
-        status = <>Upload File</>;
+    let status;
+    if (state == "busy") {status = <><Spinner /></>;} else {status = <>Upload File</>;}
 
-    var render =
-        <><form action={props.action} method="post" name="upload" enctype="multipart/form-data">
+    const render =
+        <><form action={props.action} method="post" name="upload" encType="multipart/form-data">
             <FileLabel id="uploadLabel" className={state}>{status}<input type="file" id="file"
                 onClick={(e) => {
                     if (state == "busy") {
@@ -153,20 +149,19 @@ function Upload(props) {
                     }
                 }}
                 onChange={(e) => {
-                    var form = document.forms.namedItem("upload");
+                    const form = document.forms.namedItem("upload");
                     const files = e.target.files;
                     const formData = new FormData();
 
                     if (files.length > 0) {
                         if (typeof props.filter === "undefined"
-                            || files[0].name.substr(files[0].name.length - (props.filter.length + 1)) == "." + props.filter)
-                        {
+                            || files[0].name.substr(files[0].name.length - (props.filter.length + 1)) == `.${props.filter}`) {
                             setState("busy");
 
-                            formData.append('myFile', files[0]);
+                            formData.append("myFile", files[0]);
 
                             fetch(form.action, {
-                                method: 'POST',
+                                method: "POST",
                                 body: formData,
                             }).then((response) => { return response.json(); })
                                 .then((data) => {
@@ -177,9 +172,7 @@ function Upload(props) {
                                         setState("nok");
                                     }
                                 });
-                        } 
-                        else 
-                        {
+                        } else {
                             setState("wrongtype");
                         }
 
@@ -187,11 +180,11 @@ function Upload(props) {
                 }} />
             </FileLabel>
         </form>
-            <Alert active={state == "nok"}
-                confirm={() => setState("")}>
-                The upload has failed. The file could be too large, or it's name too long (>32).</Alert>
-            <Alert active={state == "wrongtype"}
-                confirm={() => setState("")}>
+        <Alert active={state == "nok"}
+            confirm={() => setState("")}>
+                The upload has failed. The file could be too large, or it&apos;s name too long ({">"}32).</Alert>
+        <Alert active={state == "wrongtype"}
+            confirm={() => setState("")}>
                 The selected file is not of the correct type (.{props.filter})</Alert>
         </>;
 
