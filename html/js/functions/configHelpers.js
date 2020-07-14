@@ -1,14 +1,14 @@
-import Config from '../configuration.json';
+import Config from "../configuration.json";
 
 export function obj2bin(obj, binSize) {
     const binData = new ArrayBuffer(binSize);
     const binDataView = new DataView(binData);
-    var n = 0;
+    let n = 0;
 
-    for (var i = 0; i < Config.length; i++) {
+    for (let i = 0; i < Config.length; i++) {
         switch (Config[i].type) {
             case "char":
-                for (var j = 0; j < obj[Config[i].name].length; j++) {
+                for (let j = 0; j < obj[Config[i].name].length; j++) {
                     binDataView.setUint8(n, (new TextEncoder).encode(obj[Config[i].name][j])[0]);
                     n++;
                 }
@@ -16,10 +16,7 @@ export function obj2bin(obj, binSize) {
                 n += Config[i].length - obj[Config[i].name].length;
                 break;
             case "bool":
-                if (obj[Config[i].name] === true)
-                    binDataView.setUint8(n, 1);
-                else
-                    binDataView.setUint8(n, 0);
+                if (obj[Config[i].name] === true) {binDataView.setUint8(n, 1);} else {binDataView.setUint8(n, 0);}
                 n++;
                 break;
             case "uint8_t":
@@ -64,13 +61,13 @@ export function obj2bin(obj, binSize) {
 
 
 export function bin2obj(rawData) {
-    let utf8decoder = new TextDecoder();
+    const utf8decoder = new TextDecoder();
 
-    var parsedData = {};
+    const parsedData = {};
     const rawDataView = new DataView(rawData);
 
-    var n = 0;
-    for (var i = 0; i < Config.length; i++) {
+    let n = 0;
+    for (let i = 0; i < Config.length; i++) {
         switch (Config[i].type) {
             case "char":
                 parsedData[Config[i].name] = utf8decoder.decode(rawData.slice(n, n + Config[i].length)).split("\0").shift();
@@ -118,6 +115,6 @@ export function bin2obj(rawData) {
         }
     }
 
-    return(parsedData);
+    return (parsedData);
 
 }

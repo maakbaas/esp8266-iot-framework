@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-import { Form, Button, Spinner, Confirmation } from './UiComponents'
-import { Wifi, Lock } from 'react-feather';
+import { Form, Button, Spinner, Confirmation } from "./UiComponents";
+import { Wifi, Lock } from "react-feather";
 
 export function WifiPage(props) {
     const [state, setState] = useState({ captivePortal: [], ssid: []});
@@ -9,8 +9,8 @@ export function WifiPage(props) {
     const [saveModal, setSaveModal] = useState(false);
 
     useEffect(() => {
-        document.title = `WiFi Settings`;
-        fetch(props.API + '/api/wifi/get')
+        document.title = "WiFi Settings";
+        fetch(`${props.API}/api/wifi/get`)
             .then((response) => {
                 return response.json();
             })
@@ -20,30 +20,29 @@ export function WifiPage(props) {
     }, []);
 
     function changeWifi() {
-        fetch(props.API + '/api/wifi/set?ssid=' + document.getElementById("ssid").value.trim() + '&pass=' + document.getElementById("pass").value.trim())
-        document.getElementById("ssid").value = '';
-        document.getElementById("pass").value = '';
+        fetch(`${props.API}/api/wifi/set?ssid=${document.getElementById("ssid").value.trim()}&pass=${document.getElementById("pass").value.trim()}`);
+        document.getElementById("ssid").value = "";
+        document.getElementById("pass").value = "";
     }
 
-    var form = <><Form>
-        <p><label for="ssid"><Wifi /> SSID:</label>
-            <input type="text" id="ssid" name="ssid" autocapitalize="none" />
+    const form = <><Form>
+        <p><label htmlFor="ssid"><Wifi /> SSID:</label>
+            <input type="text" id="ssid" name="ssid" autoCapitalize="none" />
         </p>
-        <p><label for="pass"><Lock /> Password:</label>
-            <input type="text" id="pass" name="pass" autocapitalize="none" />
+        <p><label htmlFor="pass"><Lock /> Password:</label>
+            <input type="text" id="pass" name="pass" autoCapitalize="none" />
         </p>        
     </Form>
-    <Button onClick={(e) => setSaveModal(true)}>Save</Button>
-    </>
+    <Button onClick={() => setSaveModal(true)}>Save</Button>
+    </>;
     
-    var page = <><h2>WiFi Settings</h2> 
-    <h3>Status</h3></>;
+    let page = <><h2>WiFi Settings</h2> 
+        <h3>Status</h3></>;
     
-    var connectedTo;
+    let connectedTo;
     if (state.captivePortal === true) {
         connectedTo = "Captive portal running";
-    }
-    else if (state.captivePortal === false) {
+    } else if (state.captivePortal === false) {
         connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>)</>;
     }
     
@@ -51,10 +50,10 @@ export function WifiPage(props) {
 
     page = <>{page}<h3>Update credentials</h3>{form}
         <Confirmation active={forgetModal}
-            confirm={() => { fetch(props.API + '/api/wifi/forget'); setForgetModal(false) }}
+            confirm={() => { fetch(`${props.API}/api/wifi/forget`); setForgetModal(false); }}
             cancel={() => setForgetModal(false)}>Are you sure? If you continue, a captive portal will be started.</Confirmation>
         <Confirmation active={saveModal}
-            confirm={() => { changeWifi(); setSaveModal(false) }}
+            confirm={() => { changeWifi(); setSaveModal(false); }}
             cancel={() => setSaveModal(false)}>Are you sure? If you continue, device access from the current network will probably be lost.</Confirmation>
     </>;
 
