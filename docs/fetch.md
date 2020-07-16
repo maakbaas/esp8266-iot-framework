@@ -75,6 +75,15 @@ void clean();
 ```
 Call this after you have finished handling a request to free up the memory that was used by the `http` and `client` objects.
 
+#### setAuthorization
+
+```c++
+void setAuthorization(const char * user, const char * password);
+void setAuthorization(const char * auth);
+```
+
+Sets the HTTP Auhorization credentials for the request. Username and passord or a base64 encoded string of the credentials can be used. Only Basic authorization is supported.
+
 ## Usage Examples
 
 For parsing and processing larger responses you can stream the incoming data such as in this example:

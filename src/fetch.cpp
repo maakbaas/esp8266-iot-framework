@@ -78,4 +78,14 @@ void HTTPRequest::clean()
     delete client;
 }
 
+void HTTPRequest::setAuthorization(const char * user, const char * password)
+{
+    http->setAuthorization(user, password);
+}
+
+void HTTPRequest::setAuthorization(const char * auth)
+{
+    http->setAuthorization(auth);
+}
+
 HTTPRequest fetch;

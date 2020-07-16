@@ -20,6 +20,8 @@ public:
     bool available();
     uint8_t read();
     String readString();
+    void setAuthorization(const char * user, const char * password);
+    void setAuthorization(const char * auth);
 
 private : 
     BearSSL::CertStore certStore;
