@@ -16,5 +16,14 @@
     ],
     "build": {
         "extraScript": "build/preBuild.py"
-    }
+    },
+    "examples": [       
+        {
+            "name": "Main",
+            "base": "examples/main",
+            "files": [
+                "main.cpp"
+            ]
+        }
+    ]
 }
