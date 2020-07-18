@@ -1,0 +1,29 @@
+{
+    "name": "ESP8266 IoT Framework",
+    "version": "1.0.0",
+    "description": "Framework for IoT projects implementing HTTPS requests, a React web interface, WiFi manager, configuration manager, file manager and OTA updates.",
+    "keywords": "esp8266,react,ota-updates,wifi-manager,https,file-manager",
+    "frameworks": "arduino",
+    "platforms": "espressif8266",
+    "dependencies":
+    [
+        {
+            "name": "ESP Async WebServer"
+        },
+        {
+            "name": "ArduinoJson"
+        }
+    ],
+    "build": {
+        "extraScript": "build/preBuild.py"
+    },
+    "examples": [       
+        {
+            "name": "Main",
+            "base": "examples/main",
+            "files": [
+                "main.cpp"
+            ]
+        }
+    ]
+}

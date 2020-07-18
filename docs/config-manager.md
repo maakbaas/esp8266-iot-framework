@@ -52,7 +52,15 @@ Of course you can also update configuration information from your code rather th
 
 ## Code Generation
 
-As mentioned earlier, the configuration data is defined in the JSON file `html/js/configuration.json`. An example of how this file could look is shown here:
+The configuration data is defined in the JSON file `html/js/configuration.json`. 
+
+However, if you use the framework as a PlatformIO library, you need to define the filename that points to your configuration JSON file. This can be done in your `platformio.ini` file by adding a custom build flag:
+
+```ini
+build_flags = -DCONFIG_PATH=configuration_filename.json
+```
+
+This configuration file will be automatically copied into the library folder before each build. An example of how this file could look is shown below.
 
 ```json
 [
