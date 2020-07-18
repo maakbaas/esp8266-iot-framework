@@ -21,7 +21,7 @@ openssl = "C:\\msys32\\usr\\bin\\openssl"
 # below script content is adapted from:
 # https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/BearSSL_CertStore/certs-from-mozilla.py
 
-f = open("src/generated/certificates.h", "w", encoding="utf8")
+f = open("../src/generated/certificates.h", "w", encoding="utf8")
 
 f.write("#ifndef CERT_H" + "\n")
 f.write("#define CERT_H" + "\n\n")

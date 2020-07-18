@@ -2,10 +2,10 @@ import json
 import binascii
 
 filename = "config"
-h = open("src/generated/" + filename + ".h", "w", encoding="utf8")
-cpp = open("src/generated/" + filename + ".cpp", "w", encoding="utf8")
+h = open("../src/generated/" + filename + ".h", "w", encoding="utf8")
+cpp = open("../src/generated/" + filename + ".cpp", "w", encoding="utf8")
 
-with open('html/js/configuration.json') as f:
+with open('../html/js/configuration.json') as f:
   data = json.load(f)
 
 # binascii.crc32(mes.encode('utf8'))
