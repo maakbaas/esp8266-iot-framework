@@ -15,13 +15,18 @@ try:
 except:
     from io import StringIO
 
+import inspect, os.path
+
+filename = inspect.getframeinfo(inspect.currentframe()).filename
+dir_path = os.path.dirname(os.path.abspath(filename))
+
 #path to openssl
 openssl = "C:\\msys32\\usr\\bin\\openssl" 
 
 # below script content is adapted from:
 # https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/BearSSL_CertStore/certs-from-mozilla.py
 
-f = open("../src/generated/certificates.h", "w", encoding="utf8")
+f = open(dir_path + "\\../src/generated/certificates.h", "w", encoding="utf8")
 
 f.write("#ifndef CERT_H" + "\n")
 f.write("#define CERT_H" + "\n\n")

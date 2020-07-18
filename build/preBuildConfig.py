@@ -1,11 +1,16 @@
 import json
 import binascii
 
-filename = "config"
-h = open("../src/generated/" + filename + ".h", "w", encoding="utf8")
-cpp = open("../src/generated/" + filename + ".cpp", "w", encoding="utf8")
+import inspect, os.path
 
-with open('../html/js/configuration.json') as f:
+filename = inspect.getframeinfo(inspect.currentframe()).filename
+dir_path = os.path.dirname(os.path.abspath(filename))
+
+filename = "config"
+h = open(dir_path + "\\../src/generated/" + filename + ".h", "w", encoding="utf8")
+cpp = open(dir_path + "\\../src/generated/" + filename + ".cpp", "w", encoding="utf8")
+
+with open(dir_path + '\\../html/js/configuration.json') as f:
   data = json.load(f)
 
 # binascii.crc32(mes.encode('utf8'))

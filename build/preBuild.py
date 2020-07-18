@@ -1,6 +1,9 @@
 Import('env')
-from os.path import join, realpath
 import subprocess
+import inspect, os.path
+
+filename = inspect.getframeinfo(inspect.currentframe()).filename
+dir_path = os.path.dirname(os.path.abspath(filename))
 
 # default setting = rebuild config and do not rebuild HTML or certificates
 html = False
@@ -17,10 +20,10 @@ for item in env.get("CPPDEFINES", []):
         certs = True
 
 if html:
-    subprocess.call("preBuildHTML.py", shell=True)
+    subprocess.call(dir_path + "\\preBuildHTML.py", shell=True)
 if config:
-    subprocess.call("preBuildConfig.py", shell=True)
+    subprocess.call(dir_path + "\\preBuildConfig.py", shell=True)
 if certs:
-    subprocess.call("preBuildCertificates.py", shell=True)
+    subprocess.call(dir_path + "\\preBuildCertificates.py", shell=True)
 
 
