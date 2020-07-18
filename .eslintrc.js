@@ -41,10 +41,6 @@ module.exports = { // eslint-disable-line no-undef
             "error",
             { before: true, after: true },
         ],
-        "linebreak-style": [
-            "error",
-            "unix",
-        ],
         "no-multi-spaces": [
             "error",
         ],
