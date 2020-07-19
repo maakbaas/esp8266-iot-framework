@@ -88,4 +88,9 @@ void HTTPRequest::setAuthorization(const char * auth)
     http->setAuthorization(auth);
 }
 
+void HTTPRequest::addHeader(String name, String value)
+{
+    http->addHeader(name, value);
+}
+
 HTTPRequest fetch;
