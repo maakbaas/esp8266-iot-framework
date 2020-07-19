@@ -11,15 +11,25 @@ class HTTPRequest
 
 public:
     void clean();
+
+    void begin(String url);
+
     int GET(String url);
+    int GET();
     int POST(String url, String body);
+    int POST(String body);
     int PUT(String url, String body);
+    int PUT(String body);
     int PATCH(String url, String body);
+    int PATCH(String body);
     int DELETE(String url);
+    int DELETE();
+    
     bool busy();
     bool available();
     uint8_t read();
     String readString();
+    
     void setAuthorization(const char * user, const char * password);
     void setAuthorization(const char * auth);
     void addHeader(String name, String value);
@@ -30,8 +40,6 @@ private :
     HTTPClient *http;
     WiFiClient *client;
     BearSSL::WiFiClientSecure *httpsClient;
-
-    void beginRequest(String &url);
 };
 
 extern HTTPRequest fetch;

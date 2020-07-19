@@ -5,40 +5,52 @@ Certificates are only valid for a specific time period; therefore, in order to d
 
 ## Class Methods
 
+#### begin
+
+```c++
+void begin(String url);
+```
+This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to use `addHeader` or `setAuthorization`. Otherwise you can use one of the shorthand request methods below.
+
 #### GET
 
 ```c++
 int GET(String url);
+int GET();
 ```
-This method starts a GET request to the URL specified in `url`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+This method starts a GET request to the URL specified in `url`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code. If you first called the `begin` method, the variant without the `url` argument should be used.
 
 #### POST
 
 ```c++
 int POST(String url, String body);
+int POST(String body);
 ```
-This method starts a POST request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+This method starts a POST request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code. If you first called the `begin` method, the variant without the `url` argument should be used.
 
 #### PUT
 
 ```c++
 int PUT(String url, String body);
+int PUT(String body);
 ```
-This method starts a PUT request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+This method starts a PUT request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code. If you first called the `begin` method, the variant without the `url` argument should be used.
 
 #### PATCH
 
 ```c++
 int PATCH(String url, String body);
+int PATCH(String body);
 ```
-This method starts a PATCH request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+This method starts a PATCH request to the URL specified in `url` with the payload specified in `body`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code. If you first called the `begin` method, the variant without the `url` argument should be used.
 
 #### DELETE
 
 ```c++
 int DELETE(String url);
+int DELETE();
 ```
-This method starts a DELETE request to the URL specified in `url`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code.
+This method starts a DELETE request to the URL specified in `url`. The URL must include a http:// or https:// prefix. The method returns the HTTP response code. If you first called the `begin` method, the variant without the `url` argument should be used.
 
 #### busy
 
