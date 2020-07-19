@@ -5,6 +5,10 @@
     "keywords": "esp8266,react,ota-updates,wifi-manager,https,file-manager",
     "frameworks": "arduino",
     "platforms": "espressif8266",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maakbaas/esp8266-iot-framework.git"
+    },
     "dependencies":
     [
         {
@@ -24,6 +28,19 @@
             "files": [
                 "main.cpp"
             ]
+        },
+        {
+            "name": "timeSync",
+            "base": "examples/timeSync",
+            "files": [
+                "main.cpp"
+            ]
         }
-    ]
+    ],
+    "export": {
+        "exclude": [
+            "node_modules",
+            ".vscode"
+        ]
+    }
 }

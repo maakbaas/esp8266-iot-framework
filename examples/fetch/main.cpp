@@ -41,16 +41,16 @@ void loop()
         //do task
         Serial.println(ESP.getFreeHeap());
                 
-        // fetch.GET("https://www.google.com");
+        fetch.GET("https://www.google.com");
 
-        // while (fetch.busy())
-        // {
-        //     if (fetch.available())
-        //     {
-        //         Serial.write(fetch.read());           
-        //     }
-        // }
+        while (fetch.busy())
+        {
+            if (fetch.available())
+            {
+                Serial.write(fetch.read());           
+            }
+        }
         
-        // fetch.clean();
+        fetch.clean();
     }
 }
