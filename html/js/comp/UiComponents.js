@@ -372,18 +372,32 @@ export const Spinner = styled(Loader)`
 export function Fetch(props) {
     return <span onClick={(e) => {
         e.stopPropagation();
-        fetch(props.href)
-            .then((response) => { return response.status; })
-            .then((status) => { 
-                if (status == 200) {
-                    if (typeof props.onFinished === "function") {props.onFinished();}
-                } 
-            });
+        if (typeof props.POST !== undefined) {
+            fetch(props.href,
+                {
+                    method: "POST",
+                })
+                .then((response) => { return response.status; })
+                .then((status) => { 
+                    if (status == 200) {
+                        if (typeof props.onFinished === "function") {props.onFinished();}
+                    } 
+                });
+        } else {
+            fetch(props.href)
+                .then((response) => { return response.status; })
+                .then((status) => {
+                    if (status == 200) {
+                        if (typeof props.onFinished === "function") { props.onFinished(); }
+                    }
+                });  
+        }
     }}>{props.children}</span>;
 }
 
 Fetch.propTypes = {
     href: PropTypes.string,
+    POST: PropTypes.bool,
     onFinished: PropTypes.func,
     children: PropTypes.any,
 };

@@ -60,7 +60,7 @@ export function FirmwarePage(props) {
         }
     } else if (state == 3) {
         step = <WizardBox><h1><Power /></h1><p>The firmware <b>{filename}</b> has been flashed successfully.</p><p>Please restart the device to boot from the new software version.</p><p>            
-            <Button onClick={() => { fetch(`${props.API}/api/restart`); setRestart(true);}}>Restart Now</Button>
+            <Button onClick={() => { fetch(`${props.API}/api/restart`, { method: "POST" }); setRestart(true);}}>Restart Now</Button>
         </p></WizardBox>;
         buttons = <Button onClick={() => setState(1)}>Back</Button>;
     } else {step = <FileListing API={props.API} selectable={true} onSelect={(name) => {setFilename(name);setState(2);}} filter="bin" />;}
@@ -93,7 +93,7 @@ export function FirmwarePage(props) {
     </>;  
     
     function startFlashing() {        
-        fetch(`${props.API}/api/update?filename=${filename}`)
+        fetch(`${props.API}/api/update?filename=${filename}`, { method: "POST" })
             .then((response) => { return response.status; })
             .then((status) => {
                 if (status == 200) {
