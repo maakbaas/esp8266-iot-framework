@@ -2,7 +2,7 @@
 
 #include <WiFiClientSecureBearSSL.h>
 
-void HTTPRequest::beginRequest(String &url) 
+void HTTPRequest::begin(String url) 
 {
     http = new HTTPClient();
 
@@ -24,31 +24,56 @@ void HTTPRequest::beginRequest(String &url)
 
 int HTTPRequest::GET(String url)
 {
-    beginRequest(url);
+    begin(url);
+    return http->GET();
+}
+
+int HTTPRequest::GET()
+{
     return http->GET();
 }
 
 int HTTPRequest::POST(String url, String body)
 {
-    beginRequest(url);
+    begin(url);
+    return http->POST(body);
+}
+
+int HTTPRequest::POST(String body)
+{
     return http->POST(body);
 }
 
 int HTTPRequest::PUT(String url, String body)
 {
-    beginRequest(url);
+    begin(url);
+    return http->PUT(body);
+}
+
+int HTTPRequest::PUT(String body)
+{
     return http->PUT(body);
 }
 
 int HTTPRequest::PATCH(String url, String body)
 {
-    beginRequest(url);
+    begin(url);
+    return http->PATCH(body);
+}
+
+int HTTPRequest::PATCH(String body)
+{
     return http->PATCH(body);
 }
 
 int HTTPRequest::DELETE(String url)
 {
-    beginRequest(url);
+    begin(url);
+    return http->sendRequest("DELETE");
+}
+
+int HTTPRequest::DELETE()
+{
     return http->sendRequest("DELETE");
 }
 
