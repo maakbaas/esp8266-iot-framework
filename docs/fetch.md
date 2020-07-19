@@ -99,7 +99,7 @@ Sets the HTTP Auhorization credentials for the request. Username and passord or 
 #### addHeader
 
 ```c++
-void addHeader(const char *name, const char *value);
+void addHeader(String name, String value);
 ```
 
 Allows to add headers to your HTTP(S) request.
