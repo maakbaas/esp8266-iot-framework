@@ -99,7 +99,7 @@ export function FileListing(props) {
                                 <a href={`${props.API}/download/${state.files[i]}`} rel="noreferrer" target="_blank" onClick={(e) => { e.stopPropagation();}}>
                                     <Button title="Download file"><Download /></Button>
                                 </a>                
-                                <Fetch href={`${props.API}/api/files/remove?filename=${state.files[i]}`} onFinished={fetchData}>
+                                <Fetch href={`${props.API}/api/files/remove?filename=${state.files[i]}`} POST onFinished={fetchData}>
                                     <RedButton title="Remove file" ><Trash2 /></RedButton>
                                 </Fetch>   
                             </div>

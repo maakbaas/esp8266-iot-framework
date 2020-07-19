@@ -30,19 +30,19 @@ void webServer::begin()
 void webServer::bindAll()
 {
     //Restart the ESP
-    server.on(PSTR("/api/restart"), HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/restart"), HTTP_POST, [](AsyncWebServerRequest *request) {
         request->send(200, PSTR("text/html"), ""); //respond first because of restart
         ESP.restart();
     });
 
     //update WiFi details
-    server.on(PSTR("/api/wifi/set"), HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/wifi/set"), HTTP_POST, [](AsyncWebServerRequest *request) {
         request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
         WiFiManager.setNewWifi(request->arg("ssid"), request->arg("pass"));
     });
 
     //update WiFi details
-    server.on(PSTR("/api/wifi/forget"), HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/wifi/forget"), HTTP_POST, [](AsyncWebServerRequest *request) {
         request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
         WiFiManager.forget();
     });
@@ -82,13 +82,13 @@ void webServer::bindAll()
     });
 
     //remove file
-    server.on(PSTR("/api/files/remove"), HTTP_GET, [](AsyncWebServerRequest *request) {
+    server.on(PSTR("/api/files/remove"), HTTP_POST, [](AsyncWebServerRequest *request) {
         LittleFS.remove("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
     });
 
     //update from LittleFS
-    server.on(PSTR("/api/update"), HTTP_GET, [](AsyncWebServerRequest *request) {        
+    server.on(PSTR("/api/update"), HTTP_POST, [](AsyncWebServerRequest *request) {        
         updater.requestStart("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
     });

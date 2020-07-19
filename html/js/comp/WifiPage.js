@@ -20,7 +20,7 @@ export function WifiPage(props) {
     }, []);
 
     function changeWifi() {
-        fetch(`${props.API}/api/wifi/set?ssid=${document.getElementById("ssid").value.trim()}&pass=${document.getElementById("pass").value.trim()}`);
+        fetch(`${props.API}/api/wifi/set?ssid=${document.getElementById("ssid").value.trim()}&pass=${document.getElementById("pass").value.trim()}`, { method: "POST" });
         document.getElementById("ssid").value = "";
         document.getElementById("pass").value = "";
     }
@@ -50,7 +50,7 @@ export function WifiPage(props) {
 
     page = <>{page}<h3>Update credentials</h3>{form}
         <Confirmation active={forgetModal}
-            confirm={() => { fetch(`${props.API}/api/wifi/forget`); setForgetModal(false); }}
+            confirm={() => { fetch(`${props.API}/api/wifi/forget`, { method: "POST" }); setForgetModal(false); }}
             cancel={() => setForgetModal(false)}>Are you sure? If you continue, a captive portal will be started.</Confirmation>
         <Confirmation active={saveModal}
             confirm={() => { changeWifi(); setSaveModal(false); }}
