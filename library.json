@@ -23,8 +23,15 @@
     },
     "examples": [       
         {
-            "name": "Main",
-            "base": "examples/main",
+            "name": "helloWorld",
+            "base": "examples/helloWorld",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "fetch",
+            "base": "examples/fetch",
             "files": [
                 "main.cpp"
             ]
