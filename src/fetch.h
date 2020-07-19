@@ -22,6 +22,7 @@ public:
     String readString();
     void setAuthorization(const char * user, const char * password);
     void setAuthorization(const char * auth);
+    void addHeader(String name, String value);
 
 private : 
     BearSSL::CertStore certStore;

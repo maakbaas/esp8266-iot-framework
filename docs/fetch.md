@@ -84,6 +84,14 @@ void setAuthorization(const char * auth);
 
 Sets the HTTP Auhorization credentials for the request. Username and passord or a base64 encoded string of the credentials can be used. Only Basic authorization is supported.
 
+#### addHeader
+
+```c++
+void addHeader(const char *name, const char *value);
+```
+
+Allows to add headers to your HTTP(S) request.
+
 ## Usage Examples
 
 For parsing and processing larger responses you can stream the incoming data such as in this example:
