@@ -13,10 +13,10 @@ It is recommended to use the framework as a platformIO library. if you prefer to
 2. If you succeeeded to deploy to the ESP8266 in step 1 you have a project folder that contains a platformio.ini file. In this file add the following line:
 
 ```ini
-lib_deps = https://github.com/maakbaas/esp8266-iot-framework.git
+lib_deps = ESP8266 IoT Framework
 ```
 
-3. Use one of the examples in this library as a starting point for `main.cpp` and start changing and developing your application.
+3. Use one of the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) in this library as a starting point for the `main.cpp` of your project, and start changing and developing your application.
 
 4. Continue to step 9.
 
@@ -45,7 +45,7 @@ lib_deps = https://github.com/maakbaas/esp8266-iot-framework.git
 +board = d1_mini
 ```
 
-8. You can't build the application straight away, because there is no `main.cpp` included in the src folder. This is because the framework is primarily designed as a library. To continue with the current approach, paste a `main.cpp` file from one of the examples into the src folder.
+8. You can't build the application straight away, since there is no default `main.cpp` included in the src folder. The reason for this is that the framework is primarily designed as a library. To continue take one of the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point for your own `main.cpp`.
 
 ## Building the application
 
