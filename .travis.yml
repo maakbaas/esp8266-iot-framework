@@ -19,49 +19,24 @@
 # Travis CI documentation (see above).
 #
 
+language: python
+python:
+    - "2.7"
 
-#
-# Template #1: General project. Test it using existing `platformio.ini`.
-#
+sudo: false
+cache:
+    directories:
+        - "~/.platformio"
 
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# install:
-#     - pip install -U platformio
-#     - platformio update
-#
-# script:
-#     - platformio run
+env:    
+    - PLATFORMIO_CI_SRC=examples/helloWorld/helloWorld.cpp
+    - PLATFORMIO_CI_SRC=examples/fetch/fetchExample.cpp
+    - PLATFORMIO_CI_SRC=examples/timeSync/timeSyncExample.cpp
+    
 
+install:
+    - pip install -U platformio
+    - platformio update
 
-#
-# Template #2: The project is intended to be used as a library with examples.
-#
-
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# env:
-#     - PLATFORMIO_CI_SRC=path/to/test/file.c
-#     - PLATFORMIO_CI_SRC=examples/file.ino
-#     - PLATFORMIO_CI_SRC=path/to/test/directory
-#
-# install:
-#     - pip install -U platformio
-#     - platformio update
-#
-# script:
-#     - platformio ci --lib="." --board=ID_1 --board=ID_2 --board=ID_N
+script:
+    - platformio ci --lib="." --nodemcuv2
