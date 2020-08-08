@@ -39,4 +39,4 @@ install:
     - platformio update
 
 script:
-    - platformio ci --lib="." --nodemcuv2
+    - platformio ci --lib="." --board=nodemcuv2
