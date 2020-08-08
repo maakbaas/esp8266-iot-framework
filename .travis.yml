@@ -19,34 +19,71 @@
 # Travis CI documentation (see above).
 #
 
-stage: Framework
-language: python
-python:
-    - "2.7"
-
-sudo: false
-cache:
-    directories:
-        - "~/.platformio"
-
-env:   
-  - PLATFORMIO_CI_SRC=examples/helloWorld/helloWorld.cpp
-  - PLATFORMIO_CI_SRC=examples/fetch/fetchExample.cpp
-  - PLATFORMIO_CI_SRC=examples/timeSync/timeSyncExample.cpp
-    
-
-install:
-    - pip install -U platformio
-    - platformio update
-
-script:
-    - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
-
 jobs:
   include:
+    - stage: Framework
+      name: "Hello World Example"
+      language: python
+      python:
+          - "2.7"
+      sudo: false
+      cache:
+          directories:
+              - "~/.platformio"
+      env:   
+        - PLATFORMIO_CI_SRC=examples/helloWorld/helloWorld.cpp
+      install:
+          - pip install -U platformio
+          - platformio update
+      script:
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+
+    - stage: Framework
+      name: "Fetch Example"
+      language: python
+      python:
+          - "2.7"
+      sudo: false
+      cache:
+          directories:
+              - "~/.platformio"
+      env:   
+        - PLATFORMIO_CI_SRC=examples/fetch/fetchExample.cpp
+      install:
+          - pip install -U platformio
+          - platformio update
+      script:
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+
+    - stage: Framework
+      name: "Time Sync Example"
+      language: python
+      python:
+          - "2.7"
+      sudo: false
+      cache:
+          directories:
+              - "~/.platformio"
+      env:   
+        - PLATFORMIO_CI_SRC=examples/timeSync/timeSyncExample.cpp
+      install:
+          - pip install -U platformio
+          - platformio update
+      script:
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+
     - stage: GUI
+      name: "Webpack Build"
       language: node_js
       node_js: 12
+      env:
       script: 
         - npm run build
+
+    - stage: GUI
+      name: "ESLint"
+      language: node_js
+      node_js: 12
+      env:
+      script: 
         - npm run lint
