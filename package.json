@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --history-api-fallback",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "lint": "eslint \"./**/*.js\""
   },
   "author": "Johannes",
   "license": "ISC",
