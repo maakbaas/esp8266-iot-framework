@@ -19,11 +19,6 @@
 # Travis CI documentation (see above).
 #
 
-env:    
-    - PLATFORMIO_CI_SRC=examples/helloWorld/helloWorld.cpp
-    - PLATFORMIO_CI_SRC=examples/fetch/fetchExample.cpp
-    - PLATFORMIO_CI_SRC=examples/timeSync/timeSyncExample.cpp
-    
 jobs:
   include:
     - language: python
@@ -35,6 +30,13 @@ jobs:
           directories:
               - "~/.platformio"
 
+      env: 
+          matrix:   
+              - PLATFORMIO_CI_SRC=examples/helloWorld/helloWorld.cpp
+              - PLATFORMIO_CI_SRC=examples/fetch/fetchExample.cpp
+              - PLATFORMIO_CI_SRC=examples/timeSync/timeSyncExample.cpp
+          
+
       install:
           - pip install -U platformio
           - platformio update
@@ -44,5 +46,4 @@ jobs:
 
     - language: node_js
       node_js: 12
-      env:
       script: npm run build
