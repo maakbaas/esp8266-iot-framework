@@ -2,7 +2,7 @@
 
 #include <WiFiClientSecureBearSSL.h>
 
-void HTTPRequest::begin(String url) 
+void HTTPRequest::begin(String url, bool useMFLN = false) 
 {
     http = new HTTPClient();
 
@@ -11,7 +11,7 @@ void HTTPRequest::begin(String url)
         httpsClient = new BearSSL::WiFiClientSecure();
 
         //try MFLN to reduce memory need
-        if (httpsClient->probeMaxFragmentLength(url, 443, 512))
+        if (useMFLN && httpsClient->probeMaxFragmentLength(url, 443, 512))
         {
             Serial.println(PSTR("MFLN supported"));
             httpsClient->setBufferSizes(512, 512);

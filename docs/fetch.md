@@ -9,8 +9,11 @@ Certificates are only valid for a specific time period; therefore, in order to d
 
 ```c++
 void begin(String url);
+void begin(String url, bool useMFLN);
 ```
-This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to use `addHeader` or `setAuthorization`. Otherwise you can use one of the shorthand request methods below.
+This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to set the `useMFLN` parameter or use the `addHeader` or `setAuthorization` functions. Otherwise you can use one of the shorthand request methods below.
+
+MFLN has the potential to reduce memory needed for HTTPS requests by up to 20kB if it is supported by the server you are requesting from. The reason that it is not enabled by default is that it takes the ESP8266 roughly 5 seconds to detect if MFLN is supported. With this flag you can enable MFLN if this trade-off is worth it in your use case. See the section on [memory usage](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md#memory-usage) for details.
 
 #### GET
 
