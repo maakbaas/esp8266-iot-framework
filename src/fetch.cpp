@@ -9,8 +9,17 @@ void HTTPRequest::begin(String url)
     if (url[4] == 's')
     {
         httpsClient = new BearSSL::WiFiClientSecure();
+
+        //try MFLN to reduce memory need
+        if (httpsClient->probeMaxFragmentLength(url, 443, 512))
+        {
+            Serial.println(PSTR("MFLN supported"));
+            httpsClient->setBufferSizes(512, 512);
+        }
+
         httpsClient->setCertStore(&certStore);
         http->begin(*httpsClient, url);
+                
         client = httpsClient;
     }
     else
@@ -24,7 +33,9 @@ void HTTPRequest::begin(String url)
 
 int HTTPRequest::GET(String url)
 {
+    Serial.println(ESP.getFreeHeap());
     begin(url);
+    Serial.println(ESP.getFreeHeap());
     return http->GET();
 }
 

@@ -132,6 +132,12 @@ Serial.write(fetch.readString());
 fetch.clean();
 ```
 
+## Memory usage
+
+As described [here](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/bearssl-client-secure-class.html#mfln-or-maximum-fragment-length-negotiation-saving-ram) each HTTPS request needs roughly 28kB of free memory. Which is the majority of what is available, so can become an issue if your application needs more memory.
+
+To help with this, MFLN is implemented to reduce the memory requirements. But this technology can only be used if it is supported by the server. Before a HTTPS request is executed the `probeMaxFragmentLength` and `setBufferSizes` functions are used to check if the receive buffer size can be reduced. When supported by the server the memory needed for each request is reduced to roughly 6kB, which is quite significant.
+
 ## Code Generation
 
 As mentioned earlier a full certificate store is saved in PROGMEM as part of the application. By default this store is located in `certificates.h`, and will be included in the build. These certificates will be used by the ESP8266 Arduino BearSSL class to establish a secure connection.
