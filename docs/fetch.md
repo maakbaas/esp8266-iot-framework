@@ -9,8 +9,11 @@ Certificates are only valid for a specific time period; therefore, in order to d
 
 ```c++
 void begin(String url);
+void begin(String url, bool useMFLN);
 ```
-This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to use `addHeader` or `setAuthorization`. Otherwise you can use one of the shorthand request methods below.
+This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to set the `useMFLN` parameter or use the `addHeader` or `setAuthorization` functions. Otherwise you can use one of the shorthand request methods below.
+
+MFLN has the potential to reduce memory needed for HTTPS requests by up to 20kB if it is supported by the server you are requesting from. The reason that it is not enabled by default is that it takes the ESP8266 roughly 5 seconds to detect if MFLN is supported. With this flag you can enable MFLN if this trade-off is worth it in your use case. See the section on [memory usage](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md#memory-usage) for details.
 
 #### GET
 
@@ -131,6 +134,12 @@ Serial.write(fetch.readString());
 
 fetch.clean();
 ```
+
+## Memory usage
+
+As described [here](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/bearssl-client-secure-class.html#mfln-or-maximum-fragment-length-negotiation-saving-ram) each HTTPS request needs roughly 28kB of free memory. Which is the majority of what is available, so can become an issue if your application needs more memory.
+
+To help with this, MFLN is implemented to reduce the memory requirements. But this technology can only be used if it is supported by the server. Before a HTTPS request is executed the `probeMaxFragmentLength` and `setBufferSizes` functions are used to check if the receive buffer size can be reduced. When supported by the server the memory needed for each request is reduced to roughly 6kB, which is quite significant.
 
 ## Code Generation
 

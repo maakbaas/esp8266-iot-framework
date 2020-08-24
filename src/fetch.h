@@ -12,7 +12,7 @@ class HTTPRequest
 public:
     void clean();
 
-    void begin(String url);
+    void begin(String url, bool useMFLN);
 
     int GET(String url);
     int GET();
