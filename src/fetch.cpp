@@ -2,7 +2,7 @@
 
 #include <WiFiClientSecureBearSSL.h>
 
-void HTTPRequest::begin(String url, bool useMFLN = false) 
+void HTTPRequest::begin(String url, bool useMFLN) 
 {
     http = new HTTPClient();
 
