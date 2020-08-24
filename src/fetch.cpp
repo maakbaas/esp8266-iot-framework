@@ -33,9 +33,7 @@ void HTTPRequest::begin(String url)
 
 int HTTPRequest::GET(String url)
 {
-    Serial.println(ESP.getFreeHeap());
     begin(url);
-    Serial.println(ESP.getFreeHeap());
     return http->GET();
 }
 
