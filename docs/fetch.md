@@ -9,8 +9,11 @@ Certificates are only valid for a specific time period; therefore, in order to d
 
 ```c++
 void begin(String url);
+void begin(String url, bool useMFLN);
 ```
-This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to use `addHeader` or `setAuthorization`. Otherwise you can use one of the shorthand request methods below.
+This method initializes a request object to `url`. The URL must include a http:// or https:// prefix. The method is only required if you want to set the `useMFLN` parameter or use the `addHeader` or `setAuthorization` functions. Otherwise you can use one of the shorthand request methods below.
+
+MFLN has the potential to reduce memory needed for HTTPS requests by up to 20kB if it is supported by the server you are requesting from. The reason that it is not enabled by default is that it takes the ESP8266 roughly 5 seconds to detect if MFLN is supported. With this flag you can enable MFLN if this trade-off is worth it in your use case. See the section on [memory usage](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md#memory-usage) for details.
 
 #### GET
 
@@ -132,6 +135,12 @@ Serial.write(fetch.readString());
 fetch.clean();
 ```
 
+## Memory Usage
+
+As described [here](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/bearssl-client-secure-class.html#mfln-or-maximum-fragment-length-negotiation-saving-ram) each HTTPS request needs roughly 28kB of free memory. Which is the majority of what is available, so can become an issue if your application needs more memory.
+
+To help with this, MFLN is implemented to reduce the memory requirements. But this technology can only be used if it is supported by the server. Before a HTTPS request is executed the `probeMaxFragmentLength` and `setBufferSizes` functions are used to check if the receive buffer size can be reduced. When supported by the server the memory needed for each request is reduced to roughly 6kB, which is quite significant.
+
 ## Code Generation
 
 As mentioned earlier a full certificate store is saved in PROGMEM as part of the application. By default this store is located in `certificates.h`, and will be included in the build. These certificates will be used by the ESP8266 Arduino BearSSL class to establish a secure connection.
@@ -144,3 +153,9 @@ For this step OpenSSL is needed. On Linux this is probably available by default,
 #path to openssl
 openssl = "C:\\msys32\\usr\\bin\\openssl"
 ```
+
+## Certificate Store Size
+
+The default certificate store contains ~150 certificates, and is roughly 170kB in size. There is a method to reduce this size by only including the root certificates that are needed for a predefined list of domains. These domains can be defined with the `DOMAIN_LIST` build flag in `platformio.ini`. See the [installation guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md) for more information on this build flag.
+
+Note that doing this reduces the flexibility of your application. This should not be used for cases where there is a user configurable URL that can changes after the build. Also, if the root certificate for a certain domain changes, your application will no longer work. But this scenario is probably not very likely.

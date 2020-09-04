@@ -26,7 +26,7 @@ If you are new to PlatformIO, start with the [installation guide](https://github
 lib_deps = ESP8266 IoT Framework
 ```
 
-Take one the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point to develop your application.
+Take one of the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point to develop your application.
 
 ## Screenshots
 
