@@ -9,11 +9,11 @@ class config
 public:
     configData data;
     bool begin(int numBytes = 512);
-    void saveRaw(uint8_t test[]);
+    void saveRaw(uint8_t bytes[]);
+    void saveExternal(configData *extData);
+    void save();
     void reset();
 
-private:
-    void save();
 };
 
 extern config configManager;
