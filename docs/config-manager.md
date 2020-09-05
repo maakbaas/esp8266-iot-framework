@@ -18,7 +18,7 @@ This method must be called from the setup of the application. The optional argum
 #### save
 
 ```c++
-void saveRaw();
+void save();
 ```
 This method saves the configManager.data object to EEPROM. Use this if you write changes or updates directly to the RAM mirror
 
