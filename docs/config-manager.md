@@ -4,6 +4,8 @@ For whatever function a device with an ESP8266 might have, it could be that you 
 
 Usage of this class is easy. See below how to define your configuration parameters. Once you have done this, these can be changed from the browser, and simply be called in the rest of your application as `configManager.data.parameterName`.
 
+A more detailed example of how to use this in your code is in the examples folder.
+
 ## Class Methods
 
 #### begin
@@ -13,10 +15,24 @@ bool begin(int numBytes = 512);
 ```
 This method must be called from the setup of the application. The optional argument will determine the flash size used for EEPROM. The method will attempt to restore the saved data from EEPROM. If no data is available, or if the fingerprint of the data structure has changed, the default values will be used.
 
+#### save
+
+```c++
+void saveRaw();
+```
+This method saves the configManager.data object to EEPROM. Use this if you write changes or updates directly to the RAM mirror
+
 #### saveRaw
 
 ```c++
-void saveRaw(uint8_t test[]);
+void saveExternal(configData *extData);
+```
+This method copies an external configData object into the configManager.data RAM mirror, and uploads it to EEPROM.
+
+#### saveRaw
+
+```c++
+void saveRaw(uint8_t bytes[]);
 ```
 This method stores the input byte array into the EEPROM. This is an unsafe method, you must ensure externally that the input byte array is the correct length and structure.
 
@@ -46,10 +62,6 @@ You might have noticed that the API only gives a function to update the full con
 
 On the low level then the full block will be rewritten. The reason for this implementation is that typically nothing is gained by writing individual members. The ESP8266 has no real EEPROM. The EEPROM class will rather write the content to a flash block. Since Flash memory can only be erased in blocks you have to wipe the whole lot and rewrite it. To prevent abusing the flash by potentially looping over a save function for individual members, this function is simply not available, enforcing you to only write the entire block at once.
 
-## Updating from the C++ code
-
-Of course you can also update configuration information from your code rather than through the web interface. To do this you need to make a RAM mirror of the `configManager.data` object. After you have modified the content of this object, you can simply give a pointer to its contents as an argument to the `configManager.saveRaw` function to store the result in EEPROM.
-
 ## Code Generation
 
 The configuration data is defined in the JSON file `html/js/configuration.json`. 
@@ -60,7 +72,11 @@ However, if you use the framework as a PlatformIO library, you need to define th
 build_flags = -DCONFIG_PATH=configuration_filename.json
 ```
 
-This configuration file will be automatically copied into the library folder before each build. An example of how this file could look is shown below.
+This configuration file will be automatically copied into the library folder before each build. 
+
+**Important:** After you have changed the JSON file, you also need to regenerate the web interface to reflect the latest changes by enabling the REBUILD_HTML build flag, otherwise the web interface will show the old configData. Refer to [this section](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface) for more details.
+
+An example of how this file could look is shown below:
 
 ```json
 [
