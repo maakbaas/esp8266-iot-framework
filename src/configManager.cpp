@@ -29,9 +29,15 @@ void config::reset()
     save();
 }
 
-void config::saveRaw(uint8_t test[])
+void config::saveRaw(uint8_t bytes[])
 {
-    memcpy(&data,test,sizeof(data));
+    memcpy(&data,bytes,sizeof(data));
+    save();
+}
+
+void config::saveExternal(configData *extData)
+{
+    memcpy(&data, extData, sizeof(data));
     save();
 }
 

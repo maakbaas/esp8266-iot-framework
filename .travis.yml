@@ -56,6 +56,23 @@ jobs:
           - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
 
     - stage: Framework
+      name: "configManager Example"
+      language: python
+      python:
+          - "2.7"
+      sudo: false
+      cache:
+          directories:
+              - "~/.platformio"
+      env:   
+        - PLATFORMIO_CI_SRC=examples/configManager/configManagerExample.cpp
+      install:
+          - pip install -U platformio
+          - platformio update
+      script:
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+
+    - stage: Framework
       name: "Time Sync Example"
       language: python
       python:
