@@ -25,7 +25,7 @@ jobs:
       name: "Hello World Example"
       language: python
       python:
-          - "2.7"
+          - "3.8"
       sudo: false
       cache:
           directories:
@@ -42,7 +42,7 @@ jobs:
       name: "Fetch Example"
       language: python
       python:
-          - "2.7"
+          - "3.8"
       sudo: false
       cache:
           directories:
@@ -59,7 +59,7 @@ jobs:
       name: "configManager Example"
       language: python
       python:
-          - "2.7"
+          - "3.8"
       sudo: false
       cache:
           directories:
@@ -76,7 +76,7 @@ jobs:
       name: "Time Sync Example"
       language: python
       python:
-          - "2.7"
+          - "3.8"
       sudo: false
       cache:
           directories:
