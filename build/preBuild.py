@@ -27,7 +27,7 @@ for item in env.get("CPPDEFINES", []):
     elif item == "REBUILD_CERTS":
         certs = True
     elif isinstance(item, tuple) and item[0] == "CONFIG_PATH":
-        copyfile(env.get("PROJECT_DIR") + '\\' + item[1], '../html/js/configuration.json')
+        copyfile(env.get("PROJECT_DIR") + '/' + item[1], '../html/js/configuration.json')
     elif isinstance(item, tuple) and item[0] == "DOMAIN_LIST":
         domains = item[1]
 

@@ -8,10 +8,10 @@ def preBuildConfigFun():
     dir_path = os.path.dirname(os.path.abspath(filename))
 
     filename = "config"
-    h = open(dir_path + "\\../src/generated/" + filename + ".h", "w", encoding="utf8")
-    cpp = open(dir_path + "\\../src/generated/" + filename + ".cpp", "w", encoding="utf8")
+    h = open(dir_path + "/../src/generated/" + filename + ".h", "w", encoding="utf8")
+    cpp = open(dir_path + "/../src/generated/" + filename + ".cpp", "w", encoding="utf8")
 
-    with open(dir_path + '\\../html/js/configuration.json') as f:
+    with open(dir_path + '/../html/js/configuration.json') as f:
         data = json.load(f)
 
     # binascii.crc32(mes.encode('utf8'))
