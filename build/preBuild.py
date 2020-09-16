@@ -4,6 +4,11 @@ import subprocess
 import inspect, os.path
 from os.path import join, realpath
 
+from preBuildHTML import preBuildHTMLFun
+from preBuildConfig import preBuildConfigFun
+from preBuildCertificates import preBuildCertificatesFun
+
+
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 dir_path = os.path.dirname(os.path.abspath(filename))
 
@@ -13,7 +18,7 @@ config = True
 certs = False
 
 # private library flags
-domainList = False
+domains = ''
 for item in env.get("CPPDEFINES", []):
     if item == "REBUILD_HTML":
         html = True
@@ -24,17 +29,13 @@ for item in env.get("CPPDEFINES", []):
     elif isinstance(item, tuple) and item[0] == "CONFIG_PATH":
         copyfile(env.get("PROJECT_DIR") + '\\' + item[1], '../html/js/configuration.json')
     elif isinstance(item, tuple) and item[0] == "DOMAIN_LIST":
-        domainList = True
         domains = item[1]
 
 if html:
-    subprocess.call(dir_path + "\\preBuildHTML.py", shell=True)
+    preBuildHTMLFun()
 if config:
-    subprocess.call(dir_path + "\\preBuildConfig.py", shell=True)
+    preBuildConfigFun()
 if certs:
-    if domainList:
-        subprocess.call([dir_path + "\\preBuildCertificates.py", domains], shell=True)
-    else:	
-        subprocess.call([dir_path + "\\preBuildCertificates.py"], shell=True)
+    preBuildCertificatesFun(domains)
 
 
