@@ -8,6 +8,7 @@ export function obj2bin(obj, binSize) {
     for (let i = 0; i < Config.length; i++) {
         switch (Config[i].type) {
             case "char":
+            case "color":
                 for (let j = 0; j < obj[Config[i].name].length; j++) {
                     binDataView.setUint8(n, (new TextEncoder).encode(obj[Config[i].name][j])[0]);
                     n++;
@@ -70,6 +71,7 @@ export function bin2obj(rawData) {
     for (let i = 0; i < Config.length; i++) {
         switch (Config[i].type) {
             case "char":
+            case "color":
                 parsedData[Config[i].name] = utf8decoder.decode(rawData.slice(n, n + Config[i].length)).split("\0").shift();
                 n = n + Config[i].length;
                 break;
