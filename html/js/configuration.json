@@ -7,6 +7,12 @@
         "value": "Generic ESP8266 Firmware"
     },
     {
+        "name": "dummyColor",
+        "type": "color",
+        "length": 32,
+        "value": "#ffffff"
+    },
+    {
         "name": "dummyInt",
         "type": "uint16_t",
         "value": 1000
@@ -15,7 +21,7 @@
         "name": "dummyBool",
         "type": "bool",
         "value": true
-    },    
+    },
     {
         "name": "dummyFloat",
         "type": "float",
