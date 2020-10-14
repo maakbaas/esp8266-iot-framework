@@ -36,7 +36,7 @@ def preBuildConfigFun():
         else:
             cpp.write(',\n')
 
-        if item['type'] == 'char':
+        if (item['type'] == 'char' or item['type'] == 'color'):
             cpp.write("\t\"" + item['value'] + "\"")
             h.write("\tchar " + item['name'] + "[" + str(item['length']) + "];\n")
         elif item['type'] == 'bool':
