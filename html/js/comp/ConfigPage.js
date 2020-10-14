@@ -59,6 +59,9 @@ const DefaultTypeAttributes = {
         max: 3.4028235E+38,
         step: "any",
     },
+    color: {
+        type: "color",
+    },
 };
 
 export function ConfigPage(props) {
@@ -90,9 +93,9 @@ export function ConfigPage(props) {
                 continue;
             }
 
-            let value; 
+            let value;
             if (typeof state[Config[i].name] !== "undefined") {value = state[Config[i].name];} else {value = "";}
-             
+
             const configInputAttributes = DefaultTypeAttributes[Config[i].type] || {};
             const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
 
@@ -117,6 +120,12 @@ export function ConfigPage(props) {
                         <Grey>({conditionalAttributes.min} &ndash; {conditionalAttributes.max})</Grey>
                     </>;
                     break;
+
+                case "color":
+                    inputType = "color";
+                    conditionalAttributes.value = value;
+                    break;
+
             }
 
             confItems = <>{confItems}
