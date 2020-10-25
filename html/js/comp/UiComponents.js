@@ -271,34 +271,9 @@ export const StyledSlider = styled(ReactSlider)`
     height: 25px;
 `;
 
-/* DEADCODE:
-const StyledThumb = styled.div`
-    height: 25px;
-    line-height: 25px;
-    width: 25px;
-    text-align: center;
-    background-color: #000;
-    color: #fff;
-    border-radius: 50%;
-    cursor: grab;
-`;
-
-export const Thumb = (props, state) => <StyledThumb {...props}>{state.valueNow}</StyledThumb>;
-
-const StyledTrack = styled.div`
-    top: 0;
-    bottom: 0;
-    background: ${props => props.index === 2 ? '#f00' : props.index === 1 ? '#ddd' : '${cPrimary}'};
-    border-radius: 999px;
-`;
-
-export const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
-*/
-
 const HeaderSrc = ({ className, children }) => (
     <div className={className}><div>{children}</div></div>
 );
-
 
 HeaderSrc.propTypes = {
     className: PropTypes.string,

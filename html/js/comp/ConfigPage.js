@@ -9,7 +9,6 @@ import { Form, Button, StyledSlider } from "./UiComponents";
 
 import { obj2bin, bin2obj } from "../functions/configHelpers";
 
-// DEADCODE: import InputColor from 'react-input-color';
 import Toggle from 'react-toggle';
 
 const Grey = styled.span`
@@ -135,14 +134,6 @@ export function ConfigPage(props) {
                 //   but preferred browser in built color selector, is good enough.  Less dependencies.
 
                 inputControlElements = <><input type="color" id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} />
-                    {/* DEADCODE: react-input-color:
-                     <InputColor
-                            initialValue={value}
-                            id={Config[i].name}
-                            name={Config[i].name}
-                            placement="right"
-                            onChange={(val) => state[Config[i].name] = val.hex}
-                        /> */}
                     </>;
             } else if (inputControl == "slider") {
                 // Using https://github.com/zillow/react-slider
