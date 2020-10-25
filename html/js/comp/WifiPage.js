@@ -26,7 +26,7 @@ export function WifiPage(props) {
     }, []);
 
     function changeWifi() {
-        fetch(`${props.API}/api/wifi/set?ssid=${document.getElementById("ssid").value.trim()}&pass=${document.getElementById("pass").value.trim()}`, { method: "POST" });
+        fetch(`${props.API}/api/wifi/set?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}`, { method: "POST" });
         document.getElementById("ssid").value = "";
         document.getElementById("pass").value = "";
     }

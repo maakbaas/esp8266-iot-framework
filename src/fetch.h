@@ -4,10 +4,10 @@
 #include <Arduino.h>
 
 #ifdef ESP32
-#include <WiFi.h>
-#include <HTTPClient.h>
+    #include <WiFi.h>
+    #include <HTTPClient.h>
 #elif defined(ESP8266)
-#include <ESP8266HTTPClient.h>
+    #include <ESP8266HTTPClient.h>
 #endif
 
 #include "certStore.h"
@@ -18,7 +18,7 @@ class HTTPRequest
 public:
     void clean();
 
-    void begin(String url);
+    void begin(String url, bool useMFLN = false);
 
     int GET(String url);
     int GET();

@@ -25,7 +25,6 @@ bool config::begin(int numBytes)
 
 void config::reset()
 {
-    _hasConfigChanged = true;
     memcpy_P(&data, &defaults, sizeof(data));
     save();
 }
@@ -36,26 +35,18 @@ void config::saveRaw(uint8_t newData[])
     save();
 }
 
-void config::update(uint8_t newData[])
+void config::saveExternal(configData *extData)
 {
-    _hasConfigChanged = true;
-    memcpy(&data, newData,sizeof(data));
+    memcpy(&data, extData, sizeof(data));
+    save();
 }
-
 
 void config::save()
 {
-    _hasConfigChanged = true;
     EEPROM.put(0, configVersion);
     EEPROM.put(4, data);
     EEPROM.commit();
-}
-
-bool config::hasConfigChanged()
-{
-    bool hasChanged = _hasConfigChanged;
-    _hasConfigChanged = false;
-    return hasChanged;
+    _hasConfigChanged = true;
 }
 
 config configManager;

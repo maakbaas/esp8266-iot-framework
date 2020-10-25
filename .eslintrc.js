@@ -23,6 +23,10 @@ module.exports = { // eslint-disable-line no-undef
             "error",
             "always-multiline",
         ],
+        "linebreak-style": [
+            "error",
+            "unix",
+        ],
         curly: [
             "error",
             "all",

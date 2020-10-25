@@ -1,4 +1,4 @@
-# ESP8266 IoT Framework
+# ESP8266 IoT Framework ![Status](https://travis-ci.com/maakbaas/esp8266-iot-framework.svg?branch=master)
 
 The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, WiFi manager, configuration manager and OTA updates.
 
@@ -26,7 +26,7 @@ If you are new to PlatformIO, start with the [installation guide](https://github
 lib_deps = ESP8266 IoT Framework
 ```
 
-Take one the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point to develop your application.
+Take one of the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point to develop your application.
 
 ## Screenshots
 

@@ -10,7 +10,7 @@
 
 #endif
 
-void HTTPRequest::begin(String url) 
+void HTTPRequest::begin(String url, bool useMFLN) 
 {
     http = new HTTPClient();
 
@@ -22,8 +22,17 @@ void HTTPRequest::begin(String url)
         http->begin(*client, url);
 #elif defined(ESP8266)
         httpsClient = new BearSSL::WiFiClientSecure();
+
+        //try MFLN to reduce memory need
+        if (useMFLN && httpsClient->probeMaxFragmentLength(url, 443, 512))
+        {
+            Serial.println(PSTR("MFLN supported"));
+            httpsClient->setBufferSizes(512, 512);
+        }
+
         httpsClient->setCertStore(&certStore);
         http->begin(*httpsClient, url);
+                
         client = httpsClient;
 #endif
     }
