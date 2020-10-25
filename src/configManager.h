@@ -8,12 +8,16 @@ class config
 
 public:
     configData data;
+
     bool begin(int numBytes = 512);
-    void saveRaw(uint8_t test[]);
+    void saveRaw(uint8_t newData[]);
+    void update(uint8_t newData[]);
     void reset();
+    bool hasConfigChanged();
 
 private:
     void save();
+    bool _hasConfigChanged = false;
 };
 
 extern config configManager;

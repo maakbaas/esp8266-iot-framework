@@ -4,6 +4,12 @@
 
 namespace BearSSL {
 
+#ifdef ESP32
+
+// TODO: Implement ESP32 version
+
+#elif defined(ESP8266)
+
 void CertStore::installCertStore(br_x509_minimal_context *ctx) {
   br_x509_minimal_set_dynamic(ctx, (void*)this, findHashedTA, freeHashedTA);
 }
@@ -55,5 +61,7 @@ void CertStore::freeHashedTA(void *ctx, const br_x509_trust_anchor *ta) {
   delete cs->_x509;
   cs->_x509 = nullptr;
 }
+
+#endif
 
 }

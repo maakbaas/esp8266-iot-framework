@@ -3,9 +3,10 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import { normalize } from "styled-normalize";
 import { Loader, Menu as MenuIcon } from "react-feather";
 import PropTypes from "prop-types";
+import ReactSlider from 'react-slider';
 
-export const cPrimary = "#0055ff"; 
-export const cPrimaryHover = "#0066ee"; 
+export const cPrimary = "#6699cc"; 
+export const cPrimaryHover = "#99ccff"; 
 export const cHeader = "#111";
 export const cHeaderHover = "#333"; 
 export const cSecondary = "#ff00cc";
@@ -51,7 +52,248 @@ export const GlobalStyle = createGlobalStyle`
             max-width: initial !important;
         }
     }
+    
+
+    .horizontal-slider {
+        max-width: 100%;
+        height: 38px;
+        border: 0px solid grey;
+    }
+
+    .vertical-slider {
+        height: 380px;
+        width: 38px;
+        border: 1px solid grey;
+    }
+
+    .slider-thumb {
+        font-size: 0.8em;
+        text-align: center;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        border: 4px solid #ccc;
+        box-shadow:0 0 4px #aaa;
+        box-sizing: border-box;
+        border-radius: 50%;
+    }
+
+    .slider-thumb.active {
+        outline:none;
+        border-color:${cPrimaryHover};
+        box-shadow:0 0 10px ${cPrimaryHover};
+    }
+
+    .slider-track {
+        position: relative;
+        background: ${cPrimary};
+        border-radius: 999px;
+    }
+
+    .slider-track.slider-track-1 {
+        background: #ddd;
+    }
+
+    .slider-track.slider-track-2 {
+        background: #0f0;
+    }
+
+    .horizontal-slider .slider-track {
+        top: 16px;
+        height: 8px;
+    }
+
+    .horizontal-slider .slider-thumb {
+        top: 1px;
+        width: 40px;
+        height: 38px;
+        line-height: 30px;
+    }
+
+    .vertical-slider .slider-thumb {
+        left: 1px;
+        width: 38px;
+        height: 40px;
+        line-height: 30px;
+    }
+
+    .vertical-slider .slider-track {
+        left: 16px;
+        width: 8px;
+    }    
+
+
+    .react-toggle {
+        touch-action: pan-x;
+      
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+      
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .react-toggle-screenreader-only {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+      
+      .react-toggle--disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        -webkit-transition: opacity 0.25s;
+        transition: opacity 0.25s;
+      }
+      
+      .react-toggle-track {
+        width: 50px;
+        height: 24px;
+        padding: 0;
+        border-radius: 30px;
+        background-color: #ddd;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+      }
+      
+      .react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+        background-color: #000000;
+      }
+      
+      .react-toggle--checked .react-toggle-track {
+        background-color: ${cPrimary};
+      }
+      
+      .react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+        background-color: ${cPrimaryHover};
+      }
+      
+      .react-toggle-track-check {
+        position: absolute;
+        width: 14px;
+        height: 10px;
+        top: 0px;
+        bottom: 0px;
+        margin-top: auto;
+        margin-bottom: auto;
+        line-height: 0;
+        left: 8px;
+        opacity: 0;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+      }
+      
+      .react-toggle--checked .react-toggle-track-check {
+        opacity: 1;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+      }
+      
+      .react-toggle-track-x {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 0px;
+        bottom: 0px;
+        margin-top: auto;
+        margin-bottom: auto;
+        line-height: 0;
+        right: 10px;
+        opacity: 1;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+      }
+      
+      .react-toggle--checked .react-toggle-track-x {
+        opacity: 0;
+      }
+      
+      .react-toggle-thumb {
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 22px;
+        height: 22px;
+        border: 1px solid #dddddd;
+        border-radius: 50%;
+        background-color: #FAFAFA;
+      
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      
+        -webkit-transition: all 0.25s ease;
+        -moz-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+      }
+      
+      .react-toggle--checked .react-toggle-thumb {
+        left: 27px;
+        border-color: ${cPrimary};
+      }
+      
+      .react-toggle--focus .react-toggle-thumb {
+        -webkit-box-shadow: 0px 0px 3px 2px ${cPrimaryHover};
+        -moz-box-shadow: 0px 0px 3px 2px ${cPrimaryHover};
+        box-shadow: 0px 0px 2px 3px ${cPrimaryHover};
+      }
+      
+      .react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+        -webkit-box-shadow: 0px 0px 5px 5px ${cPrimaryHover};
+        -moz-box-shadow: 0px 0px 5px 5px ${cPrimaryHover};
+        box-shadow: 0px 0px 5px 5px ${cPrimaryHover};
+      }
 `;
+
+export const StyledSlider = styled(ReactSlider)`
+    width: 100%;
+    height: 25px;
+`;
+
+/* DEADCODE:
+const StyledThumb = styled.div`
+    height: 25px;
+    line-height: 25px;
+    width: 25px;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    cursor: grab;
+`;
+
+export const Thumb = (props, state) => <StyledThumb {...props}>{state.valueNow}</StyledThumb>;
+
+const StyledTrack = styled.div`
+    top: 0;
+    bottom: 0;
+    background: ${props => props.index === 2 ? '#f00' : props.index === 1 ? '#ddd' : '${cPrimary}'};
+    border-radius: 999px;
+`;
+
+export const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
+*/
 
 const HeaderSrc = ({ className, children }) => (
     <div className={className}><div>{children}</div></div>
@@ -267,19 +509,21 @@ export const Alert = styled(AlertSrc)`
 
 export const Form = styled.form` 
     label {
+        /*
         display: inline-block;
-        min-width: 250px;
-        max-width: 250px;
+        in-width: 250px;
+        ax-width: 250px;
         padding-right:1em;
+        */
     }
 
     input[type=number],
     input[type=checkbox],
     input[type=text] {
-        width:450px;
+        /*width:450px;
         max-width:100%;
         box-sizing: border-box;
-        padding:0.3em;
+        padding:0.3em;*/
     }
 
     input[type=checkbox] {

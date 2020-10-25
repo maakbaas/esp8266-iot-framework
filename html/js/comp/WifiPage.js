@@ -4,7 +4,13 @@ import { Form, Button, Spinner, Confirmation } from "./UiComponents";
 import { Wifi, Lock } from "react-feather";
 
 export function WifiPage(props) {
-    const [state, setState] = useState({ captivePortal: [], ssid: []});
+    const [state, setState] = useState({ 
+        captivePortal: [], 
+        ssid: [], 
+        hostName: [],
+        ipAddress: [],
+        macAddress: []
+    });
     const [forgetModal, setForgetModal] = useState(false);
     const [saveModal, setSaveModal] = useState(false);
 
@@ -43,7 +49,11 @@ export function WifiPage(props) {
     if (state.captivePortal === true) {
         connectedTo = "Captive portal running";
     } else if (state.captivePortal === false) {
-        connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>)</>;
+        connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>) 
+            <br/>Host: {state.hostName}
+            <br/>IP: {state.ipAddress} 
+            <br/>MAC: {state.macAddress}
+        </>;
     }
     
     page = <>{page}<p>{connectedTo == null ? <Spinner /> : connectedTo}</p></>;

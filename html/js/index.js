@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
-import { Box } from "react-feather";
+import { Cpu } from "react-feather";
 
 import {GlobalStyle, Menu, Header, Page, Hamburger} from "./comp/UiComponents";
 import { WifiPage } from "./comp/WifiPage";
@@ -23,7 +23,8 @@ function Root() {
         <BrowserRouter>
 
             <Header>
-                <h1><Box style={{verticalAlign:"-0.1em"}} /> ESP8266</h1>
+                {/* Cpu (https://feathericons.com) is similar to ESP8266 icon https://www.espressif.com/en/products/socs/esp8266 */}
+                <h1><Cpu style={{verticalAlign:"-0.1em"}} /> ESP8266</h1>
 
                 <Hamburger onClick={() => setMenu(!menu)} />
                 <Menu className={menu ? "" : "menuHidden"}>

@@ -6,6 +6,11 @@ export function obj2bin(obj, binSize) {
     let n = 0;
 
     for (let i = 0; i < Config.length; i++) {
+
+        if (typeof obj[Config[i].name] === "undefined") {
+            throw "Expected obj to contain key-value for '" + Config[i].name + "'";
+        }
+    
         switch (Config[i].type) {
             case "char":
                 for (let j = 0; j < obj[Config[i].name].length; j++) {
@@ -115,6 +120,7 @@ export function bin2obj(rawData) {
         }
     }
 
-    return (parsedData);
+    // DEBUG: alert(JSON.stringify(parsedData));
 
+    return (parsedData);
 }

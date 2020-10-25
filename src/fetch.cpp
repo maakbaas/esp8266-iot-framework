@@ -1,6 +1,14 @@
 #include "fetch.h"
 
+#ifdef ESP32
+
+// TODO: Implement ESP32 version
+
+#elif defined(ESP8266)
+
 #include <WiFiClientSecureBearSSL.h>
+
+#endif
 
 void HTTPRequest::begin(String url) 
 {
@@ -8,10 +16,16 @@ void HTTPRequest::begin(String url)
 
     if (url[4] == 's')
     {
+#ifdef ESP32
+        // TODO: Implement ESP32 version
+        client = new WiFiClient();  // TODO: Should use ESP32 secure client instead
+        http->begin(*client, url);
+#elif defined(ESP8266)
         httpsClient = new BearSSL::WiFiClientSecure();
         httpsClient->setCertStore(&certStore);
         http->begin(*httpsClient, url);
         client = httpsClient;
+#endif
     }
     else
     {
