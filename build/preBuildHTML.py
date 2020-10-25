@@ -1,3 +1,4 @@
 import os
 
-os.system("npm run build")
+def preBuildHTMLFun():
+    os.system("npm run build")
