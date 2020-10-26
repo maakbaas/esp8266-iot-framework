@@ -29,5 +29,37 @@
         "hidden": true,
         "length": 11,
         "value": "invisible!"
+    },
+    {
+        "name": "dummyColor",
+        "label": "Color",
+        "type": "char",
+        "length": 10,
+        "inputControl": "color",
+        "value": "#ff00ff"
+    },
+    {
+        "name": "dummySelection",
+        "label": "Dropdown",
+        "type": "char",
+        "length": 10,
+        "inputControl": "select",
+        "value": "Aurora",
+        "options": [
+            "Aurora",
+            "Ocean",
+            "Rainbow",
+            "Space",
+            "Sunset"
+        ]
+    },
+    {
+        "name": "dummySlider",
+        "label": "Slider",
+        "type": "uint8_t",
+        "inputControl": "slider",
+        "value": 25,
+        "min": 1,
+        "max": 100
     }
 ]

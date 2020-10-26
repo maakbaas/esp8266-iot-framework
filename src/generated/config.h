@@ -8,6 +8,9 @@ struct configData
 	bool dummyBool;
 	float dummyFloat;
 	char dummyString[11];
+	char dummyColor[10];
+	char dummySelection[10];
+	uint8_t dummySlider;
 };
 
 extern uint32_t configVersion;
