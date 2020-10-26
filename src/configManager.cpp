@@ -49,4 +49,11 @@ void config::save()
     _hasConfigChanged = true;
 }
 
+bool config::hasConfigChanged()
+{
+    bool hasChanged = _hasConfigChanged;
+    _hasConfigChanged = false;
+    return hasChanged;
+}
+
 config configManager;
