@@ -3,7 +3,7 @@ import styled, { createGlobalStyle, css } from "styled-components";
 import { normalize } from "styled-normalize";
 import { Loader, Menu as MenuIcon } from "react-feather";
 import PropTypes from "prop-types";
-import ReactSlider from 'react-slider';
+import ReactSlider from "react-slider";
 
 export const cPrimary = "#6699cc"; 
 export const cPrimaryHover = "#99ccff"; 

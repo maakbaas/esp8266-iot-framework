@@ -9,7 +9,7 @@ export function WifiPage(props) {
         ssid: [], 
         hostName: [],
         ipAddress: [],
-        macAddress: []
+        macAddress: [],
     });
     const [forgetModal, setForgetModal] = useState(false);
     const [saveModal, setSaveModal] = useState(false);

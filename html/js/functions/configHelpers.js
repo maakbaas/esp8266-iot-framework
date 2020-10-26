@@ -8,7 +8,7 @@ export function obj2bin(obj, binSize) {
     for (let i = 0; i < Config.length; i++) {
 
         if (typeof obj[Config[i].name] === "undefined") {
-            throw "Expected obj to contain key-value for '" + Config[i].name + "'";
+            throw `Expected obj to contain key-value for '${Config[i].name}'`;
         }
     
         switch (Config[i].type) {

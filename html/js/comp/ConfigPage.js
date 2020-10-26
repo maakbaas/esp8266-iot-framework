@@ -9,7 +9,7 @@ import { Form, Button, StyledSlider } from "./UiComponents";
 
 import { obj2bin, bin2obj } from "../functions/configHelpers";
 
-import Toggle from 'react-toggle';
+import Toggle from "react-toggle";
 
 const Grey = styled.span`
     color:#666;
@@ -95,7 +95,7 @@ export function ConfigPage(props) {
             let value; 
             if (typeof state[Config[i].name] !== "undefined") {value = state[Config[i].name];} else {value = "";}
 
-            let inputControl = Config[i].inputControl || "input";
+            const inputControl = Config[i].inputControl || "input";
 
             const configInputAttributes = DefaultTypeAttributes[Config[i].type] || {};
             const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
@@ -126,7 +126,7 @@ export function ConfigPage(props) {
             let inputControlElements;
             if (inputControl == "select") {
                 inputControlElements = <><select id={Config[i].name} name={Config[i].name} value={value}>
-                    {Config[i].options.map((currValue,index) => <option value={currValue}>{currValue}</option>)}
+                    {Config[i].options.map((currValue, index) => <option value={currValue} key={index}>{currValue}</option>)}
                 </select></>;
             } else if (inputControl == "color") {
                 // Using HTML <Input type=color.
@@ -134,31 +134,29 @@ export function ConfigPage(props) {
                 //   but preferred browser in built color selector, is good enough.  Less dependencies.
 
                 inputControlElements = <><input type="color" id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} />
-                    </>;
+                </>;
             } else if (inputControl == "slider") {
                 // Using https://github.com/zillow/react-slider
 
                 // Hide range info label, is redundant, since slider thumb displays selected value.
-                rangeInfo = ""
+                rangeInfo = "";
 
                 inputControlElements = <><StyledSlider
-                        id={Config[i].name}
-                        name={Config[i].name}
-                        className="horizontal-slider"
-                        thumbClassName="slider-thumb"
-                        trackClassName="slider-track"
-                        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                        value={value}
-                        {...conditionalAttributes}
-                        onAfterChange={(val) => state[Config[i].name] = val}
-                    /></>;
+                    id={Config[i].name}
+                    name={Config[i].name}
+                    className="horizontal-slider"
+                    thumbClassName="slider-thumb"
+                    trackClassName="slider-track"
+                    renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                    value={value}
+                    {...conditionalAttributes}
+                    onAfterChange={(val) => state[Config[i].name] = val}
+                /></>;
             } else if (inputControl == "toggle" || inputType == "checkbox") {
                 // Using <Toggle> from https://github.com/aaronshaf/react-toggle
                 // - Did consider <Switch> from https://github.com/clari/react-ios-switch 
                 //   but preferred react-toggle since UI better matches react-slider.
 
-                let isChecked = Boolean(value);
-                    
                 inputControlElements = <><Toggle
                     id={Config[i].name}
                     name={Config[i].name}
@@ -166,11 +164,11 @@ export function ConfigPage(props) {
                     
                     icons={false}
                     onChange={(e) => { state[Config[i].name] = e.target.checked; this.setState(this.state);} } 
-                    /></>;
+                /></>;
             } else if (inputControl == "input") {
                 inputControlElements = <input type={inputType} id={Config[i].name} name={Config[i].name} value={value} {...conditionalAttributes} disabled={Config[i].disabled} style="width:100%" />;
             } else {
-                inputControlElements = <><div>Unknown inputControl type '{inputControl}'</div></>;
+                inputControlElements = <><div>Unknown inputControl type &apos;{inputControl}&apos;</div></>;
             }
             
             confItems = <>{confItems}
@@ -178,7 +176,7 @@ export function ConfigPage(props) {
                     <td nowrap><label htmlFor={Config[i].name}><b>{Config[i].label || Config[i].name}</b>: {rangeInfo}</label></td>
                     <td>{inputControlElements}</td>
                 </tr>
-                </>;
+            </>;
         }
     }
 
@@ -198,11 +196,11 @@ export function ConfigPage(props) {
     const form = <>
         <Form>
             <table width="100%" style="width:100%">
-            {confItems}
+                {confItems}
             </table>
         </Form>
         {button}        
-        </>;
+    </>;
 
     return <><h2>Configuration</h2><p>{form}</p></>;
 
@@ -222,14 +220,11 @@ export function ConfigPage(props) {
             } else if (Config[i].inputControl == "slider") {
                 // Use state property that was modified when slider after change event fired
                 newData[Config[i].name] = state[Config[i].name];
-            }
-            else {
-                try
-                {
+            } else {
+                try {
                     newData[Config[i].name] = document.getElementById(Config[i].name).value;
-                }
-                catch (ex) {
-                    alert("Ex, msg=" + ex.message + ", failed to find " + Config[i].name);
+                } catch (ex) {
+                    alert(`Ex, msg=${ex.message}, failed to find ${Config[i].name}`);
                 }
             }
         }
