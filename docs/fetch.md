@@ -154,6 +154,12 @@ For this step OpenSSL is needed. On Linux this is probably available by default,
 openssl = "C:\\msys32\\usr\\bin\\openssl"
 ```
 
+Another prerequisite is that you need the Python module asn1crypto. Since currently PlatformIO uses its own internal Python version, this means you need to open a new PlatformIO terminal, and then execute the command:
+
+```
+pip install asn1crypto
+```
+
 ## Certificate Store Size
 
 The default certificate store contains ~150 certificates, and is roughly 170kB in size. There is a method to reduce this size by only including the root certificates that are needed for a predefined list of domains. These domains can be defined with the `DOMAIN_LIST` build flag in `platformio.ini`. See the [installation guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md) for more information on this build flag.
