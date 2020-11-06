@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
 import { Box } from "react-feather";
@@ -8,6 +8,8 @@ import { WifiPage } from "./comp/WifiPage";
 import { ConfigPage } from "./comp/ConfigPage";
 import { FilePage } from "./comp/FilePage";
 import { FirmwarePage } from "./comp/FirmwarePage";
+
+import { bin2obj } from "./functions/configHelpers";
 
 import Config from "./configuration.json";
 
@@ -19,7 +21,25 @@ if (process.env.NODE_ENV === "development") {require("preact/debug");}
 function Root() {
     
     const [menu, setMenu] = useState(false);
-    const projectName = Config.find(entry => entry.name === "projectName").value || "ESP8266";
+    const [configData, setConfigData] = useState([]);
+    const [binSize, setBinSize] = useState(0);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    function fetchData() {
+        fetch(`${url}/api/config/get`)
+            .then((response) => {
+                return response.arrayBuffer();
+            })
+            .then((data) => {
+                setBinSize(data.byteLength);
+                setConfigData(bin2obj(data));
+            });
+    }
+
+    const projectName = configData["projectName"] || Config.find(entry => entry.name === "projectName").value || "ESP8266";
     return <><GlobalStyle />
 
         <BrowserRouter>
@@ -43,7 +63,10 @@ function Root() {
                         <FilePage API={url} />
                     </Route>
                     <Route exact path="/config">
-                        <ConfigPage API={url} />
+                        <ConfigPage API={url} 
+                            configData={configData}
+                            binSize={binSize}
+                            requestUpdate={fetchData} />
                     </Route>
                     <Route exact path="/firmware">
                         <FirmwarePage API={url} />
