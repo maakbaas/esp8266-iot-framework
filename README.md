@@ -18,6 +18,10 @@ The unique advantage of this framework is that code generation at build time is 
 
 Details beyond the documentation can be found at [maakbaas.com](https://maakbaas.com/esp8266-iot-framework/).
 
+## Featured projects
+
+*I would love to showcase some cool projects here that are based on this framework. Would you like to be featured with a picture and a link? [contact me!](https://maakbaas.com/contact/)*
+
 ## Quick start
 
 If you are new to PlatformIO, start with the [installation guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md). Otherwise, simply start a new project for your ESP8266, and add the following line to your `platformio.ini` file:
