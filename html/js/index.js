@@ -9,6 +9,8 @@ import { ConfigPage } from "./comp/ConfigPage";
 import { FilePage } from "./comp/FilePage";
 import { FirmwarePage } from "./comp/FirmwarePage";
 
+import Config from "./configuration.json";
+
 let url = "http://192.168.1.54";
 if (process.env.NODE_ENV === "production") {url = window.location.origin;}
 
@@ -17,13 +19,13 @@ if (process.env.NODE_ENV === "development") {require("preact/debug");}
 function Root() {
     
     const [menu, setMenu] = useState(false);
-
+    const projectName = Config.find(entry => entry.name === "projectName").value || "ESP8266";
     return <><GlobalStyle />
 
         <BrowserRouter>
 
             <Header>
-                <h1><Box style={{verticalAlign:"-0.1em"}} /> ESP8266</h1>
+                <h1><Box style={{verticalAlign:"-0.1em"}} /> {projectName}</h1>
 
                 <Hamburger onClick={() => setMenu(!menu)} />
                 <Menu className={menu ? "" : "menuHidden"}>
