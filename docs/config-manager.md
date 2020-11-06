@@ -22,7 +22,7 @@ void save();
 ```
 This method saves the configManager.data object to EEPROM. Use this if you write changes or updates directly to the RAM mirror
 
-#### saveRaw
+#### saveExternal
 
 ```c++
 void saveExternal(configData *extData);
