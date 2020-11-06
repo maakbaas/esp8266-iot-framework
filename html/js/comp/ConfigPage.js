@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
 import Config from "../configuration.json";
+import { obj2bin } from "../functions/configHelpers";
 
 import { Form, Button } from "./UiComponents";
-
-import { obj2bin, bin2obj } from "../functions/configHelpers";
 
 const Grey = styled.span`
     color:#666;
@@ -62,25 +61,11 @@ const DefaultTypeAttributes = {
 };
 
 export function ConfigPage(props) {
-    const [state, setState] = useState([]);
-    const [binSize, setBinSize] = useState(0);
-
+    
     useEffect(() => {
         document.title = "Configuration";
-        fetchData();
     }, []);
-
-    function fetchData() {
-        fetch(`${props.API}/api/config/get`)
-            .then((response) => {
-                return response.arrayBuffer();
-            })
-            .then((data) => {
-                setBinSize(data.byteLength);
-                setState(bin2obj(data));
-            });
-    }
-
+   
     let confItems;
     if (Config.length == 0) {
         confItems = <p>There are no items defined in <b>configuration.json</b></p>;
@@ -91,7 +76,7 @@ export function ConfigPage(props) {
             }
 
             let value; 
-            if (typeof state[Config[i].name] !== "undefined") {value = state[Config[i].name];} else {value = "";}
+            if (typeof props.configData[Config[i].name] !== "undefined") {value = props.configData[Config[i].name];} else {value = "";}
              
             const configInputAttributes = DefaultTypeAttributes[Config[i].type] || {};
             const inputType = DefaultTypeAttributes[Config[i].type].type || "text";
@@ -129,14 +114,14 @@ export function ConfigPage(props) {
     }
 
     let button;
-    if (Object.keys(state).length > 0) {
+    if (Object.keys(props.configData).length > 0) {
         button = <Button onClick={() =>
             fetch(`${props.API}/api/config/set`, {
                 method: "post",
                 body: form2bin(),                
             }).then((response) => { return response.status; })
                 .then((status) => {
-                    if (status == 200) {fetchData();}
+                    if (status == 200) {props.requestUpdate();}
                 })         
         }>Save</Button>;
     }
@@ -154,7 +139,7 @@ export function ConfigPage(props) {
 
         for (let i = 0; i < Config.length; i++) {
             if (Config[i].hidden) {
-                newData[Config[i].name] = state[Config[i].name];
+                newData[Config[i].name] = props.configData[Config[i].name];
                 continue;
             }
 
@@ -168,7 +153,7 @@ export function ConfigPage(props) {
             }
         }
         
-        return obj2bin(newData, binSize);
+        return obj2bin(newData, props.binSize);
         
     }
     
@@ -176,4 +161,7 @@ export function ConfigPage(props) {
 
 ConfigPage.propTypes = {
     API: PropTypes.string,
+    binSize: PropTypes.number,
+    configData: PropTypes.object,
+    requestUpdate: PropTypes.func,
 };

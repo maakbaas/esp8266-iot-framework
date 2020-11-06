@@ -64,7 +64,13 @@ HeaderSrc.propTypes = {
 };
 
 export const Header = styled(HeaderSrc)`
-    background-color: ${cHeader};    
+    background-color: ${cHeader};   
+    padding:0.3em 0em; 
+
+    h1 {
+        margin:0.5em 0em;
+    }
+
     div:first-child {
         margin:0px auto;
         padding:0em 1em;
@@ -82,8 +88,12 @@ export const Header = styled(HeaderSrc)`
     a {
         color: #fff;
         padding:0.6em;
-        margin-left:1em;
+        margin-right:1em;
         border-radius:3px;
+    }
+
+    li:last-of-type a {
+        margin-right:0px;
     }
 
     a:hover {
@@ -150,7 +160,7 @@ export const Hamburger = styled(HamburgerSrc)`
 export const Menu = styled.ul`
     display:flex;
     padding:0px;
-    list-style: none;     
+    list-style: none;  
     
     @media (max-width: 1024px) 
     {   
@@ -158,7 +168,7 @@ export const Menu = styled.ul`
         width:100%;
         background-color:#444;
         margin:0px -1em;
-        padding:0em 1em;
+        padding:0em 1em;    
 
         a {
             display:block;

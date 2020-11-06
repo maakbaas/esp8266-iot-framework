@@ -4,7 +4,7 @@
         "label": "Project Name",
         "type": "char",
         "length": 32,
-        "value": "Generic ESP8266 Firmware"
+        "value": "ESP8266 IoT Framework"
     },
     {
         "name": "dummyInt",

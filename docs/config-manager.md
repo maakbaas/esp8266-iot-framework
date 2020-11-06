@@ -114,7 +114,11 @@ An example of how this file could look is shown below:
 ]
 ```
 
-Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct.
+Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. 
+
+The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
+
+For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct.
 
 The `configVersion` is the CRC32 hash of the JSON file. This is added to the C code in order to detect if the JSON has changed compared to the content of the EEPROM, since the `configVersion` will also be stored in the EEPROM. This means that if a field is changed in the JSON, the application will know to reject the current content of the EEPROM since it might not be in accordance to the struct definitions it knows.
 
