@@ -12,6 +12,9 @@ private:
     DNSServer *dnsServer;
     String ssid;
     String pass;
+    IPAddress ip;
+    IPAddress gw;
+    IPAddress sub;
     bool reconnect = false;
     bool inCaptivePortal = false;
     char const *captivePortalName;
@@ -19,6 +22,7 @@ private:
     void startCaptivePortal(char const *apName);
     void stopCaptivePortal();
     void connectNewWifi(String newSSID, String newPass);    
+    void storeToEEPROM();
 
 public : 
     void begin(char const *apName);
@@ -27,6 +31,7 @@ public :
     bool isCaptivePortal();
     String SSID();
     void setNewWifi(String newSSID, String newPass);
+    void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw);
 };
 
 extern WifiManager WiFiManager;
