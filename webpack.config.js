@@ -13,7 +13,7 @@ module.exports = (env, argv) => ({
     
     context: path.resolve(__dirname),
 
-    entry: "./html/js/index.js",
+    entry: "./gui/js/index.js",
 
     output: {
         filename: "bundle.js",
@@ -80,7 +80,7 @@ module.exports = (env, argv) => ({
     plugins: [
         new MiniCssExtractPlugin(),
         new HtmlWebPackPlugin({
-            template: "./html/index.html",
+            template: "./gui/index.html",
             filename: "./index.html",
             inlineSource: ".(js|css)$", // embed all javascript and css inline
         }),

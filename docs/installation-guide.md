@@ -73,7 +73,7 @@ The build flags are optional, since all default generated artefacts are already 
 
 **-DREBUILD_HTML:** This pre-build step will re-generate the web interface to `html.h` by simply calling `npm run build`. This is only needed if you make modifications to the GUI. Read more details [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface).
 
-**-DREBUILD_CONFIG:** Enabled by default. This build step generates the `config.c` and `config.h` files for the configuration manager based on `html/js/configuration.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+**-DREBUILD_CONFIG:** Enabled by default. This build step generates the `config.c` and `config.h` files for the configuration manager based on `gui/js/configuration.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
 
 **-DREBUILD_CERTS:** This build step generates `certificates.h` containing a full root certificate store to enable arbitrary HTTPS requests with the ESP8266. More info on this process can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md).
 

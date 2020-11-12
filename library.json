@@ -19,7 +19,7 @@
         }
     ],
     "build": {
-        "extraScript": "build/preBuild.py",
+        "extraScript": "scripts/preBuild.py",
         "libArchive": false
     },
     "examples": [       

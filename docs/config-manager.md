@@ -64,7 +64,7 @@ On the low level then the full block will be rewritten. The reason for this impl
 
 ## Code Generation
 
-The configuration data is defined in the JSON file `html/js/configuration.json`. 
+The configuration data is defined in the JSON file `gui/js/configuration.json`. 
 
 However, if you use the framework as a PlatformIO library, you need to define the filename that points to your configuration JSON file. This can be done in your `platformio.ini` file by adding a custom build flag:
 

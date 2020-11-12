@@ -11,7 +11,7 @@ def preBuildConfigFun():
     h = open(dir_path + "/../src/generated/" + filename + ".h", "w", encoding="utf8")
     cpp = open(dir_path + "/../src/generated/" + filename + ".cpp", "w", encoding="utf8")
 
-    with open(dir_path + '/../html/js/configuration.json') as f:
+    with open(dir_path + '/../gui/js/configuration.json') as f:
         data = json.load(f)
 
     # binascii.crc32(mes.encode('utf8'))
