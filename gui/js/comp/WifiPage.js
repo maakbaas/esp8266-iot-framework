@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import { Form, Button, Spinner, Confirmation } from "./UiComponents";
-import { Wifi, Lock } from "react-feather";
+import { Wifi, Lock, Server, CornerDownRight } from "react-feather";
 
 export function WifiPage(props) {
     const [state, setState] = useState({ captivePortal: [], ssid: []});
     const [forgetModal, setForgetModal] = useState(false);
     const [saveModal, setSaveModal] = useState(false);
+    const [dhcpForm, setDhcpForm] = useState(true);
 
     useEffect(() => {
         document.title = "WiFi Settings";
@@ -20,10 +21,34 @@ export function WifiPage(props) {
     }, []);
 
     function changeWifi() {
-        fetch(`${props.API}/api/wifi/set?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}`, { method: "POST" });
+        if (dhcpForm) {
+            fetch(`${props.API}/api/wifi/set?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}`, { method: "POST" });
+        } else {
+            fetch(`${props.API}/api/wifi/setStatic?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}&ip=${escape(document.getElementById("ip").value.trim())}&sub=${escape(document.getElementById("sub").value.trim())}&gw=${escape(document.getElementById("gw").value.trim())}`, { method: "POST" });
+            document.getElementById("ip").value = "";
+            document.getElementById("gw").value = "";
+            document.getElementById("sub").value = "";
+            setDhcpForm(true);
+        }
         document.getElementById("ssid").value = "";
-        document.getElementById("pass").value = "";
+        document.getElementById("pass").value = "";        
     }
+
+    let dhcp = <></>;
+
+    if (!dhcpForm) {
+        dhcp = <>
+            <p><label htmlFor="ip"><CornerDownRight /> IP Address:</label>
+                <input type="text" id="ip" name="ip" autoCapitalize="none" />
+            </p>
+            <p><label htmlFor="sub"><CornerDownRight /> Subnet:</label>
+                <input type="text" id="sub" name="sub" autoCapitalize="none" />
+            </p>
+            <p><label htmlFor="gw"><CornerDownRight /> Gateway:</label>
+                <input type="text" id="gw" name="gw" autoCapitalize="none" />
+            </p>
+        </>;
+    }    
 
     const form = <><Form>
         <p><label htmlFor="ssid"><Wifi /> SSID:</label>
@@ -31,7 +56,11 @@ export function WifiPage(props) {
         </p>
         <p><label htmlFor="pass"><Lock /> Password:</label>
             <input type="text" id="pass" name="pass" autoCapitalize="none" />
-        </p>        
+        </p>   
+        <p><label htmlFor="dhcp"><Server /> DHCP:</label>
+            <input type="checkbox" id="dhcp" name="dhcp" checked={dhcpForm} onChange={()=>setDhcpForm(!dhcpForm)} />
+        </p>
+        {dhcp}      
     </Form>
     <Button onClick={() => setSaveModal(true)}>Save</Button>
     </>;

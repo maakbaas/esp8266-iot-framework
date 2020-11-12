@@ -5,6 +5,7 @@
 #include <ESP8266WiFi.h>
 
 #include "WiFiManager.h"
+#include "configManager.h"
 
 //create global object
 WifiManager WiFiManager;
@@ -15,6 +16,10 @@ void WifiManager::begin(char const *apName)
     captivePortalName = apName;
 
     WiFi.mode(WIFI_STA);
+
+    //set static IP if entered
+    if (configManager.internal.ip.isSet() && configManager.internal.gw.isSet() && configManager.internal.sub.isSet())
+        WiFi.config(configManager.internal.ip, configManager.internal.gw, configManager.internal.sub);
 
     if (WiFi.SSID() != "")
     {
@@ -54,13 +59,29 @@ void WifiManager::setNewWifi(String newSSID, String newPass)
     reconnect = true;
 }
 
+//function to request a connection to new WiFi credentials
+void WifiManager::setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw)
+{
+    ssid = newSSID;
+    pass = newPass;
+    configManager.internal.ip.fromString(newIp);
+    configManager.internal.sub.fromString(newSub);
+    configManager.internal.gw.fromString(newGw);
+    configManager.save();
+    reconnect = true;
+}
+
 //function to connect to new WiFi credentials
 void WifiManager::connectNewWifi(String newSSID, String newPass)
 {
     delay(1000);
 
+    //set static IP if entered
+    if (configManager.internal.ip.isSet() && configManager.internal.gw.isSet() && configManager.internal.sub.isSet())
+        WiFi.config(configManager.internal.ip, configManager.internal.gw, configManager.internal.sub);
+
     //fix for auto connect racing issue
-    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)))
+    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || configManager.internal.ip.isSet())
     {          
         //trying to fix connection in progress hanging
         ETS_UART_INTR_DISABLE();

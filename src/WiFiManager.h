@@ -27,6 +27,7 @@ public :
     bool isCaptivePortal();
     String SSID();
     void setNewWifi(String newSSID, String newPass);
+    void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw);
 };
 
 extern WifiManager WiFiManager;

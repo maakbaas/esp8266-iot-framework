@@ -15,9 +15,9 @@ bool config::begin(int numBytes)
         return false;
     }
     else
-    {
+    {        
         EEPROM.get(4, data);
-
+        EEPROM.get(4 + sizeof(data), internal);
         return true;
     }
     
@@ -45,6 +45,7 @@ void config::save()
 {
     EEPROM.put(0, configVersion);
     EEPROM.put(4, data);
+    EEPROM.put(4 + sizeof(data), internal);
     EEPROM.commit();
 }
 

@@ -41,6 +41,12 @@ void webServer::bindAll()
         WiFiManager.setNewWifi(request->arg("ssid"), request->arg("pass"));
     });
 
+    //update WiFi details with static IP
+    server.on(PSTR("/api/wifi/setStatic"), HTTP_POST, [](AsyncWebServerRequest *request) {
+        request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
+        WiFiManager.setNewWifi(request->arg("ssid"), request->arg("pass"), request->arg("ip"), request->arg("sub"), request->arg("gw"));
+    });
+
     //update WiFi details
     server.on(PSTR("/api/wifi/forget"), HTTP_POST, [](AsyncWebServerRequest *request) {
         request->send(200, PSTR("text/html"), ""); //respond first because of wifi change
