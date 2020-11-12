@@ -46,6 +46,10 @@ A request of this URL restarts the ESP8266.
 
 A GET request to this location with the arguments `ssid` and `pass` tries to connect to these new WiFi credentials.
 
+#### /api/wifi/setStatic
+
+A GET request to this location with the arguments `ssid`, `pass`, `ip`, `sub` and `gw` tries to connect to these new WiFi credentials with a static IP address.
+
 #### /api/wifi/forget
 
 A request to this URL will forget the stored WiFi details and start a captive portal.
