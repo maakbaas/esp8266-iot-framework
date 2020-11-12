@@ -18,8 +18,15 @@ void WifiManager::begin(char const *apName)
     WiFi.mode(WIFI_STA);
 
     //set static IP if entered
-    if (configManager.internal.ip.isSet() && configManager.internal.gw.isSet() && configManager.internal.sub.isSet())
-        WiFi.config(configManager.internal.ip, configManager.internal.gw, configManager.internal.sub);
+    ip = IPAddress(configManager.internal.ip);
+    gw = IPAddress(configManager.internal.gw);
+    sub = IPAddress(configManager.internal.sub);
+
+    if (ip.isSet() && gw.isSet() && sub.isSet())
+    {
+        Serial.println(PSTR("Using static IP"));
+        WiFi.config(ip, gw, sub);
+    }
 
     if (WiFi.SSID() != "")
     {
@@ -48,6 +55,15 @@ void WifiManager::forget()
 { 
     WiFi.disconnect();
     startCaptivePortal(captivePortalName);
+
+    //remove IP address from EEPROM
+    ip = IPAddress();
+    sub = IPAddress();
+    gw = IPAddress();
+
+    //make EEPROM empty
+    storeToEEPROM();
+
     Serial.println(PSTR("Requested to forget WiFi. Started Captive portal."));
 }
 
@@ -56,6 +72,10 @@ void WifiManager::setNewWifi(String newSSID, String newPass)
 {    
     ssid = newSSID;
     pass = newPass;
+    ip = IPAddress();
+    sub = IPAddress();
+    gw = IPAddress();
+
     reconnect = true;
 }
 
@@ -64,10 +84,10 @@ void WifiManager::setNewWifi(String newSSID, String newPass, String newIp, Strin
 {
     ssid = newSSID;
     pass = newPass;
-    configManager.internal.ip.fromString(newIp);
-    configManager.internal.sub.fromString(newSub);
-    configManager.internal.gw.fromString(newGw);
-    configManager.save();
+    ip.fromString(newIp);
+    sub.fromString(newSub);
+    gw.fromString(newGw);
+
     reconnect = true;
 }
 
@@ -76,12 +96,11 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 {
     delay(1000);
 
-    //set static IP if entered
-    if (configManager.internal.ip.isSet() && configManager.internal.gw.isSet() && configManager.internal.sub.isSet())
-        WiFi.config(configManager.internal.ip, configManager.internal.gw, configManager.internal.sub);
+    //set static IP or zeros if undefined    
+    WiFi.config(ip, gw, sub);
 
     //fix for auto connect racing issue
-    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || configManager.internal.ip.isSet())
+    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip)
     {          
         //trying to fix connection in progress hanging
         ETS_UART_INTR_DISABLE();
@@ -123,6 +142,10 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 
             Serial.println(PSTR("New connection successful"));
             Serial.println(WiFi.localIP());
+
+            //store IP address in EEProm
+            storeToEEPROM();
+
         }
     }
 }
@@ -185,4 +208,13 @@ void WifiManager::loop()
         reconnect = false;
     }
     
+}
+
+//update IP address in EEPROM
+void WifiManager::storeToEEPROM()
+{
+    configManager.internal.ip = ip.v4();
+    configManager.internal.gw = gw.v4();
+    configManager.internal.sub = sub.v4();
+    configManager.save();
 }
