@@ -6,27 +6,41 @@ import { Box } from "react-feather";
 import {GlobalStyle, Menu, Header, Page, Hamburger} from "./comp/UiComponents";
 import { WifiPage } from "./comp/WifiPage";
 import { ConfigPage } from "./comp/ConfigPage";
+import { DashboardPage } from "./comp/DashboardPage";
 import { FilePage } from "./comp/FilePage";
 import { FirmwarePage } from "./comp/FirmwarePage";
 
 import { bin2obj } from "./functions/configHelpers";
 
 import Config from "./configuration.json";
+import Dash from "./dashboard.json";
 
 let url = "http://192.168.1.54";
 if (process.env.NODE_ENV === "production") {url = window.location.origin;}
 
 if (process.env.NODE_ENV === "development") {require("preact/debug");}
 
+const displayData = new Array();
+
 function Root() {
     
     const [menu, setMenu] = useState(false);
-    const [configData, setConfigData] = useState([]);
+    const [configData, setConfigData] = useState(new Object());
     const [binSize, setBinSize] = useState(0);
 
     useEffect(() => {
-        fetchData();
+        const socket = new WebSocket(url.replace("http://","ws://").concat("/ws"));
+        socket.addEventListener("message", wsMessage);
+        fetchData();        
     }, []);
+
+    function wsMessage(event) {
+        event.data.arrayBuffer().then((buffer) => {                
+            const dv = new DataView(buffer, 0);
+            const timestamp = dv.getUint32(0, true);
+            displayData.push([timestamp, bin2obj(buffer.slice(8,buffer.byteLength), Dash)]);     
+        });        
+    }
 
     function fetchData() {
         fetch(`${url}/api/config/get`)
@@ -35,7 +49,7 @@ function Root() {
             })
             .then((data) => {
                 setBinSize(data.byteLength);
-                setConfigData(bin2obj(data));
+                setConfigData(bin2obj(data, Config));
             });
     }
 
@@ -50,6 +64,7 @@ function Root() {
                 <Hamburger onClick={() => setMenu(!menu)} />
                 <Menu className={menu ? "" : "menuHidden"}>
                     <li><NavLink onClick={() => setMenu(false)} exact to="/">WiFi Settings</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/dashboard">Dashboard</NavLink></li>
                     <li><NavLink onClick={() => setMenu(false)} exact to="/config">Configuration</NavLink></li>
                     <li><NavLink onClick={() => setMenu(false)} exact to="/files">File Manager</NavLink></li>
                     <li><NavLink onClick={() => setMenu(false)} exact to="/firmware">Firmware Update</NavLink></li>
@@ -67,6 +82,10 @@ function Root() {
                             configData={configData}
                             binSize={binSize}
                             requestUpdate={fetchData} />
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <DashboardPage
+                            requestData={() => {return displayData;}} />
                     </Route>
                     <Route exact path="/firmware">
                         <FirmwarePage API={url} />

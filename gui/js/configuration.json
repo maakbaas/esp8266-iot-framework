@@ -8,16 +8,19 @@
     },
     {
         "name": "dummyInt",
+        "label": "Dummy Int",
         "type": "uint16_t",
         "value": 1000
     },
     {
         "name": "dummyBool",
+        "label": "Dummy Bool",
         "type": "bool",
         "value": true
     },    
     {
         "name": "dummyFloat",
+        "label": "Dummy Float",
         "type": "float",
         "min": 1,
         "max": 10,
@@ -25,6 +28,7 @@
     },
     {
         "name": "dummyString",
+        "label": "Dummy String",
         "type": "char",
         "hidden": true,
         "length": 11,

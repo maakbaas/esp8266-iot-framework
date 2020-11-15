@@ -14,6 +14,7 @@ private:
     void bindAll();
 
 public:
+    AsyncWebSocket ws = AsyncWebSocket("/ws");
     void begin();
 };
 

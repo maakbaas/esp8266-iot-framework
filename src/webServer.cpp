@@ -15,6 +15,7 @@ void webServer::begin()
     //to enable testing and debugging of the interface
     DefaultHeaders::Instance().addHeader(PSTR("Access-Control-Allow-Origin"), PSTR("*"));
 
+    server.addHandler(&ws);
     server.begin();
 
     server.serveStatic("/download", LittleFS, "/");

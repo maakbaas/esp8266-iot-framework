@@ -39,7 +39,7 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    svg {
+    label > svg, button > svg, h1 > svg {
         width:0.9em;
         height:0.9em;
         vertical-align: -0.05em;
@@ -106,6 +106,13 @@ export const Header = styled(HeaderSrc)`
     color:${cHeader};
     }
 
+    @media (max-width: 1024px) 
+    {    
+        h1 {
+            font-size:1.3em;
+        }
+    }
+
 `;
 
 export const Page = styled.div`
@@ -142,6 +149,7 @@ HamburgerSrc.propTypes = {
 export const Hamburger = styled(HamburgerSrc)`
 
     display:none;
+    margin-right:0px !important;
 
     svg 
     {
@@ -294,6 +302,7 @@ export const Form = styled.form`
 
     input[type=checkbox] {
         width: auto;
+        margin:12px 0px;
     }
 `;
 
