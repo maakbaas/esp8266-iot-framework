@@ -36,25 +36,6 @@ void dashboard::onWsEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, 
     {
         Serial.println("Lost WS client");
     }
-    else if (type == WS_EVT_DATA)
-    {
-        //receive binary data packet
-        AwsFrameInfo *info = (AwsFrameInfo *)arg;
-        if (info->final && info->index == 0 && info->len == len)
-        {
-            if (info->opcode == WS_BINARY)
-            {
-                static uint8_t buffer[sizeof(data)];
-
-                for (size_t i = 0; i < info->len; i++)
-                {
-                    buffer[i] = dataIn[i];
-                }
-
-                memcpy(&(dash.data), buffer, sizeof(buffer));
-            }            
-        }
-    }
 }
 
 dashboard dash;

@@ -25,7 +25,7 @@ export function DashboardPage(props) {
 
     const dashboardData = props.requestData();
     
-    const confItems = <Dashboard items={Dash} data={dashboardData} />;
+    const confItems = <Dashboard API={props.API} items={Dash} data={dashboardData} />;
 
     const form = <><Form>
         {confItems}
@@ -38,4 +38,5 @@ export function DashboardPage(props) {
 
 DashboardPage.propTypes = {    
     requestData: PropTypes.func,
+    API: PropTypes.string,
 };

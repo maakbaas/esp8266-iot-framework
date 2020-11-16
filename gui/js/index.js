@@ -84,7 +84,7 @@ function Root() {
                             requestUpdate={fetchData} />
                     </Route>
                     <Route exact path="/dashboard">
-                        <DashboardPage
+                        <DashboardPage API={url} 
                             requestData={() => {return displayData;}} />
                     </Route>
                     <Route exact path="/firmware">
