@@ -1,0 +1,37 @@
+[
+    {
+        "name": "projectName",
+        "label": "Project Name",
+        "type": "char",
+        "length": 32,
+        "value": "ESP8266 IoT Framework"
+    },
+    {
+        "name": "dummyInt",
+        "label": "Dummy Int",
+        "type": "uint16_t",
+        "value": 1000
+    },
+    {
+        "name": "dummyBool",
+        "label": "Dummy Bool",
+        "type": "bool",
+        "value": true
+    },    
+    {
+        "name": "dummyFloat",
+        "label": "Dummy Float",
+        "type": "float",
+        "min": 1,
+        "max": 10,
+        "value": 1.2345
+    },
+    {
+        "name": "dummyString",
+        "label": "Dummy String",
+        "type": "char",
+        "hidden": true,
+        "length": 11,
+        "value": "invisible!"
+    }
+]
