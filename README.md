@@ -1,8 +1,8 @@
 # ESP8266 IoT Framework ![Status](https://travis-ci.com/maakbaas/esp8266-iot-framework.svg?branch=master)
 
-The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, WiFi manager, configuration manager and OTA updates.
+The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, WiFi manager, configuration manager live dashboard and OTA updates.
 
-The unique advantage of this framework is that code generation at build time is used to provide different benefits. Code generation is used to dynamically generate a configuration struct from a JSON file, to incorporate the web interface into PROGMEM in the firmware and to bundle a full root certificate store in PROGMEM that allows the ESP8266 to do secure HTTPS requests to arbitrary URLs.
+The unique advantage of this framework is that code generation at build time is used to provide different benefits. Code generation is used to dynamically generate a configuration struct and a live dashboard from JSON files, to incorporate the web interface into PROGMEM in the firmware and to bundle a full root certificate store in PROGMEM that allows the ESP8266 to do secure HTTPS requests to arbitrary URLs.
 
 ## Documentation
 
@@ -11,6 +11,7 @@ The unique advantage of this framework is that code generation at build time is 
 * [Installation Guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md)
 * [Web Server](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/web-server.md)
 * [WiFi Manager](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/wifi-manager.md)
+* [Dashboard](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/dashboard.md)
 * [Configuration Manager](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md)
 * [File Manager](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/file-manager.md)
 * [HTTPS Requests](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md)

@@ -67,13 +67,13 @@ jobs:
           directories:
               - "~/.platformio"
       env:   
-        - PLATFORMIO_CI_SRC=examples/configManager/configManagerExample.cpp
+        - PLATFORMIO_CI_SRC=examples/configManager/
       install:
           - pip install asn1crypto
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON" --project-option="build_flags = -DCONFIG_PATH=src/configuration.json -DREBUILD_CONFIG"
 
     - stage: Framework
       name: "Time Sync Example"
@@ -92,6 +92,24 @@ jobs:
           - platformio update
       script:
           - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+
+    - stage: Framework
+      name: "Dashboard Example"
+      language: python
+      python:
+          - "3.8"
+      sudo: false
+      cache:
+          directories:
+              - "~/.platformio"
+      env:   
+        - PLATFORMIO_CI_SRC=examples/dashboard/
+      install:
+          - pip install asn1crypto
+          - pip install -U platformio
+          - platformio update
+      script:
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON" --project-option="build_flags = -DDASHBOARD_PATH=src/dashboard.json -DREBUILD_DASHBOARD"
 
     - stage: GUI
       name: "Webpack Build"

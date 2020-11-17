@@ -9,12 +9,14 @@
 #include "WiFiManager.h"
 #include "configManager.h"
 #include "updater.h"
+#include "dashboard.h"
 
 void webServer::begin()
 {
     //to enable testing and debugging of the interface
     DefaultHeaders::Instance().addHeader(PSTR("Access-Control-Allow-Origin"), PSTR("*"));
 
+    server.addHandler(&ws);
     server.begin();
 
     server.serveStatic("/download", LittleFS, "/");
@@ -140,6 +142,16 @@ void webServer::bindAll()
                 request->send(200, PSTR("text/html"), "");
             }
 
+        });
+
+    //receive binary configuration data from body
+    server.on(
+        PSTR("/api/dash/set"), HTTP_POST,
+        [this](AsyncWebServerRequest *request) {},
+        [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {},
+        [this](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+            memcpy(reinterpret_cast<uint8_t *>(&(dash.data)) + (request->arg("start")).toInt(), data, (request->arg("length")).toInt());
+            request->send(200, PSTR("text/html"), "");
         });
 }
 

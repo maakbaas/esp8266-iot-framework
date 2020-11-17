@@ -5,29 +5,5 @@
         "type": "char",
         "length": 32,
         "value": "ESP8266 IoT Framework"
-    },
-    {
-        "name": "dummyInt",
-        "type": "uint16_t",
-        "value": 1000
-    },
-    {
-        "name": "dummyBool",
-        "type": "bool",
-        "value": true
-    },    
-    {
-        "name": "dummyFloat",
-        "type": "float",
-        "min": 1,
-        "max": 10,
-        "value": 1.2345
-    },
-    {
-        "name": "dummyString",
-        "type": "char",
-        "hidden": true,
-        "length": 11,
-        "value": "invisible!"
     }
 ]
