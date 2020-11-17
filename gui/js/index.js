@@ -27,10 +27,12 @@ function Root() {
     const [menu, setMenu] = useState(false);
     const [configData, setConfigData] = useState(new Object());
     const [binSize, setBinSize] = useState(0);
+    const [socket, setSocket] = useState({});
 
     useEffect(() => {
-        const socket = new WebSocket(url.replace("http://","ws://").concat("/ws"));
-        socket.addEventListener("message", wsMessage);
+        const ws = new WebSocket(url.replace("http://","ws://").concat("/ws"));
+        ws.addEventListener("message", wsMessage);
+        setSocket(ws);
         fetchData();        
     }, []);
 
@@ -85,6 +87,7 @@ function Root() {
                     </Route>
                     <Route exact path="/dashboard">
                         <DashboardPage API={url} 
+                            socket={socket}
                             requestData={() => {return displayData;}} />
                     </Route>
                     <Route exact path="/firmware">
