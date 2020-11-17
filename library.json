@@ -1,6 +1,6 @@
 {
     "name": "ESP8266 IoT Framework",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "description": "Framework for IoT projects implementing HTTPS requests, a React web interface, WiFi manager, configuration manager, file manager and OTA updates.",
     "keywords": "esp8266,react,ota-updates,wifi-manager,https,file-manager",
     "frameworks": "arduino",
@@ -65,6 +65,13 @@
             "files": [
                 "timeSyncExample.cpp"
             ]
+        },
+        {
+            "name": "dashboard",
+            "base": "examples/dashboard",
+            "files": [
+                "dashboardExample.cpp"
+            ]
         }
     ],
     "export": {
@@ -88,7 +95,8 @@
             "examples/configManager/*.*",
             "examples/fetch/*.*",
             "examples/helloWorld/*.*",
-            "examples/timeSync/*.*"
+            "examples/timeSync/*.*",
+            "examples/dashboard/*.*"
         ]
     }
 }

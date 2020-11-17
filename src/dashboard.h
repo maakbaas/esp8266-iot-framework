@@ -15,6 +15,7 @@ private:
 public:
     void begin(int sampleTimeMs = 1000);
     void loop();
+    void send();
     dashboardData data;
 };
 
