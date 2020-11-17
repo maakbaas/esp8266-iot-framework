@@ -73,7 +73,9 @@ The build flags are optional, since all default generated artefacts are already 
 
 **-DREBUILD_HTML:** This pre-build step will re-generate the web interface to `html.h` by simply calling `npm run build`. This is only needed if you make modifications to the GUI. Read more details [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface).
 
-**-DREBUILD_CONFIG:** Enabled by default. This build step generates the `config.c` and `config.h` files for the configuration manager based on `gui/js/configuration.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+**-DREBUILD_CONFIG:** This build step generates the `config.c` and `config.h` files for the configuration manager based on `gui/js/configuration.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+
+**-DREBUILD_DASHBOARD:** This build step generates the `dash.h` files for the dashboard based on `gui/js/dashboard.js` as described in more detail [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/dashboard.md).
 
 **-DREBUILD_CERTS:** This build step generates `certificates.h` containing a full root certificate store to enable arbitrary HTTPS requests with the ESP8266. More info on this process can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md).
 
@@ -84,6 +86,8 @@ For this step OpenSSL is needed. On Linux this is probably available by default,
 openssl = "C:\\msys32\\usr\\bin\\openssl"
 ```
 
-**-DCONFIG_PATH=configuration.json:** This option defines a custom location for your JSON file. This is needed when using the framework as a library, to allow you to define a JSON file in your project folder. The path is relative to the PlatformIO project root folder. More detail on the JSON file can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+**-DCONFIG_PATH=configuration.json:** This option defines a custom location for your configuration JSON file. This is needed when using the framework as a library, to allow you to define a JSON file in your project folder. The path is relative to the PlatformIO project root folder. More detail on the JSON file can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+
+**-DDASHBOARD_PATH=dashboard.json:** This option defines a custom location for your dashboard JSON file. This is needed when using the framework as a library, to allow you to define a JSON file in your project folder. The path is relative to the PlatformIO project root folder. More detail on the JSON file can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/dashboard.md).
 
 **-DDOMAIN_LIST=google.com,maakbaas.com:** This option defines a comma separated list of domains. When this option is included the `REBUILD_CERTS` option will only include the root certificates in `certificates.h` that are part of this list. The default certificate store when this option is not active contains ~150 certificates, and is roughly 170kB in size. Use this option to reduce the size of the certificate store.
