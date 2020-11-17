@@ -114,53 +114,57 @@ export function bin2obj(rawData, JSON) {
 
 }
 
-export function sizes(JSON) {
+export function binsize(name, JSON) {
 
-    const sizeArray = [];
+    let sizeArray;
     let n = 0;
     for (let i = 0; i < JSON.length; i++) {
         switch (JSON[i].type) {
             case "char":
-                sizeArray[i] = [n, JSON[i].length];                
+                sizeArray = [n, JSON[i].length];                
                 n = n + JSON[i].length;
                 break;
             case "bool":
-                sizeArray[i] = [n, 1];                
+                sizeArray = [n, 1];                
                 n++;
                 break;
             case "uint8_t":
-                sizeArray[i] = [n, 1];                
+                sizeArray = [n, 1];                
                 n++;
                 break;
             case "int8_t":
-                sizeArray[i] = [n, 1];                
+                sizeArray = [n, 1];                
                 n++;
                 break;
             case "uint16_t":
                 n = Math.ceil(n / 2) * 2; //padding
-                sizeArray[i] = [n, 2];                
+                sizeArray = [n, 2];                
                 n += 2;
                 break;
             case "int16_t":
                 n = Math.ceil(n / 2) * 2; //padding
-                sizeArray[i] = [n, 2];                
+                sizeArray = [n, 2];                
                 n += 2;
                 break;
             case "uint32_t":
                 n = Math.ceil(n / 4) * 4; //padding
-                sizeArray[i] = [n, 4];                
+                sizeArray = [n, 4];                
                 n += 4;
                 break;
             case "int32_t":
                 n = Math.ceil(n / 4) * 4; //padding
-                sizeArray[i] = [n, 4];                
+                sizeArray = [n, 4];                
                 n += 4;
                 break;
             case "float":
                 n = Math.ceil(n / 4) * 4; //padding
-                sizeArray[i] = [n, 4];                
+                sizeArray = [n, 4];                
                 n += 4;
                 break;
+        }
+        
+        if (JSON[i].name == name) {
+            return sizeArray;
         }
     }
 

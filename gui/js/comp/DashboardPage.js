@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Dash from "../dashboard.json";
 
 import { Form } from "./UiComponents";
-import { Dashboard } from "./Dashboard";
+import { DashboardItems } from "./DashboardItems";
 
 export function DashboardPage(props) {
 
@@ -25,7 +25,7 @@ export function DashboardPage(props) {
 
     const dashboardData = props.requestData();
     
-    const confItems = <Dashboard API={props.API} items={Dash} data={dashboardData} />;
+    const confItems = <DashboardItems API={props.API} items={Dash} data={dashboardData} />;
 
     const form = <><Form>
         {confItems}

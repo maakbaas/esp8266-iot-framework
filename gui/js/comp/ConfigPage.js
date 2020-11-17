@@ -5,7 +5,7 @@ import Config from "../configuration.json";
 import { obj2bin } from "../functions/configHelpers";
 
 import { Form, Button } from "./UiComponents";
-import { Dashboard } from "./Dashboard";
+import { DashboardItems } from "./DashboardItems";
 
 export function ConfigPage(props) {
     
@@ -13,7 +13,7 @@ export function ConfigPage(props) {
         document.title = "Configuration";
     }, []);
    
-    const confItems = <Dashboard items={Config} data={props.configData} />;    
+    const confItems = <DashboardItems items={Config} data={props.configData} />;    
 
     let button;
     if (Object.keys(props.configData).length > 0) {
