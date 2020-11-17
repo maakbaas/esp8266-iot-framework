@@ -67,8 +67,7 @@ jobs:
           directories:
               - "~/.platformio"
       env:   
-        - PLATFORMIO_CI_SRC=examples/configManager/configManagerExample.cpp
-        - PLATFORMIO_CI_SRC=examples/configManager/configuration.json
+        - PLATFORMIO_CI_SRC=examples/configManager/
       install:
           - pip install asn1crypto
           - pip install -U platformio
@@ -104,8 +103,7 @@ jobs:
           directories:
               - "~/.platformio"
       env:   
-        - PLATFORMIO_CI_SRC=examples/dashboard/dashboardExample.cpp
-        - PLATFORMIO_CI_SRC=examples/dashboard/dashboard.json
+        - PLATFORMIO_CI_SRC=examples/dashboard/
       install:
           - pip install asn1crypto
           - pip install -U platformio
