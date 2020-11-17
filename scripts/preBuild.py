@@ -28,6 +28,10 @@ for item in env.get("CPPDEFINES", []):
         dash = True
     elif item == "REBUILD_CERTS":
         certs = True
+    elif item == "REBUILD_CONFIG":
+        config = True
+    elif item == "REBUILD_DASHBOARD":
+        dash = True
     elif isinstance(item, tuple) and item[0] == "CONFIG_PATH":
         copyfile(env.get("PROJECT_DIR") + '/' + item[1], '../gui/js/configuration.json')
     elif isinstance(item, tuple) and item[0] == "DASHBOARD_PATH":

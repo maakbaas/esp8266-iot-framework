@@ -69,6 +69,7 @@ jobs:
       env:   
         - PLATFORMIO_CI_SRC=examples/configManager/configManagerExample.cpp
         - CONFIG_PATH=examples/configManager/configuration.json
+        - REBUILD_CONFIG
       install:
           - pip install asn1crypto
           - pip install -U platformio
@@ -106,6 +107,7 @@ jobs:
       env:   
         - PLATFORMIO_CI_SRC=examples/dashboard/dashboardExample.cpp
         - DASHBOARD_PATH=examples/configManager/dashboard.json
+        - REBUILD_DASHBOARD
       install:
           - pip install asn1crypto
           - pip install -U platformio
