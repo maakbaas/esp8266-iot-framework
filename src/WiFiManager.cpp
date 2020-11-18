@@ -21,11 +21,12 @@ void WifiManager::begin(char const *apName)
     ip = IPAddress(configManager.internal.ip);
     gw = IPAddress(configManager.internal.gw);
     sub = IPAddress(configManager.internal.sub);
+    dns = IPAddress(configManager.internal.dns);
 
-    if (ip.isSet() && gw.isSet() && sub.isSet())
+    if (ip.isSet() || gw.isSet() || sub.isSet() || dns.isSet())
     {
         Serial.println(PSTR("Using static IP"));
-        WiFi.config(ip, gw, sub);
+        WiFi.config(ip, gw, sub, dns);
     }
 
     if (WiFi.SSID() != "")
@@ -60,6 +61,7 @@ void WifiManager::forget()
     ip = IPAddress();
     sub = IPAddress();
     gw = IPAddress();
+    dns = IPAddress();
 
     //make EEPROM empty
     storeToEEPROM();
@@ -75,18 +77,20 @@ void WifiManager::setNewWifi(String newSSID, String newPass)
     ip = IPAddress();
     sub = IPAddress();
     gw = IPAddress();
+    dns = IPAddress();
 
     reconnect = true;
 }
 
 //function to request a connection to new WiFi credentials
-void WifiManager::setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw)
+void WifiManager::setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw, String newDns)
 {
     ssid = newSSID;
     pass = newPass;
     ip.fromString(newIp);
     sub.fromString(newSub);
     gw.fromString(newGw);
+    dns.fromString(newDns);
 
     reconnect = true;
 }
@@ -97,7 +101,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
     delay(1000);
 
     //set static IP or zeros if undefined    
-    WiFi.config(ip, gw, sub);
+    WiFi.config(ip, gw, sub, dns);
 
     //fix for auto connect racing issue
     if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip)

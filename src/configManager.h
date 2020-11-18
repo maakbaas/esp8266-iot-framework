@@ -13,6 +13,7 @@ struct internalData
     uint32_t ip;
     uint32_t gw;
     uint32_t sub;
+    uint32_t dns;
 };
 
 class config

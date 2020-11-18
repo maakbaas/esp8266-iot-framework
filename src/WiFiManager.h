@@ -15,6 +15,7 @@ private:
     IPAddress ip;
     IPAddress gw;
     IPAddress sub;
+    IPAddress dns;
     bool reconnect = false;
     bool inCaptivePortal = false;
     char const *captivePortalName;
@@ -31,7 +32,7 @@ public :
     bool isCaptivePortal();
     String SSID();
     void setNewWifi(String newSSID, String newPass);
-    void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw);
+    void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw, String newDns);
 };
 
 extern WifiManager WiFiManager;
