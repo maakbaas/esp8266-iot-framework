@@ -56,8 +56,7 @@
             "name": "configManager",
             "base": "examples/configManager",
             "files": [
-                "configManagerExample.cpp",
-                "configuration.json"
+                "configManagerExample.cpp"
             ]
         },
         {
@@ -71,8 +70,7 @@
             "name": "dashboard",
             "base": "examples/dashboard",
             "files": [
-                "dashboardExample.cpp",
-                "dashboard.json"
+                "dashboardExample.cpp"
             ]
         }
     ],
