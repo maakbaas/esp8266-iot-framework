@@ -41,7 +41,7 @@ Returns the SSID to which the ESP8266 is connected. Returns an empty string if a
 
 ```c++
 void setNewWifi(String newSSID, String newPass);
-void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw);
+void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw, String newDns);
 ```
 Tries to connect to the WiFi network with SSID `newSSID` and password `newPass`. If this fails a reconnect to the known network will be attempted. If this also fails or if no previous network was known, a captive portal will be started. Alternatively the function can also be called with inputs for a static IP address if DHCP is not available.
 

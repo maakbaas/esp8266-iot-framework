@@ -24,10 +24,11 @@ export function WifiPage(props) {
         if (dhcpForm) {
             fetch(`${props.API}/api/wifi/set?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}`, { method: "POST" });
         } else {
-            fetch(`${props.API}/api/wifi/setStatic?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}&ip=${escape(document.getElementById("ip").value.trim())}&sub=${escape(document.getElementById("sub").value.trim())}&gw=${escape(document.getElementById("gw").value.trim())}`, { method: "POST" });
+            fetch(`${props.API}/api/wifi/setStatic?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}&ip=${escape(document.getElementById("ip").value.trim())}&sub=${escape(document.getElementById("sub").value.trim())}&gw=${escape(document.getElementById("gw").value.trim())}&dns=${escape(document.getElementById("dns").value.trim())}`, { method: "POST" });
             document.getElementById("ip").value = "";
             document.getElementById("gw").value = "";
             document.getElementById("sub").value = "";
+            document.getElementById("dns").value = "";
             setDhcpForm(true);
         }
         document.getElementById("ssid").value = "";
@@ -46,6 +47,9 @@ export function WifiPage(props) {
             </p>
             <p><label htmlFor="gw"><CornerDownRight /> Gateway:</label>
                 <input type="text" id="gw" name="gw" autoCapitalize="none" />
+            </p>
+            <p><label htmlFor="dns"><CornerDownRight /> DNS:</label>
+                <input type="text" id="dns" name="dns" autoCapitalize="none" />
             </p>
         </>;
     }    
