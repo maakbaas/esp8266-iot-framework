@@ -81,3 +81,7 @@ A call to this URL returns a raw binary representation of the configuration obje
 #### /api/config/set
 
 A POST request to this URL with again the binary representation of an updated configuration object will attempt to update the configuration data in EEPROM accordingly. More information on this can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
+
+#### /api/dash/set
+
+A POST request to this URL with the binary representation of an updated dashboard object member, its offset pointer location from the start of the dashboard structure and its length will update the dashboard data accordingly. More information on this can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/dashboard.md).
