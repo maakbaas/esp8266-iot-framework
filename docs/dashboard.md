@@ -111,6 +111,8 @@ there are a few other specific fields. the `direction` field is mandatory, and `
 
 For this example, the pre-build python script `preBuildDash.py` will generate the files `dash.h` containing the type definition. This should be fairly self explanatory and show how the JSON file is translated into a C struct.
 
+**Important:** After you have changed the JSON file, you also need to regenerate the web interface to reflect the latest changes by enabling the REBUILD_HTML build flag, otherwise the web interface will show the old dashboard data. Refer to [this section](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface) for more details.
+
 #### dash.h
 ```c++
 #ifndef DASH_H
