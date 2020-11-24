@@ -164,4 +164,4 @@ pip install asn1crypto
 
 The default certificate store contains ~150 certificates, and is roughly 170kB in size. There is a method to reduce this size by only including the root certificates that are needed for a predefined list of domains. These domains can be defined with the `DOMAIN_LIST` build flag in `platformio.ini`. See the [installation guide](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/installation-guide.md) for more information on this build flag.
 
-Note that doing this reduces the flexibility of your application. This should not be used for cases where there is a user configurable URL that can changes after the build. Also, if the root certificate for a certain domain changes, your application will no longer work. But this scenario is probably not very likely.
+Note that doing this reduces the flexibility of your application. This should not be used for cases where there is a user configurable URL that can change after the build. Also, if the root certificate for a certain domain changes, your application will no longer work. But this scenario is probably not very likely.
