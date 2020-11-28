@@ -44,7 +44,7 @@ export function DashboardPage(props) {
     const [socketStatus, setSocketStatus] = useState(0);
 
     useEffect(() => {
-        document.title = "Configuration";
+        document.title = "Dashboard";
     }, []);
 
     useEffect(() => {
