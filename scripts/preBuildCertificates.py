@@ -4,7 +4,15 @@ import os
 import re
 import string
 import sys
-from asn1crypto.x509 import Certificate
+try:
+    from asn1crypto.x509 import Certificate
+except ImportError:
+    env.Execute(
+        env.VerboseAction(
+            '$PYTHONEXE -m pip install "asn1crypto" ',
+            "ASN1 crypto import failed, installing.",
+        )
+    )
 import hashlib
 
 from subprocess import Popen, PIPE, call, check_output
