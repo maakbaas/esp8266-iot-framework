@@ -11,6 +11,14 @@ export const cHeaderHover = "#333";
 export const cSecondary = "#ff00cc";
 export const cSecondaryHover = "#cc0099"; 
 
+import Config from "./../configuration.json";
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 export const GlobalStyle = createGlobalStyle`
   
     ${normalize}
@@ -242,8 +250,8 @@ const ConfirmationSrc = ({ active, confirm, cancel, className, children }) => (
         onClick={() => cancel()}>
         <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
             <div>
-                <CancelButton onClick={() => cancel()}>Cancel</CancelButton>
-                <Button onClick={() => confirm()}>Continue</Button>
+                <CancelButton onClick={() => cancel()}>{loc.globalCancel}</CancelButton>
+                <Button onClick={() => confirm()}>{loc.globalContinue}</Button>
             </div>
         </div>
     </div> : ""
@@ -266,7 +274,7 @@ const AlertSrc = ({ active, confirm, className, children }) => (
         onClick={() => confirm()}>
         <div onClick={(e) => e.stopPropagation()}><p>{children}</p>
             <div>
-                <Button onClick={() => confirm()}>OK</Button>
+                <Button onClick={() => confirm()}>{loc.globalOk}</Button>
             </div>
         </div>
     </div> : ""

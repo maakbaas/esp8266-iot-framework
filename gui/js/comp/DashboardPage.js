@@ -38,13 +38,21 @@ const Disconnected = styled.span`
     vertical-align:0.3em;
 `;
 
+import Config from "./../configuration.json";
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 export function DashboardPage(props) {
 
     const [counter, setCounter] = useState(0);
     const [socketStatus, setSocketStatus] = useState(0);
 
     useEffect(() => {
-        document.title = "Dashboard";
+        document.title = loc.titleDash;
     }, []);
 
     useEffect(() => {
@@ -68,7 +76,7 @@ export function DashboardPage(props) {
     </Form>
     </>;
 
-    return <><h2>Dashboard {socketStatus != 0 ? socketStatus == 1 ? <Live>LIVE</Live> : <Disconnected>DISCONNECTED</Disconnected> : <Connecting>CONNECTING</Connecting>}</h2><p>{form}</p></>;
+    return <><h2>{loc.titleDash} {socketStatus != 0 ? socketStatus == 1 ? <Live>{loc.dashLive}</Live> : <Disconnected>{loc.dashDisconn}</Disconnected> : <Connecting>{loc.dashConn}</Connecting>}</h2><p>{form}</p></>;
 
 }
 

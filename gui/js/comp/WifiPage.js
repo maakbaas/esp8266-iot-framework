@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Spinner, Confirmation } from "./UiComponents";
 import { Wifi, Lock, Server, CornerDownRight } from "react-feather";
 
+import Config from "./../configuration.json";
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 export function WifiPage(props) {
     const [state, setState] = useState({ captivePortal: [], ssid: []});
     const [forgetModal, setForgetModal] = useState(false);
@@ -10,7 +18,7 @@ export function WifiPage(props) {
     const [dhcpForm, setDhcpForm] = useState(true);
 
     useEffect(() => {
-        document.title = "WiFi Settings";
+        document.title = loc.titleWifi;
         fetch(`${props.API}/api/wifi/get`)
             .then((response) => {
                 return response.json();
@@ -39,55 +47,55 @@ export function WifiPage(props) {
 
     if (!dhcpForm) {
         dhcp = <>
-            <p><label htmlFor="ip"><CornerDownRight /> IP Address:</label>
+            <p><label htmlFor="ip"><CornerDownRight /> {loc.wifiIP}:</label>
                 <input type="text" id="ip" name="ip" autoCapitalize="none" />
             </p>
-            <p><label htmlFor="sub"><CornerDownRight /> Subnet:</label>
+            <p><label htmlFor="sub"><CornerDownRight /> {loc.wifiSub}:</label>
                 <input type="text" id="sub" name="sub" autoCapitalize="none" />
             </p>
-            <p><label htmlFor="gw"><CornerDownRight /> Gateway:</label>
+            <p><label htmlFor="gw"><CornerDownRight /> {loc.wifiGW}:</label>
                 <input type="text" id="gw" name="gw" autoCapitalize="none" />
             </p>
-            <p><label htmlFor="dns"><CornerDownRight /> DNS:</label>
+            <p><label htmlFor="dns"><CornerDownRight /> {loc.wifiDNS}:</label>
                 <input type="text" id="dns" name="dns" autoCapitalize="none" />
             </p>
         </>;
     }    
 
     const form = <><Form>
-        <p><label htmlFor="ssid"><Wifi /> SSID:</label>
+        <p><label htmlFor="ssid"><Wifi /> {loc.wifiSSID}:</label>
             <input type="text" id="ssid" name="ssid" autoCapitalize="none" />
         </p>
-        <p><label htmlFor="pass"><Lock /> Password:</label>
+        <p><label htmlFor="pass"><Lock /> {loc.wifiPass}:</label>
             <input type="text" id="pass" name="pass" autoCapitalize="none" />
         </p>   
-        <p><label htmlFor="dhcp"><Server /> DHCP:</label>
+        <p><label htmlFor="dhcp"><Server /> {loc.wifiDHCP}:</label>
             <input type="checkbox" id="dhcp" name="dhcp" checked={dhcpForm} onChange={()=>setDhcpForm(!dhcpForm)} />
         </p>
         {dhcp}      
     </Form>
-    <Button onClick={() => setSaveModal(true)}>Save</Button>
+    <Button onClick={() => setSaveModal(true)}>{loc.globalSave}</Button>
     </>;
     
-    let page = <><h2>WiFi Settings</h2> 
-        <h3>Status</h3></>;
+    let page = <><h2>{loc.titleWifi}</h2> 
+        <h3>{loc.globalStatus}</h3></>;
     
     let connectedTo;
     if (state.captivePortal === true) {
-        connectedTo = "Captive portal running";
+        connectedTo = loc.wifiCP;
     } else if (state.captivePortal === false) {
-        connectedTo = <>Connected to {state.ssid} (<a onClick={() => setForgetModal(true)}>Forget</a>)</>;
+        connectedTo = <>{loc.wifiConn} {state.ssid} (<a onClick={() => setForgetModal(true)}>{loc.wifiForget}</a>)</>;
     }
     
     page = <>{page}<p>{connectedTo == null ? <Spinner /> : connectedTo}</p></>;
 
-    page = <>{page}<h3>Update credentials</h3>{form}
+    page = <>{page}<h3>{loc.wifiUpdate}</h3>{form}
         <Confirmation active={forgetModal}
             confirm={() => { fetch(`${props.API}/api/wifi/forget`, { method: "POST" }); setForgetModal(false); }}
-            cancel={() => setForgetModal(false)}>Are you sure? If you continue, a captive portal will be started.</Confirmation>
+            cancel={() => setForgetModal(false)}>{loc.wifiModal1}</Confirmation>
         <Confirmation active={saveModal}
             confirm={() => { changeWifi(); setSaveModal(false); }}
-            cancel={() => setSaveModal(false)}>Are you sure? If you continue, device access from the current network will probably be lost.</Confirmation>
+            cancel={() => setSaveModal(false)}>{loc.wifiModal2}</Confirmation>
     </>;
 
     return page;

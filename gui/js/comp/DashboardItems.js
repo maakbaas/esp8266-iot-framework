@@ -5,6 +5,14 @@ import styled from "styled-components";
 import { ControlItem } from "./ControlItem";
 import { DisplayItem } from "./DisplayItem";
 
+import Config from "./../configuration.json";
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 const Grey = styled.span`
     color:#666;
     white-space: nowrap;
@@ -112,7 +120,7 @@ export function DashboardItems(props) {
 
     let confItems;
     if (props.items.length == 0) {
-        confItems = <p>There are no items defined in the JSON file</p>;
+        confItems = <p>{loc.dashEmpty}</p>;
     } else {
         for (let i = 0; i < props.items.length; i++) {
             if (props.items[i].hidden) {

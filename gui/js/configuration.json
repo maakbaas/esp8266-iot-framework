@@ -5,5 +5,12 @@
         "type": "char",
         "length": 32,
         "value": "ESP8266 IoT Framework"
+    },
+    {
+        "name": "language",        
+        "type": "char",
+        "length": 3,
+        "value": "en",
+        "hidden": true
     }
 ]
