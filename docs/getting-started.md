@@ -63,3 +63,17 @@ else
 The command `npm run build` will generate a `html.h` file which contains the full bundle as a PROGMEM byte array to be included when building and flashing the framework to the ESP8266. But manual execution of this command is not needed if you use the `REBUILD_HTML` build flag.
 
 If you have defined a custom location for the configuration JSON file, you need to build the ESP8266 sources at least once after changes in the JSON, so that it will be copied into the HTML folder. Otherwise the development server will not reflect the latest version of the JSON file.
+
+## Changing the language of the web interface
+
+The parameter named `language` in the `configuration.json` file: 
+```javascript
+{
+    "name": "language",        
+    "type": "char",
+    "length": 3,
+    "value": "nl",
+    "hidden": true
+}
+```
+can be used to change the language of the web interface. Supported languages are placed in the folder `gui/js/lang`. Change the language code and rebuild the HTML interface as described above to change the language. If your language is not yet supported, feel free to create a pull request for it.

@@ -4,6 +4,7 @@
 struct configData
 {
 	char projectName[32];
+	char language[3];
 };
 
 extern uint32_t configVersion;

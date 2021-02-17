@@ -15,6 +15,14 @@ import { bin2obj } from "./functions/configHelpers";
 import Config from "./configuration.json";
 import Dash from "./dashboard.json";
 
+
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./lang/en.json");
+}
+
 let url = "http://192.168.1.54";
 if (process.env.NODE_ENV === "production") {url = window.location.origin;}
 
@@ -65,11 +73,11 @@ function Root() {
 
                 <Hamburger onClick={() => setMenu(!menu)} />
                 <Menu className={menu ? "" : "menuHidden"}>
-                    <li><NavLink onClick={() => setMenu(false)} exact to="/">WiFi Settings</NavLink></li>
-                    <li><NavLink onClick={() => setMenu(false)} exact to="/dashboard">Dashboard</NavLink></li>
-                    <li><NavLink onClick={() => setMenu(false)} exact to="/config">Configuration</NavLink></li>
-                    <li><NavLink onClick={() => setMenu(false)} exact to="/files">File Manager</NavLink></li>
-                    <li><NavLink onClick={() => setMenu(false)} exact to="/firmware">Firmware Update</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/">{loc.titleWifi}</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/dashboard">{loc.titleDash}</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/config">{loc.titleConf}</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/files">{loc.titleFile}</NavLink></li>
+                    <li><NavLink onClick={() => setMenu(false)} exact to="/firmware">{loc.titleFw}</NavLink></li>
                 </Menu>
 
             </Header>

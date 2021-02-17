@@ -7,10 +7,17 @@ import { obj2bin } from "../functions/configHelpers";
 import { Form, Button } from "./UiComponents";
 import { DashboardItems } from "./DashboardItems";
 
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 export function ConfigPage(props) {
     
     useEffect(() => {
-        document.title = "Configuration";
+        document.title = loc.titleConf;
     }, []);
    
     const confItems = <DashboardItems items={Config} data={props.configData} />;    
@@ -25,7 +32,7 @@ export function ConfigPage(props) {
                 .then((status) => {
                     if (status == 200) {props.requestUpdate();}
                 })         
-        }>Save</Button>;
+        }>{loc.globalSave}</Button>;
     }
 
     const form = <><Form>
@@ -34,7 +41,7 @@ export function ConfigPage(props) {
     {button}        
     </>;
 
-    return <><h2>Configuration</h2><p>{form}</p></>;
+    return <><h2>{loc.titleConf}</h2><p>{form}</p></>;
 
     function form2bin() {
         const newData = {};
