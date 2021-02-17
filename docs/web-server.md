@@ -12,6 +12,24 @@ void begin();
 
 The web server has only one public method. Call this method in your setup function to initialize and start the web server.
 
+## Class Members
+
+#### server
+
+```c++
+AsyncWebServer server = AsyncWebServer(80);
+```
+
+The server object is made public so that you can add your own API methods/callbacks.
+
+#### ws
+
+```c++
+AsyncWebSocket ws = AsyncWebSocket("/ws");
+```
+
+The websocket object is public so that it can be accessed from other parts of the framework.
+
 ## Web Server
 
 The basic setup of the webserver is done with three simple rules, which are described below.
