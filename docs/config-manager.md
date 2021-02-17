@@ -50,6 +50,13 @@ void loop();
 ```
 Performs the save function is a save is requested. Place this in your main loop function.
 
+#### setConfigSaveCallback
+
+```c++
+void setConfigSaveCallback( std::function<void()> func );
+```
+Use this function to add a callback that will be executed everytime new data is committed to EEPROM. See the configuration manager example for how to use it.
+
 ## Class Members
 
 #### data
