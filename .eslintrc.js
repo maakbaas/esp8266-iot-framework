@@ -54,9 +54,6 @@ module.exports = { // eslint-disable-line no-undef
         "prefer-const": [
             "error",
         ],
-        "prefer-template": [
-            "error",
-        ],
         "quote-props": [
             "error",
             "as-needed",

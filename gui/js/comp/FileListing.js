@@ -6,6 +6,14 @@ import styled from "styled-components";
 import { Fetch, Flex, RedButton, Button, buttonStyle, cPrimary, Alert, Spinner } from "./UiComponents";
 import { File, Trash2, Download } from "react-feather";
 
+import Config from "./../configuration.json";
+let loc;
+if (Config.find(entry => entry.name === "language")) {
+    loc = require("./../lang/" + Config.find(entry => entry.name === "language").value + ".json");
+} else {
+    loc = require("./../lang/en.json");
+}
+
 const FileLine = styled(Flex)`
     padding:0.35em 0em;
     border-bottom:1px solid #ddd;
@@ -62,7 +70,6 @@ export function FileListing(props) {
     const [state, setState] = useState({ files: [], used: 0, max: 0});
 
     useEffect(() => {
-        document.title = "File Manager";
         fetchData();
     }, []);
 
@@ -86,7 +93,7 @@ export function FileListing(props) {
         }
 
         if (filtered == 0) {
-            list = <FileLine><div>No files available</div></FileLine>;
+            list = <FileLine><div>{loc.filesEmpty}</div></FileLine>;
         } else {
             for (let i = 0; i < state.files.length; i++) {
                 if (typeof props.filter === "undefined" ||
@@ -97,10 +104,10 @@ export function FileListing(props) {
                             <div><File /><span>{state.files[i]}</span></div>
                             <div>
                                 <a href={`${props.API}/download/${state.files[i]}`} rel="noreferrer" target="_blank" onClick={(e) => { e.stopPropagation();}}>
-                                    <Button title="Download file"><Download /></Button>
+                                    <Button title={loc.filesDl}><Download /></Button>
                                 </a>                
                                 <Fetch href={`${props.API}/api/files/remove?filename=${state.files[i]}`} POST onFinished={fetchData}>
-                                    <RedButton title="Remove file" ><Trash2 /></RedButton>
+                                    <RedButton title={loc.filesRm} ><Trash2 /></RedButton>
                                 </Fetch>   
                             </div>
                         </FileLine></>;
@@ -114,14 +121,14 @@ export function FileListing(props) {
 
     let header;
     if (props.selectable) {
-        header = "Select a file:";
+        header = loc.filesFwTitle + ":";
     } else {
-        header = "File list";
+        header = loc.filesTitle;
     }
 
     return <><Flex>
         <div><Upload action={`${props.API}/upload`} onFinished={fetchData} filter={props.filter} /></div>
-        {parseInt(state.max) > 0 ? <div>{Math.round(state.used / 1000)} / {Math.round(state.max / 1000)} kB used</div> : ""}
+        {parseInt(state.max) > 0 ? <div>{Math.round(state.used / 1000)} / {Math.round(state.max / 1000)} kB {loc.filesUsed}</div> : ""}
     </Flex><h3>{header}</h3>{list}</>;
     
 }
@@ -138,7 +145,7 @@ function Upload(props) {
     const [state, setState] = useState("");
 
     let status;
-    if (state == "busy") {status = <><Spinner /></>;} else {status = <>Upload File</>;}
+    if (state == "busy") {status = <><Spinner /></>;} else {status = <>{loc.filesBtn}</>;}
 
     const render =
         <><form action={props.action} method="post" name="upload" encType="multipart/form-data">
@@ -182,10 +189,10 @@ function Upload(props) {
         </form>
         <Alert active={state == "nok"}
             confirm={() => setState("")}>
-                The upload has failed. The file could be too large, or it&apos;s name too long ({">"}32).</Alert>
+            {loc.filesMsg1}</Alert>
         <Alert active={state == "wrongtype"}
             confirm={() => setState("")}>
-                The selected file is not of the correct type (.{props.filter})</Alert>
+            {loc.filesMsg2} (.{props.filter})</Alert>
         </>;
 
     return render;
