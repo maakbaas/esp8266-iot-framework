@@ -56,4 +56,4 @@ The basic principles used in developing this framework are:
 
 In short, the framework aims to be unobtrusive, easy to deploy, with a modern web interface that's easy to modify and expand for different projects :). 
 
-**Note:** The ESP32 is not supported by this framework right now, due to the reliance on BearSSL. BearSSL is part of the ESP8266 Arduino libraries, but not part of the ESP32 Arduino libraries.
+**Note:** The ESP32 is not supported by this framework right now, due to the reliance on BearSSL. BearSSL is part of the ESP8266 Arduino libraries, but not part of the ESP32 Arduino libraries. Also, many functionalities of this framework are supported by ESP-IDF for the ESP32. Therefore my recommendation would be to use ESP-IDF and I don't see enough added value in porting this framework.
