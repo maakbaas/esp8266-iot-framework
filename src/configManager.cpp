@@ -72,6 +72,14 @@ void config::save()
     EEPROM.put(SIZE_INTERNAL + 5 + sizeof(data), checksum(reinterpret_cast<uint8_t*>(&data), sizeof(data)));
     
     EEPROM.commit();
+
+    if ( _configsavecallback != NULL) {
+        _configsavecallback();
+    }
+}
+
+void config::setConfigSaveCallback( std::function<void()> func ) {
+  _configsavecallback = func;
 }
 
 void config::loop()

@@ -28,9 +28,11 @@ public:
     void save();
     void reset();
     void loop();
+    void setConfigSaveCallback( std::function<void()> func );
 
 private:
     uint8_t checksum(uint8_t *byteArray, unsigned long length);
+  	std::function<void()> _configsavecallback;
     bool requestSave = false;
 };
 
