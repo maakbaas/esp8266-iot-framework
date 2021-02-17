@@ -120,7 +120,15 @@ export function DashboardItems(props) {
             }
 
             let value;
-            if (typeof data !== "undefined" && typeof data[props.items[i].name] !== "undefined") { value = data[props.items[i].name]; } else { value = ""; }
+            if (typeof data !== "undefined" && typeof data[props.items[i].name] !== "undefined") { 
+                value = data[props.items[i].name]; 
+
+                //number of digits
+                if (props.items[i].type == "float" && typeof props.items[i].digits !== "undefined") {
+                    value = parseFloat(value).toFixed(props.items[i].digits);
+                }
+                
+            } else { value = ""; }
 
             //const configInputAttributes = DefaultTypeAttributes[props.items[i].type] || {};
             const inputType = DefaultTypeAttributes[props.items[i].type].type || "text";
