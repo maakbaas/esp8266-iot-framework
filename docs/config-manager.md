@@ -20,28 +20,42 @@ This method must be called from the setup of the application. The optional argum
 ```c++
 void save();
 ```
-This method saves the configManager.data object to EEPROM. Use this if you write changes or updates directly to the RAM mirror
+This method saves the configManager.data object to EEPROM. Use this if you write changes or updates directly to the RAM mirror. This method is blocking.
 
 #### saveExternal
 
 ```c++
 void saveExternal(configData *extData);
 ```
-This method copies an external configData object into the configManager.data RAM mirror, and uploads it to EEPROM.
+This method copies an external configData object into the configManager.data RAM mirror, and uploads it to EEPROM. This method is asynchronous. The actual save command will be performed in the `loop()` function.
 
 #### saveRaw
 
 ```c++
 void saveRaw(uint8_t bytes[]);
 ```
-This method stores the input byte array into the EEPROM. This is an unsafe method, you must ensure externally that the input byte array is the correct length and structure.
+This method stores the input byte array into the EEPROM. This is an unsafe method, you must ensure externally that the input byte array is the correct length and structure. This method is asynchronous. The actual save command will be performed in the `loop()` function.
 
 #### reset
 
 ```c++
 void reset();
 ```
-This method resets the EEPROM contents to the default values.
+This method resets the EEPROM contents to the default values. This method is asynchronous. The actual save command will be performed in the `loop()` function.
+
+#### loop
+
+```c++
+void loop();
+```
+Performs the save function is a save is requested. Place this in your main loop function.
+
+#### setConfigSaveCallback
+
+```c++
+void setConfigSaveCallback( std::function<void()> func );
+```
+Use this function to add a callback that will be executed everytime new data is committed to EEPROM. See the configuration manager example for how to use it.
 
 ## Class Members
 

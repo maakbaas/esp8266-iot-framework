@@ -33,7 +33,7 @@ bool config::begin(int numBytes)
     {
         Serial.println(PSTR("Internal data checksum mismatch"));
         internal = internalData();
-        save();
+        requestSave = true;
         returnValue = false;
     }
 
@@ -43,19 +43,19 @@ bool config::begin(int numBytes)
 void config::reset()
 {
     memcpy_P(&data, &defaults, sizeof(data));
-    save();
+    requestSave = true;
 }
 
 void config::saveRaw(uint8_t bytes[])
 {
     memcpy(&data,bytes,sizeof(data));
-    save();
+    requestSave = true;
 }
 
 void config::saveExternal(configData *extData)
 {
     memcpy(&data, extData, sizeof(data));
-    save();
+    requestSave = true;
 }
 
 void config::save()
@@ -72,6 +72,23 @@ void config::save()
     EEPROM.put(SIZE_INTERNAL + 5 + sizeof(data), checksum(reinterpret_cast<uint8_t*>(&data), sizeof(data)));
     
     EEPROM.commit();
+
+    if ( _configsavecallback != NULL) {
+        _configsavecallback();
+    }
+}
+
+void config::setConfigSaveCallback( std::function<void()> func ) {
+  _configsavecallback = func;
+}
+
+void config::loop()
+{
+    if (requestSave)
+    {
+        requestSave = false;
+        save();
+    }
 }
 
 uint8_t config::checksum(uint8_t *byteArray, unsigned long length)

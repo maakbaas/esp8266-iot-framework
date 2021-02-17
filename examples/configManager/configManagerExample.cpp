@@ -16,6 +16,10 @@ struct task
 
 task taskA = {.rate = 60000, .previous = 0};
 
+void saveCallback() {
+    Serial.println("EEPROM saved"); 
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -23,6 +27,7 @@ void setup()
     LittleFS.begin();
     GUI.begin();
     configManager.begin();
+    configManager.setConfigSaveCallback(saveCallback);
     WiFiManager.begin(configManager.data.projectName);
     timeSync.begin();
 }
@@ -32,7 +37,8 @@ void loop()
     //software interrupts
     WiFiManager.loop();
     updater.loop();
-
+    configManager.loop();
+    
     //task A
     if (taskA.previous == 0 || (millis() - taskA.previous > taskA.rate))
     {
