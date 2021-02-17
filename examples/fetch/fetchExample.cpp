@@ -32,6 +32,7 @@ void loop()
     //software interrupts
     WiFiManager.loop();
     updater.loop();
+    configManager.loop();
 
     //task A
     if (taskA.previous==0 || (millis() - taskA.previous > taskA.rate ))

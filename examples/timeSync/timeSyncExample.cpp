@@ -41,4 +41,5 @@ void loop()
     //software interrupts
     WiFiManager.loop();
     updater.loop();    
+    configManager.loop();
 }

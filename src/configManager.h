@@ -27,9 +27,11 @@ public:
     void saveExternal(configData *extData);
     void save();
     void reset();
+    void loop();
 
 private:
     uint8_t checksum(uint8_t *byteArray, unsigned long length);
+    bool requestSave = false;
 };
 
 extern config configManager;

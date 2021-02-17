@@ -33,6 +33,7 @@ void loop()
     //software interrupts
     WiFiManager.loop();
     updater.loop();
+    configManager.loop();
     dash.loop();
 
     //your code here
