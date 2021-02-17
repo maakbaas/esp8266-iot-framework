@@ -104,7 +104,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
     WiFi.config(ip, gw, sub, dns);
 
     //fix for auto connect racing issue
-    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip)
+    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip  || dns.v4() != configManager.internal.dns)
     {          
         //trying to fix connection in progress hanging
         ETS_UART_INTR_DISABLE();
@@ -220,5 +220,6 @@ void WifiManager::storeToEEPROM()
     configManager.internal.ip = ip.v4();
     configManager.internal.gw = gw.v4();
     configManager.internal.sub = sub.v4();
+    configManager.internal.dns = dns.v4();
     configManager.save();
 }
