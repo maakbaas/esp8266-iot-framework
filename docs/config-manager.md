@@ -171,4 +171,4 @@ There are several configuration properties which will affect the UI of this page
 - `hidden`: won't show an input control
 - `length`: sets the input `maxlength` attribute (strings only)
 - `min`/`max`/`step`: sets the corresponding input attributes (numbers only)
-- `digits`: can be used to limit the number of digits shown (floats only.
+- `digits`: can be used to limit the number of digits shown (floats only)
