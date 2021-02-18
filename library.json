@@ -92,6 +92,7 @@
             "gui/js/*.*",
             "gui/js/comp/*.*",
             "gui/js/functions/*.*",
+            "gui/js/lang/*.*",
             "examples/configManager/*.*",
             "examples/fetch/*.*",
             "examples/helloWorld/*.*",
