@@ -4,11 +4,22 @@ import subprocess
 import inspect, os.path
 from os.path import join, realpath
 
+#auto install asn1crypto if not defined
+try:
+    from asn1crypto.x509 import Certificate
+except ImportError:
+    Import('env')
+    env.Execute(
+        env.VerboseAction(
+            '$PYTHONEXE -m pip install "asn1crypto" ',
+            "ASN1 crypto import failed, installing.",
+        )
+    )
+    
 from preBuildHTML import preBuildHTMLFun
 from preBuildConfig import preBuildConfigFun
 from preBuildDash import preBuildDashFun
 from preBuildCertificates import preBuildCertificatesFun
-
 
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 dir_path = os.path.dirname(os.path.abspath(filename))
