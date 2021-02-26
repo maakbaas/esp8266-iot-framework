@@ -7,6 +7,13 @@
         "value": "ESP8266 IoT Framework"
     },
     {
+        "name": "projectVersion",
+        "label": "Project Version",
+        "type": "char",
+        "length": 8,
+        "value": ""
+    },
+    {
         "name": "language",        
         "type": "char",
         "length": 3,

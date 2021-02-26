@@ -64,12 +64,13 @@ function Root() {
     }
 
     const projectName = configData["projectName"] || Config.find(entry => entry.name === "projectName").value || "ESP8266";
+    const projectVersion = configData["projectVersion"] || "";
     return <><GlobalStyle />
 
         <BrowserRouter>
 
             <Header>
-                <h1><Box style={{verticalAlign:"-0.1em"}} /> {projectName}</h1>
+                <h1><Box style={{verticalAlign:"-0.1em"}} /> {projectName} {projectVersion}</h1>
 
                 <Hamburger onClick={() => setMenu(!menu)} />
                 <Menu className={menu ? "" : "menuHidden"}>
