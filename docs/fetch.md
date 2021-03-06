@@ -147,18 +147,11 @@ As mentioned earlier a full certificate store is saved in PROGMEM as part of the
 
 If you ever want to update or rebuild the certificate store, you can do this by enabling or running the pre-build script `preBuildCertificates.py`. This script will read in all root certificates from the Mozilla certificate store and process these into a format that is compatible with the ESP8266 Arduino layer.
 
-For this step OpenSSL is needed. On Linux this is probably available by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL at the top of the `preBuildCertificates.py` file:
+For this step OpenSSL is needed. On Linux this is probably available by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL by adding the build flag below to `platformio.ini`:
 
-```c++
-#path to openssl
-openssl = "C:\\msys32\\usr\\bin\\openssl"
-```
+**-DOPENSSL="C:/Program Files/Git/usr/bin/openssl.exe"** Path to openssl executable. The location shown here is the default location. If your openssl is in a different location, change this flag accordingly
 
-Another prerequisite is that you need the Python module asn1crypto. Since currently PlatformIO uses its own internal Python version, this means you need to open a new PlatformIO terminal, and then execute the command:
-
-```
-pip install asn1crypto
-```
+Another prerequisite is the Python module asn1crypto. If this module is not available, the script will attempt to install it using `pip`.
 
 ## Certificate Store Size
 
