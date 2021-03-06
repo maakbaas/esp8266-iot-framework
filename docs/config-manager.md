@@ -130,9 +130,11 @@ An example of how this file could look is shown below:
 
 Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. 
 
-The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
+There are a few unique parameters:
 
-The parameter named `language` is also unique and can be used to change the language of the web interface. Supported languages are placed in the folder `gui/js/lang`. Change the language code and rebuild the HTML interface to change the language. If your language is not yet supported, feel free to create a pull request for it.
+* The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
+* The parameter named `language` is also unique and can be used to change the language of the web interface. Supported languages are placed in the folder `gui/js/lang`. Change the language code and rebuild the HTML interface to change the language. If your language is not yet supported, feel free to create a pull request for it.
+* The parameter named `projectVersion` can be added to the configuration file, and will add this version string to the header of the web interface, and can of course be used in your code as well.
 
 For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct.
 

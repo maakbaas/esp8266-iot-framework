@@ -24,9 +24,9 @@ from ssl import wrap_socket, CERT_NONE, PROTOCOL_SSLv23
 from ssl import SSLContext  # Modern SSL?
 from ssl import HAS_SNI  # Has SNI?
 
-def preBuildCertificatesFun(domains):
+def preBuildCertificatesFun(domains, openssl):
 
-    print('Start building certificate store', flush=True) 
+    print('Start building certificate store', flush=True)
 
     allDomains = True
 
@@ -43,7 +43,8 @@ def preBuildCertificatesFun(domains):
     dir_path = os.path.dirname(os.path.abspath(filename))
 
     #path to openssl
-    openssl = "C:/msys32/usr/bin/openssl" 
+    if openssl is None:
+        openssl = "C:/Program Files/Git/usr/bin/openssl.exe"
 
     # below script content is adapted from:
     # https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/BearSSL_CertStore/certs-from-mozilla.py

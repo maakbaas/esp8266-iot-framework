@@ -79,12 +79,9 @@ The build flags are optional, since all default generated artefacts are already 
 
 **-DREBUILD_CERTS:** This build step generates `certificates.h` containing a full root certificate store to enable arbitrary HTTPS requests with the ESP8266. More info on this process can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/fetch.md).
 
-For this step OpenSSL is needed. On Linux this is probably available by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL at the top of the file:
+For this step OpenSSL is needed. On Linux this is probably available by default, on Windows this comes as part of something like MinGW, or Cygwin, but is also installed with the Windows Git client. If needed you can edit the path to OpenSSL with the next build flag
 
-```python
-#path to openssl
-openssl = "C:\\msys32\\usr\\bin\\openssl"
-```
+**-DOPENSSL="C:/Program Files/Git/usr/bin/openssl.exe"** Path to openssl executable. The location shown here is the default location. If your openssl is in a different location, change this flag accordingly
 
 **-DCONFIG_PATH=configuration.json:** This option defines a custom location for your configuration JSON file. This is needed when using the framework as a library, to allow you to define a JSON file in your project folder. The path is relative to the PlatformIO project root folder. More detail on the JSON file can be found [here](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/config-manager.md).
 
