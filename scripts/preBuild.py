@@ -2,7 +2,6 @@ Import('env')
 from shutil import copyfile
 import subprocess
 import inspect, os.path
-from os.path import join, realpath
 
 #auto install asn1crypto if not defined
 try:
@@ -11,7 +10,7 @@ except ImportError:
     Import('env')
     env.Execute(
         env.VerboseAction(
-            '$PYTHONEXE -m pip install "asn1crypto" ',
+            '"$PYTHONEXE" -m pip install "asn1crypto" ',
             "ASN1 crypto import failed, installing.",
         )
     )
@@ -29,6 +28,7 @@ html = False
 config = False
 dash = False
 certs = False
+openssl = None
 
 # private library flags
 domains = ''
@@ -49,6 +49,8 @@ for item in env.get("CPPDEFINES", []):
         copyfile(env.get("PROJECT_DIR") + '/' + item[1], '../gui/js/dashboard.json')
     elif isinstance(item, tuple) and item[0] == "DOMAIN_LIST":
         domains = item[1]
+    elif isinstance(item, tuple) and item[0].lower() == "openssl":
+        openssl = item[1]
 
 if html:
     preBuildHTMLFun()
@@ -57,6 +59,6 @@ if config:
 if dash:
     preBuildDashFun()
 if certs:
-    preBuildCertificatesFun(domains)
+    preBuildCertificatesFun(domains, openssl)
 
 
