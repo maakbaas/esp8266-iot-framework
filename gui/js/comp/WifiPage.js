@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Form, Button, Spinner, Confirmation } from "./UiComponents";
-import { Wifi, Lock, Server, CornerDownRight } from "react-feather";
+import { FiWifi as Wifi, FiLock as Lock, FiServer as Server, FiCornerDownRight as CornerDownRight } from "react-icons/fi";
 
 import Config from "./../configuration.json";
 let loc;

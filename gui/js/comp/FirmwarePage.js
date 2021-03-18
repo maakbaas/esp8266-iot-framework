@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { FileListing } from "./FileListing";
 import { Card, Flex, cSecondary, Button, DisabledButton, Confirmation, Alert, Spinner} from "./UiComponents";
-import { Zap, Power } from "react-feather";
+import { FiZap as Zap, FiPower as Power } from "react-icons/fi";
 
 import Config from "./../configuration.json";
 let loc;
