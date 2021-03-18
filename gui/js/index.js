@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
-import { VscFlame as HeaderIcon } from "react-icons/vsc";
+import { FiBox as HeaderIcon } from "react-icons/fi";
 
 import {GlobalStyle, Menu, Header, Page, Hamburger} from "./comp/UiComponents";
 import { WifiPage } from "./comp/WifiPage";
