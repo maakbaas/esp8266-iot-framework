@@ -11,7 +11,7 @@
 WifiManager WiFiManager;
 
 //function to call in setup
-void WifiManager::begin(char const *apName)
+void WifiManager::begin(char const *apName, unsigned long newTimeout)
 {    
     captivePortalName = apName;
 
@@ -22,6 +22,8 @@ void WifiManager::begin(char const *apName)
     gw = IPAddress(configManager.internal.gw);
     sub = IPAddress(configManager.internal.sub);
     dns = IPAddress(configManager.internal.dns);
+
+    timeout = newTimeout;
 
     if (ip.isSet() || gw.isSet() || sub.isSet() || dns.isSet())
     {
@@ -38,7 +40,7 @@ void WifiManager::begin(char const *apName)
         WiFi.begin();
     }
 
-    if (WiFi.waitForConnectResult() == WL_CONNECTED)
+    if (WiFi.waitForConnectResult(timeout) == WL_CONNECTED)
     {
         //connected
         Serial.println(PSTR("Connected to stored WiFi details"));
@@ -118,14 +120,14 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
         WiFi.begin(newSSID.c_str(), newPass.c_str(), 0, NULL, true);
         delay(2000);
 
-        if (WiFi.waitForConnectResult() != WL_CONNECTED)
+        if (WiFi.waitForConnectResult(timeout) != WL_CONNECTED)
         {
             
             Serial.println(PSTR("New connection unsuccessful"));
             if (!inCaptivePortal)
             {
                 WiFi.begin(oldSSID, oldPSK, 0, NULL, true);
-                if (WiFi.waitForConnectResult() != WL_CONNECTED)
+                if (WiFi.waitForConnectResult(timeout) != WL_CONNECTED)
                 {
                     Serial.println(PSTR("Reconnection failed too"));
                     startCaptivePortal(captivePortalName);
