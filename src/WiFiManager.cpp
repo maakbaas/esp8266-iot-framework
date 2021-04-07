@@ -12,8 +12,9 @@ WifiManager WiFiManager;
 
 //function to call in setup
 void WifiManager::begin(char const *apName, unsigned long newTimeout)
-{    
+{
     captivePortalName = apName;
+    timeout = newTimeout;
 
     WiFi.mode(WIFI_STA);
 
@@ -22,8 +23,6 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
     gw = IPAddress(configManager.internal.gw);
     sub = IPAddress(configManager.internal.sub);
     dns = IPAddress(configManager.internal.dns);
-
-    timeout = newTimeout;
 
     if (ip.isSet() || gw.isSet() || sub.isSet() || dns.isSet())
     {

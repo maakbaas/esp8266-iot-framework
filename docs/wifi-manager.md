@@ -6,9 +6,9 @@ The function of the WiFi manager is to help the user connect to a WiFi network. 
 #### begin
 
 ```c++
-void begin(char const *apName);
+void begin(char const *apName, unsigned long newTimeout = 60000);
 ```
-This method must be called from the setup of the application. The mandatory argument is the SSID name that will be used in case a captive portal is started. The WiFi manager will connect to the stored WiFi details. If no details are stored, or if this fails, a captive portal will be started from 192.168.4.1. 
+This method must be called from the setup of the application. The mandatory argument is the SSID name that will be used in case a captive portal is started. The optional timeout value allows you to set how long (in milliseconds) the stored WiFi connection will try for before returning to captive portal mode. The WiFi manager will connect to the stored WiFi details. If no details are stored, or if this fails, a captive portal will be started from 192.168.4.1.
 
 #### loop
 
