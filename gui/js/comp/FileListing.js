@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { Fetch, Flex, RedButton, Button, buttonStyle, cPrimary, Alert, Spinner } from "./UiComponents";
-import { File, Trash2, Download } from "react-feather";
+import { FiFile as File, FiTrash2 as Trash2, FiDownload as Download } from "react-icons/fi";
 
 import Config from "./../configuration.json";
 let loc;

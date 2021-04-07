@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { createGlobalStyle, css } from "styled-components";
 import { normalize } from "styled-normalize";
-import { Loader, Menu as MenuIcon } from "react-feather";
+import { FiLoader as Loader, FiMenu as MenuIcon } from "react-icons/fi";
 import PropTypes from "prop-types";
 
 export const cPrimary = "#0055ff"; 
