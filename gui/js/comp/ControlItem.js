@@ -27,7 +27,9 @@ export function ControlItem(props) {
             setSaved(0);
             setTarget(null);
         }
+    });
 
+    useEffect(() => {
         if (saving && target != null) {
             const sizes = binsize(props.name, Dash);
             const binData = new ArrayBuffer(sizes[1]);
@@ -70,7 +72,7 @@ export function ControlItem(props) {
             });  
             setSaved(true);
         }
-    });
+    }, [saving, target]);
 
     function save() {
         setSaving(1);
@@ -89,7 +91,7 @@ export function ControlItem(props) {
         }}><Upload /></Button>;
     }
 
-    return <><input onChange={(e) => { if (checkbox) { setTarget(e.target.checked); save(); } else { setTarget(e.target.value); } }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />{savebtn}</>;
+    return <><input onClick={(e) => { if (checkbox) { setTarget(e.target.checked); save(); } else { setTarget(e.target.value); } }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />{savebtn}</>;
 }
 
 ControlItem.propTypes = {
