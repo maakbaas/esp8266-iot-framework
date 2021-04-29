@@ -62,10 +62,16 @@ function Root() {
                 setConfigData(bin2obj(data, Config));
             });
     }
-
-    const projectName = configData["projectName"] || Config.find(entry => entry.name === "projectName") ? Config.find(entry => entry.name === "projectName").value : "ESP8266";
-    const projectVersion = configData["projectVersion"] || Config.find(entry => entry.name === "projectVersion") ? Config.find(entry => entry.name === "projectVersion").value : "";
-
+    console.log(configData["projectName"]);
+    let projectName = configData["projectName"];
+    if (typeof projectName === "undefined") {
+        projectName = Config.find(entry => entry.name === "projectName") ? Config.find(entry => entry.name === "projectName").value : "ESP8266";
+    }
+    let projectVersion = configData["projectVersion"];
+    if (typeof projectVersion === "undefined") {
+        projectVersion = Config.find(entry => entry.name === "projectVersion") ? Config.find(entry => entry.name === "projectVersion").value : "";
+    }
+    
     return <><GlobalStyle />
 
         <BrowserRouter>
