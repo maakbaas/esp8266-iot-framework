@@ -2,18 +2,19 @@
 //the class is completely overwritten by using the same preprocessor
 //include guard
 
-#ifndef _CERTSTORE_BEARSSL_H
-#define _CERTSTORE_BEARSSL_H
+#ifndef _CERTSTORE_H
+#define _CERTSTORE_H
 
 #include <Arduino.h>
 #include <BearSSLHelpers.h>
 #include <bearssl/bearssl.h>
+#include <CertStoreBearSSL.h>
 
 namespace BearSSL {
 
-class CertStore {
+class CertStoreP: public CertStoreBase {
   public:
-    CertStore() { };   
+    CertStoreP() { };   
 
     // Installs the cert store into the X509 decoder (normally via static function callbacks)
     void installCertStore(br_x509_minimal_context *ctx);

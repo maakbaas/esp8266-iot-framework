@@ -35,7 +35,7 @@ public:
     void addHeader(String name, String value);
 
 private : 
-    BearSSL::CertStore certStore;
+    BearSSL::CertStoreP certStore;
 
     HTTPClient *http;
     WiFiClient *client;

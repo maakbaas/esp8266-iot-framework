@@ -4,15 +4,15 @@
 
 namespace BearSSL {
 
-void CertStore::installCertStore(br_x509_minimal_context *ctx) {
+void CertStoreP::installCertStore(br_x509_minimal_context *ctx) {
   br_x509_minimal_set_dynamic(ctx, (void*)this, findHashedTA, freeHashedTA);
 }
 
-const br_x509_trust_anchor *CertStore::findHashedTA(void *ctx, void *hashed_dn, size_t len) {
+const br_x509_trust_anchor *CertStoreP::findHashedTA(void *ctx, void *hashed_dn, size_t len) {
     //compare sha256 from index file with hashed_dn
     //then return certificate
 
-    CertStore *cs = static_cast<CertStore *>(ctx);
+    CertStoreP *cs = static_cast<CertStoreP *>(ctx);
 
     if (!cs || len != 32)
     {
@@ -49,8 +49,8 @@ const br_x509_trust_anchor *CertStore::findHashedTA(void *ctx, void *hashed_dn, 
     return nullptr;
 }
 
-void CertStore::freeHashedTA(void *ctx, const br_x509_trust_anchor *ta) {
-  CertStore *cs = static_cast<CertStore*>(ctx);
+void CertStoreP::freeHashedTA(void *ctx, const br_x509_trust_anchor *ta) {
+  CertStoreP *cs = static_cast<CertStoreP*>(ctx);
   (void) ta; // Unused
   delete cs->_x509;
   cs->_x509 = nullptr;
