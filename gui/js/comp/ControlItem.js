@@ -22,10 +22,10 @@ export function ControlItem(props) {
             setData(props.value);                  
         }
 
-        if (saved && props.value == target) {
+        if (saved) {
             setSaving(0);
             setSaved(0);
-            setTarget(null);
+            setTimeout(() => {setTarget(null);},500);
         }
     });
 
@@ -72,26 +72,29 @@ export function ControlItem(props) {
             });  
             setSaved(true);
         }
-    }, [saving, target]);
+    }, [saving]);
 
     function save() {
         setSaving(1);
     }
 
-    let savebtn;
     let checkbox = false;
 
     if (typeof props.conditionalAttributes !== "undefined" && typeof props.conditionalAttributes.checked !== "undefined") {
         props.conditionalAttributes.checked = data;
         checkbox = true;
-    } else {
-        savebtn = <Button onClick={(e) => {            
-            e.preventDefault();
-            save();
-        }}><Upload /></Button>;
     }
 
-    return <><input onClick={(e) => { if (checkbox) { setTarget(e.target.checked); save(); } else { setTarget(e.target.value); } }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />{savebtn}</>;
+    if (checkbox) {
+        return <input onClick={(e) => { setTarget(e.target.checked); save(); }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />;
+    } else {
+        return <><input onChange={(e) => { setTarget(e.target.value); }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />
+            <Button onClick={(e) => {            
+                e.preventDefault();
+                save();
+            }}><Upload /></Button></>;
+    }
+
 }
 
 ControlItem.propTypes = {
