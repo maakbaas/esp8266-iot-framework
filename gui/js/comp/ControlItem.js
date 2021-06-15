@@ -25,7 +25,7 @@ export function ControlItem(props) {
         if (saved) {
             setSaving(0);
             setSaved(0);
-            setTimeout(() => {setTarget(null);},500);
+            setTimeout(() => {setTarget(null);},750);
         }
     });
 
@@ -85,7 +85,24 @@ export function ControlItem(props) {
         checkbox = true;
     }
 
-    if (checkbox) {
+    if (props.type == "select") {
+        let options;
+        let isOption = false;
+        for (let i = 0; i < props.conditionalAttributes.options.length; i++) {
+            if (data == props.conditionalAttributes.options[i]) {
+                isOption = true;
+            }             
+            options = <>{options}<option value={props.conditionalAttributes.options[i]}>{props.conditionalAttributes.options[i]}</option></>;            
+        }
+
+        if (!isOption) {
+            options = <><option value={data}>{data}</option>{options}</>;
+        }
+
+        return <select id={props.name} name={props.name} value={data} onChange={(e) => { setTarget(e.target.value); save(); }}>
+            {options}
+        </select>;
+    } else if (checkbox) {
         return <input onClick={(e) => { setTarget(e.target.checked); save(); }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />;
     } else {
         return <><input onChange={(e) => { setTarget(e.target.value); }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />

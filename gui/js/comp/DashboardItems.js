@@ -53,6 +53,12 @@ const Control = styled.p`
         max-width:calc(100% - 40px);
     }
 
+    select {
+        width:450px;
+        padding: 0.3em;
+        max-width:100%;
+    }
+
     button {        
         padding:0.4em 0.5em;
     }
@@ -139,7 +145,12 @@ export function DashboardItems(props) {
             } else { value = ""; }
 
             //const configInputAttributes = DefaultTypeAttributes[props.items[i].type] || {};
-            const inputType = DefaultTypeAttributes[props.items[i].type].type || "text";
+            let inputType;
+            if (typeof props.items[i].control !== "undefined") {
+                inputType = props.items[i].control;
+            } else {
+                inputType = DefaultTypeAttributes[props.items[i].type].type || "text";
+            }
 
             const conditionalAttributes = {};
             let rangeInfo;
@@ -163,6 +174,10 @@ export function DashboardItems(props) {
                             <Grey>({conditionalAttributes.min} &ndash; {conditionalAttributes.max})</Grey>
                         </>;
                     }
+                    break;
+
+                case "select":
+                    conditionalAttributes.options = props.items[i].options;
                     break;
             }
 
