@@ -20,12 +20,12 @@ void dashboard::loop()
 void dashboard::send()
 {
     //send data, first 32bit timestamp and then the binary data structure
-    uint8_t buffer[sizeof(data) + 8];
+    uint8_t buffer[sizeof(data) + 4];
 
     unsigned long now = millis();
-    memcpy(buffer, reinterpret_cast<uint8_t *>(&now), 8);
+    memcpy(buffer, reinterpret_cast<uint8_t *>(&now), 4);
 
-    memcpy(buffer + 8, reinterpret_cast<uint8_t *>(&data), sizeof(data));
+    memcpy(buffer + 4, reinterpret_cast<uint8_t *>(&data), sizeof(data));
 
     GUI.ws.binaryAll(buffer, sizeof(buffer));
 }

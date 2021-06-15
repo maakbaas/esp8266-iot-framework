@@ -48,7 +48,7 @@ function Root() {
         event.data.arrayBuffer().then((buffer) => {                
             const dv = new DataView(buffer, 0);
             const timestamp = dv.getUint32(0, true);
-            displayData.push([timestamp, bin2obj(buffer.slice(8,buffer.byteLength), Dash)]);     
+            displayData.push([timestamp, bin2obj(buffer.slice(4,buffer.byteLength), Dash)]);     
         });        
     }
 
