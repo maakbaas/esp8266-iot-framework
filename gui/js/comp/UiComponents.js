@@ -308,6 +308,12 @@ export const Form = styled.form`
         padding:0.3em;
     }
 
+    select {
+        width:450px;
+        padding: 0.3em;
+        max-width:100%;
+    }
+
     input[type=checkbox] {
         width: auto;
         margin:12px 0px;

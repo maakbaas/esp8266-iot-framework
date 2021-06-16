@@ -130,6 +130,8 @@ An example of how this file could look is shown below:
 
 Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. 
 
+Adding the field `"control": "select",` will turn the item into a drop down menu, with the options defined as  `"options": [1, 2, 3]`.  
+
 There are a few unique parameters:
 
 * The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).

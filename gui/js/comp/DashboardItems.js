@@ -53,12 +53,6 @@ const Control = styled.p`
         max-width:calc(100% - 40px);
     }
 
-    select {
-        width:450px;
-        padding: 0.3em;
-        max-width:100%;
-    }
-
     button {        
         padding:0.4em 0.5em;
     }
@@ -214,12 +208,27 @@ export function DashboardItems(props) {
                     break;
 
                 case "config":
-                    confItems = <>{confItems}
-                        <p>
-                            <label htmlFor={props.items[i].name}><b>{props.items[i].label || props.items[i].name}</b>: {rangeInfo}</label>
-                            <input type={inputType} id={props.items[i].name} name={props.items[i].name} value={value} {...conditionalAttributes} disabled={props.items[i].disabled} />
-                        </p>
-                    </>;
+                    if (inputType == "select") {
+                        let options;
+                        for (let i = 0; i < conditionalAttributes.options.length; i++) {           
+                            options = <>{options}<option value={conditionalAttributes.options[i]}>{conditionalAttributes.options[i]}</option></>;            
+                        }
+                        confItems = <>{confItems}
+                            <p>
+                                <label htmlFor={props.items[i].name}><b>{props.items[i].label || props.items[i].name}</b>: {rangeInfo}</label>
+                                <select id={props.items[i].name} name={props.items[i].name} value={value} disabled={props.items[i].disabled}>
+                                    {options}
+                                </select>
+                            </p>
+                        </>;
+                    } else {
+                        confItems = <>{confItems}
+                            <p>
+                                <label htmlFor={props.items[i].name}><b>{props.items[i].label || props.items[i].name}</b>: {rangeInfo}</label>
+                                <input type={inputType} id={props.items[i].name} name={props.items[i].name} value={value} {...conditionalAttributes} disabled={props.items[i].disabled} />
+                            </p>
+                        </>;
+                    }
                     break;
                     
             }
