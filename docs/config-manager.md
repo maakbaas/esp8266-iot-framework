@@ -128,7 +128,7 @@ An example of how this file could look is shown below:
 ]
 ```
 
-Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. 
+Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. Finally, the type can also be set to `color`. In this case the field will be shown as a color picker. Define the value of a color in your JSON file as an array with three numbers between 0 and 255 for the rgb values: `"value": [255, 255, 255]`.
 
 Adding the field `"control": "select",` will turn the item into a drop down menu, with the options defined as  `"options": [1, 2, 3]`.  
 

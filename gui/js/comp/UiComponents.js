@@ -314,6 +314,28 @@ export const Form = styled.form`
         max-width:100%;
     }
 
+    input[type=color]
+    {
+        display:inline-block;
+        margin-left:-2px;
+        width: 48px;
+        height:32px;
+        border-radius: 3px;
+        border:none;
+        outline: none;
+        -webkit-appearance: none;      
+        cursor:pointer;  
+        background-color:#fff;
+        vertical-align: middle;
+    }
+
+    input[type=color]::-webkit-color-swatch-wrapper {
+        padding: 0;	
+    }
+    input[type=color]::-webkit-color-swatch {
+        border-radius: 3px;
+    }
+
     input[type=checkbox] {
         width: auto;
         margin:12px 0px;

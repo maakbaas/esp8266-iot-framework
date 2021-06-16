@@ -13,6 +13,14 @@ export function obj2bin(obj, binSize, JSON) {
                 binDataView.setUint8(n, 0);
                 n += JSON[i].length - obj[JSON[i].name].length;
                 break;
+            case "color":
+                //parse color code
+                binDataView.setUint8(n, parseInt(obj[JSON[i].name].slice(1,3), 16));
+                binDataView.setUint8(n + 1, parseInt(obj[JSON[i].name].slice(3,5), 16));
+                binDataView.setUint8(n + 2, parseInt(obj[JSON[i].name].slice(5,7), 16));   
+                
+                n += 3;
+                break;
             case "bool":
                 if (obj[JSON[i].name] === true) {binDataView.setUint8(n, 1);} else {binDataView.setUint8(n, 0);}
                 n++;
@@ -70,6 +78,11 @@ export function bin2obj(rawData, JSON) {
                 parsedData[JSON[i].name] = utf8decoder.decode(rawData.slice(n, n + JSON[i].length)).split("\0").shift();
                 n = n + JSON[i].length;
                 break;
+            case "color":
+                //create color code
+                parsedData[JSON[i].name] = "#" + ("0" + (rawDataView.getUint8(n)).toString(16)).slice(-2) + ("0" + (rawDataView.getUint8(n + 1)).toString(16)).slice(-2) + ("0" + (rawDataView.getUint8(n + 2)).toString(16)).slice(-2);
+                n = n + 3;
+                break;
             case "bool":
                 parsedData[JSON[i].name] = !!rawDataView.getUint8(n);
                 n++;
@@ -123,6 +136,10 @@ export function binsize(name, JSON) {
             case "char":
                 sizeArray = [n, JSON[i].length];                
                 n = n + JSON[i].length;
+                break;
+            case "color":
+                sizeArray = [n, 3];                
+                n += 3;
                 break;
             case "bool":
                 sizeArray = [n, 1];                

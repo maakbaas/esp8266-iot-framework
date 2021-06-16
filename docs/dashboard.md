@@ -105,7 +105,7 @@ An example of how this file could look is shown below:
 ]
 ```
 
-Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. 
+Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float and char. The length argument is mandatory for datatype char to indicate the length of the string. Variable length strings are not supported. Also, arrays are not supported for now. Finally, the type can also be set to `color`. In this case the field will be shown as a color picker which will be represented in your code as an array with 3 numbers for the rgb values. 
 
 there are a few other specific fields. the `direction` field is mandatory, and `display` will show the items in the live dashboard whereas `control` will put the items as control inputs in the dashboard. For `display` items, `"display": "graph",` will turn them into a live graph, with the x-axis length in seconds defined by `"xaxis": 20`. For displayed floats, the field `digits` can be used to limit the number of digits shown.
 

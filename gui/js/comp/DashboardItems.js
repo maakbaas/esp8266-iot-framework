@@ -62,6 +62,9 @@ const DefaultTypeAttributes = {
     char: {
         type: "text",
     },
+    color: {
+        type: "color",
+    },
     bool: {
         type: "checkbox",
     },
