@@ -37,7 +37,7 @@ jobs:
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON"
 
     - stage: Framework
       name: "Fetch Example"
@@ -55,7 +55,7 @@ jobs:
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON"
 
     - stage: Framework
       name: "configManager Example"
@@ -73,7 +73,7 @@ jobs:
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON" --project-option="build_flags = -DCONFIG_PATH=src/configuration.json -DREBUILD_CONFIG"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON" --project-option="build_flags = -DCONFIG_PATH=src/configuration.json -DREBUILD_CONFIG"
 
     - stage: Framework
       name: "Time Sync Example"
@@ -91,7 +91,7 @@ jobs:
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON"
 
     - stage: Framework
       name: "Dashboard Example"
@@ -109,7 +109,7 @@ jobs:
           - pip install -U platformio
           - platformio update
       script:
-          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=ESP Async WebServer, ArduinoJSON" --project-option="build_flags = -DDASHBOARD_PATH=src/dashboard.json -DREBUILD_DASHBOARD"
+          - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON" --project-option="build_flags = -DDASHBOARD_PATH=src/dashboard.json -DREBUILD_DASHBOARD"
 
     - stage: GUI
       name: "Webpack Build"
