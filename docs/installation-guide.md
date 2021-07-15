@@ -47,15 +47,15 @@ lib_deps = ESP8266 IoT Framework
 
 8. You can't build the application straight away, since there is no default `main.cpp` included in the src folder. The reason for this is that the framework is primarily designed as a library. To continue take one of the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) as a starting point for your own `main.cpp`.
     
-      8.1. When using the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) make sure to use the suitable build flag in your `platfomio.ini`.
+      8.1. When using the [examples](https://github.com/maakbaas/esp8266-iot-framework/tree/master/examples) make sure to use the suitable build flags in your `platfomio.ini`.
         
-      When using the `configManager` example the build flag should be: 
+      When using the `configManager` example the build flags should be: 
       ```ini 
-      build_flags = -DCONFIG_PATH=configuration_filename.json
+      build_flags = -DREBUILD_HTML -DCONFIG_PATH=path_where_you_copied_configuration.json
       ```
-      When using the `dashboard` example the build flag should be: 
+      When using the `dashboard` example the build flags should be: 
       ```ini
-      build_flags = -DDASHBOARD_PATH=configuration_filename.json
+      build_flags = -DREBUILD_HTML -DDASHBOARD_PATH=path_where_you_copied_dashboard.json
       ```
 
 ## Building the application
