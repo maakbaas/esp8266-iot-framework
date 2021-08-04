@@ -1,3 +1,18 @@
+*fork of the ESP8266 IoT Framework by maakbaas with small change to allow Espalexa[https://github.com/Aircoookie/Espalexa.git] integration.*
+
+## Using the changes
+
+You can now initialise the onNotFound within your main code like below and also check if the incoming requests are for the Espalexa.
+
+```ini
+GUI.server.onNotFound([](AsyncWebServerRequest *request)
+                      {
+                        if (!espalexa.handleAlexaApiCall(request)) //if you don't know the URI, ask espalexa whether it is an Alexa control request
+                        {
+                          GUI.serveProgmem(request);
+                        }
+                      });
+```
 # ESP8266 IoT Framework ![Status](https://travis-ci.com/maakbaas/esp8266-iot-framework.svg?branch=master)
 
 The ESP8266 IoT Framework is a set of modules to be used as a starting point in new ESP8266 projects, implementing HTTPS requests, a React web interface, WiFi manager, configuration manager, live dashboard and OTA updates.
