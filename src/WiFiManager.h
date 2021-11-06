@@ -25,6 +25,7 @@ private:
     void stopCaptivePortal();
     void connectNewWifi(String newSSID, String newPass);    
     void storeToEEPROM();
+    int8_t waitForConnectResult(unsigned long timeoutLength);
 
 public : 
     void begin(char const *apName, unsigned long newTimeout = 60000);

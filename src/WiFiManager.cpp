@@ -39,7 +39,7 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
         WiFi.begin();
     }
 
-    if (WiFi.waitForConnectResult(timeout) == WL_CONNECTED)
+    if (waitForConnectResult(timeout) == WL_CONNECTED)
     {
         //connected
         Serial.println(PSTR("Connected to stored WiFi details"));
@@ -50,6 +50,23 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
         //captive portal
         startCaptivePortal(captivePortalName);
     }
+}
+
+//Upgraded default waitForConnectResult function to incorporate WL_NO_SSID_AVAIL, fixes issue #122
+int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
+    //1 and 3 have STA enabled
+    if((wifi_get_opmode() & 1) == 0) {
+        return WL_DISCONNECTED;
+    }
+    using esp8266::polledTimeout::oneShot;
+    oneShot timeout(timeoutLength); // number of milliseconds to wait before returning timeout error
+    while(!timeout) {
+        yield();
+        if(WiFi.status() != WL_DISCONNECTED && WiFi.status() != WL_NO_SSID_AVAIL) {
+            return WiFi.status();
+        }
+    }
+    return -1; // -1 indicates timeout
 }
 
 //function to forget current WiFi details and start a captive portal
