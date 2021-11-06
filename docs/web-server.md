@@ -14,6 +14,27 @@ The web server has only one public method. Call this method in your setup functi
 
 ## Class Members
 
+#### requestHandler
+```c++
+ArRequestHandlerFunction requestHandler = serveProgmem;
+```
+
+Use this to override the requestHandler before calling `GUI.begin()`:
+
+```c++
+GUI.requestHandler = alternativeRequest; //override request handler
+GUI.begin();
+```
+With another request handler, such as:
+
+```c++
+void alternativeRequest(AsyncWebServerRequest *request)
+{
+    request->send(200, "text/plain", "Hello World!");
+}
+```
+This allows you to add your own logic into the webserver.
+
 #### server
 
 ```c++

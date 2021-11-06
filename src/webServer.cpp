@@ -21,7 +21,7 @@ void webServer::begin()
 
     server.serveStatic("/download", LittleFS, "/");
 
-    server.onNotFound(serveProgmem);
+    server.onNotFound(requestHandler);
 
     //handle uploads
     server.on(PSTR("/upload"), HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload);
