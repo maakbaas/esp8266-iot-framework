@@ -14,6 +14,7 @@ private:
 public:
     AsyncWebServer server = AsyncWebServer(80);
     AsyncWebSocket ws = AsyncWebSocket("/ws");
+    ArRequestHandlerFunction requestHandler = serveProgmem;
     void begin();
 };
 
