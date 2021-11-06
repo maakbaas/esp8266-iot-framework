@@ -4,8 +4,8 @@
   "description": "ESP8266",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode=development --history-api-fallback",
-    "build": "webpack --mode=production",
+    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode=development --history-api-fallback",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack --mode=production",
     "lint": "eslint \"./**/*.js\""
   },
   "author": "Johannes",
