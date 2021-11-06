@@ -97,8 +97,13 @@ export function ControlItem(props) {
         for (let i = 0; i < props.conditionalAttributes.options.length; i++) {
             if (data == props.conditionalAttributes.options[i]) {
                 isOption = true;
-            }             
-            options = <>{options}<option value={props.conditionalAttributes.options[i]}>{props.conditionalAttributes.options[i]}</option></>;            
+            }
+            let optionLabel = props.conditionalAttributes.options[i];
+            if (typeof props.conditionalAttributes.optionLabels[i] !== "undefined") {
+                optionLabel = props.conditionalAttributes.optionLabels[i];
+            }
+
+            options = <>{options}<option value={props.conditionalAttributes.options[i]}>{optionLabel}</option></>;                       
         }
 
         if (!isOption) {

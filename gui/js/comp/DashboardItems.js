@@ -175,6 +175,7 @@ export function DashboardItems(props) {
 
                 case "select":
                     conditionalAttributes.options = props.items[i].options;
+                    conditionalAttributes.optionLabels = props.items[i].optionLabels;
                     break;
             }
 
@@ -213,8 +214,12 @@ export function DashboardItems(props) {
                 case "config":
                     if (inputType == "select") {
                         let options;
-                        for (let i = 0; i < conditionalAttributes.options.length; i++) {           
-                            options = <>{options}<option value={conditionalAttributes.options[i]}>{conditionalAttributes.options[i]}</option></>;            
+                        for (let i = 0; i < conditionalAttributes.options.length; i++) {  
+                            let label = conditionalAttributes.options[i];
+                            if (typeof conditionalAttributes.optionLabels[i] !== "undefined") {
+                                label = conditionalAttributes.optionLabels[i];
+                            }
+                            options = <>{options}<option value={conditionalAttributes.options[i]}>{label}</option></>;            
                         }
                         confItems = <>{confItems}
                             <p>
