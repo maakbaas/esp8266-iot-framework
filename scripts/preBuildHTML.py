@@ -9,9 +9,9 @@ def preBuildHTMLFun():
 
     if webpackInst == False:
         print("Running npm ci...")
-        call(["npm", "ci"], shell=True)
+        call("npm ci", shell=True)
         print("Running npx browserslist@latest --update-db...")
-        call(["npx", "browserslist@latest", "--update-db"], shell=True)
+        call("npx browserslist@latest --update-db", shell=True)
 
     print("Running npm run build...")
-    call(["npm", "run", "build"], shell=True)
+    call("npm run build", shell=True)
