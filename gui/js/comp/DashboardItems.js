@@ -174,8 +174,11 @@ export function DashboardItems(props) {
                     break;
 
                 case "select":
-                    conditionalAttributes.options = props.items[i].options;
-                    conditionalAttributes.optionLabels = props.items[i].optionLabels;
+                    conditionalAttributes.options = props.items[i].options;                                        
+                    conditionalAttributes.optionLabels = props.items[i].options;
+                    if (typeof props.items[i].optionLabels !== "undefined") {
+                        conditionalAttributes.optionLabels = props.items[i].optionLabels;
+                    }
                     break;
             }
 
