@@ -15,9 +15,10 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
 {
     captivePortalName = apName;
     timeout = newTimeout;
-
+    
     WiFi.mode(WIFI_STA);
-
+    WiFi.persistent(true);
+    
     //set static IP if entered
     ip = IPAddress(configManager.internal.ip);
     gw = IPAddress(configManager.internal.gw);
