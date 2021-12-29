@@ -314,6 +314,19 @@ export const Form = styled.form`
         max-width:100%;
     }
 
+    input[type=range] {
+        width:380px;
+        padding: 0.3em 0em;        
+        max-width:calc(100% - 70px);
+    }
+
+    input[type=range] + * {
+        vertical-align:top;
+        display:inline-block;
+        width:70px;
+        text-align:right;
+    }
+
     input[type=color]
     {
         display:inline-block;

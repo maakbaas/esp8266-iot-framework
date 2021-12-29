@@ -141,7 +141,7 @@ export function DashboardItems(props) {
                 
             } else { value = ""; }
 
-            //const configInputAttributes = DefaultTypeAttributes[props.items[i].type] || {};
+            const configInputAttributes = DefaultTypeAttributes[props.items[i].type] || {};
             let inputType;
             if (typeof props.items[i].control !== "undefined") {
                 inputType = props.items[i].control;
@@ -171,6 +171,12 @@ export function DashboardItems(props) {
                             <Grey>({conditionalAttributes.min} &ndash; {conditionalAttributes.max})</Grey>
                         </>;
                     }
+                    break;
+
+                case "slider":
+                    conditionalAttributes.min = props.items[i].min || configInputAttributes.min;
+                    conditionalAttributes.max = props.items[i].max || configInputAttributes.max;
+                    conditionalAttributes.step = props.items[i].step || configInputAttributes.step;                   
                     break;
 
                 case "select":
@@ -230,6 +236,17 @@ export function DashboardItems(props) {
                                 <select id={props.items[i].name} name={props.items[i].name} value={value} disabled={props.items[i].disabled}>
                                     {options}
                                 </select>
+                            </p>
+                        </>;
+                    } else if (inputType == "slider") {
+                        
+                        const [rangeval, setRangeval] = useState(null);
+                        
+                        confItems = <>{confItems}
+                            <p>
+                                <label htmlFor={props.items[i].name}><b>{props.items[i].label || props.items[i].name}</b>:</label>
+                                <input type="range" id={props.items[i].name} name={props.items[i].name} value={rangeval || value} {...conditionalAttributes} disabled={props.items[i].disabled} onInput={(event) => setRangeval(event.target.value)} />
+                                <output>{rangeval || value}</output>
                             </p>
                         </>;
                     } else {

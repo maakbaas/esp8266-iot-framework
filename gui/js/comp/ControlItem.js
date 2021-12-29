@@ -113,6 +113,11 @@ export function ControlItem(props) {
         return <select id={props.name} name={props.name} value={data} onChange={(e) => { setTarget(e.target.value); save(); }}>
             {options}
         </select>;
+    } else if (props.type == "slider") {
+        return <>
+            <input type="range" onChange={() => {save();}} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} onInput={(e) => setTarget(e.target.value)} />
+            <output>{data}</output>
+        </>;    
     } else if (checkbox) {
         return <input onClick={(e) => { setTarget(e.target.checked); save(); }} type={props.type} id={props.name} name={props.name} value={data} {...props.conditionalAttributes} />;
     } else if (props.type == "color") {

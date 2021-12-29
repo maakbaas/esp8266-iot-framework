@@ -132,6 +132,8 @@ Supported data types are: bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, in
 
 Adding the field `"control": "select",` will turn the item into a drop down menu, with the options defined as  `"options": [1, 2, 3]`.  
 
+Adding the field `"control": "slider",` will turn the itemm into a slider, the `min`, `max` and `step` properties will also apply to the slider. This is only valid for numeric types.
+
 There are a few unique parameters:
 
 * The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
