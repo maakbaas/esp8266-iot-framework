@@ -11,11 +11,15 @@
 WifiManager WiFiManager;
 
 //function to call in setup
-void WifiManager::begin(char const *apName, unsigned long newTimeout)
+void WifiManager::begin(char const *apName, unsigned long newTimeout, char const *hostName)
 {
     captivePortalName = apName;
     timeout = newTimeout;
     
+    if (hostName != NULL) {
+        this->hostName = hostName;
+    }
+
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
     
@@ -37,6 +41,15 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
         ETS_UART_INTR_DISABLE();
         wifi_station_disconnect();
         ETS_UART_INTR_ENABLE();
+
+        if (hostName != NULL && strlen(hostName) > 0) {
+#ifdef ESP32
+            WiFi.setHostname(hostName);
+#elif defined(ESP8266)
+            WiFi.hostname(hostName);
+#endif
+        }
+
         WiFi.begin();
     }
 
@@ -134,6 +147,14 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
         String oldSSID = WiFi.SSID();
         String oldPSK = WiFi.psk();
 
+        if (hostName != NULL && strlen(hostName) > 0) {
+#ifdef ESP32
+            WiFi.setHostname(hostName);
+#elif defined(ESP8266)
+            WiFi.hostname(hostName);
+#endif            
+        }
+        
         WiFi.begin(newSSID.c_str(), newPass.c_str(), 0, NULL, true);
         delay(2000);
 
@@ -214,6 +235,28 @@ bool WifiManager::isCaptivePortal()
 String WifiManager::SSID()
 {    
     return WiFi.SSID();
+}
+
+//return current Host Name
+String WifiManager::getHostName()
+{    
+#ifdef ESP32
+    return WiFi.getHostname();
+#elif defined(ESP8266)
+    return WiFi.hostname();
+#endif            
+}
+
+//return current IP Address
+String WifiManager::getIPAddress()
+{    
+    return WiFi.localIP().toString();
+}
+
+//return current MAC Address
+String WifiManager::getMacAddress()
+{    
+    return WiFi.macAddress();
 }
 
 //captive portal loop

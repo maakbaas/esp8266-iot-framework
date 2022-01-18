@@ -42,6 +42,7 @@ void loop()
     //software interrupts
     WiFiManager.loop();
     updater.loop();
+    configManager.loop();  // Ensures config changes survive reboot by persisting to EEPROM
 }
 ```
 
