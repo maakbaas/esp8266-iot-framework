@@ -139,7 +139,7 @@ There are a few special parameters:
 * The configuration parameter `projectName` is special in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
 * The parameter named `language` is also special and can be used to change the language of the web interface. Supported languages are placed in the folder `gui/js/lang`. Change the language code and rebuild the HTML interface to change the language. If your language is not yet supported, feel free to create a pull request for it.
 * The parameter named `projectVersion` can be added to the configuration file, and will add this version string to the header of the web interface, and can of course be used in your code as well.
-* `hostName` optional special parameter can be used to explicitly set initial, and enable GUI configuration, of the device's Wifi Hostname.  Not specifying a hostname likely results in the device name being `ESP-<MAC Address last 3 bytes hex encoded>`.
+* `hostName` optional special parameter can be used to explicitly set initial, and enable GUI configuration, of the device's Wifi Hostname.  Not specifying a hostname usually results in the device name being `ESP-<MAC Address last 3 bytes hex encoded>`.
 
 For this example, the pre-build python script `preBuildConfig.py` will generate the following two files. These should be fairly self explanatory and show how the JSON file is translated into a C struct.
 
