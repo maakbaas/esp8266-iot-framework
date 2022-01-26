@@ -2,7 +2,13 @@
 #define FETCH_H
 
 #include <Arduino.h>
-#include <ESP8266HTTPClient.h>
+
+#ifdef ESP32
+    #include <WiFi.h>
+    #include <HTTPClient.h>
+#elif defined(ESP8266)
+    #include <ESP8266HTTPClient.h>
+#endif
 
 #include "certStore.h"
 
@@ -39,7 +45,12 @@ private :
 
     HTTPClient *http;
     WiFiClient *client;
+#ifdef ESP32
+    // TODO: Implement ESP32 version
+#elif defined(ESP8266)
     BearSSL::WiFiClientSecure *httpsClient;
+#endif
+
 };
 
 extern HTTPRequest fetch;
