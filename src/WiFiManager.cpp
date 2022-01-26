@@ -2,12 +2,7 @@
 //- with more flexibility to add your own web server setup
 //= state machine for changing wifi settings on the fly
 
-#ifdef ESP32
-#include <WiFi.h>
-#include <esp_wifi.h>
-#elif defined(ESP8266)
 #include <ESP8266WiFi.h>
-#endif
 
 #include "WiFiManager.h"
 #include "configManager.h"
@@ -34,43 +29,18 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout, char const
     sub = IPAddress(configManager.internal.sub);
     dns = IPAddress(configManager.internal.dns);
 
-    if (isIPAddressSet(ip) || isIPAddressSet(gw) || isIPAddressSet(sub) || isIPAddressSet(dns))
+    if (ip.isSet() || gw.isSet() || sub.isSet() || dns.isSet())
     {
         Serial.println(PSTR("Using static IP"));
         WiFi.config(ip, gw, sub, dns);
     }
 
-#ifdef ESP32
-    // ESP32 PITA: workaround configured persisted SSID not being restored to WiFi.SSID() 
-    // See https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/esp_wifi.html
-    // See https://github.com/espressif/arduino-esp32/issues/548#
-    wifi_config_t conf;
-    esp_wifi_get_config(WIFI_IF_STA, &conf);
-    String configSsid = F(conf.sta.ssid);
-    String configPsk = F(conf.sta.password);
-    // if (WiFi.SSID() != configSsid)
-    // {
-    //     WiFi.SSID = configSsid
-    // }
-#elif defined(ESP8266)
-    String configSsid = WiFi.SSID();
-#endif
-
-
-    if (configSsid == "")
+    if (WiFi.SSID() != "")
     {
-        Serial.println(PSTR("Configured SSID is empty."));
-    }
-    else
-    {
-#ifdef ESP32        
-        WiFi.disconnect(false);
-#elif defined(ESP8266)
         //trying to fix connection in progress hanging
         ETS_UART_INTR_DISABLE();
         wifi_station_disconnect();
         ETS_UART_INTR_ENABLE();
-#endif
 
         if (hostName != NULL && strlen(hostName) > 0) {
 #ifdef ESP32
@@ -80,51 +50,25 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout, char const
 #endif
         }
 
-        Serial.print(PSTR("WiFi.begin(), WifiManager::begin(), SSID: "));
-        Serial.print(configSsid);
-        Serial.print(PSTR(", hostName: "));
-        Serial.println(hostName);
-
         WiFi.begin();
-
-        if (hostName != NULL && strlen(hostName) > 0) {
-#ifdef ESP32
-            // NOTE: https://github.com/espressif/arduino-esp32/issues/2537
-            WiFi.setHostname(hostName);
-#elif defined(ESP8266)
-            WiFi.hostname(hostName);
-#endif
-        }        
     }
 
     if (waitForConnectResult(timeout) == WL_CONNECTED)
     {
         //connected
-        Serial.print(PSTR("Connected to stored WiFi details, hostName: "));
-        Serial.print(hostName);
-        Serial.print(PSTR(", localIP: "));
+        Serial.println(PSTR("Connected to stored WiFi details"));
         Serial.println(WiFi.localIP());
     }
     else
     {
         //captive portal
-        Serial.print(PSTR("Timed out waiting for connect. Starting captive portal. SSID: "));
-        Serial.println(WiFi.SSID());
         startCaptivePortal(captivePortalName);
     }
 }
 
 //Upgraded default waitForConnectResult function to incorporate WL_NO_SSID_AVAIL, fixes issue #122
 int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
-#ifdef ESP32
-    if((WiFiGenericClass::getMode() & WIFI_MODE_STA) == 0) {
-        return WL_DISCONNECTED;
-    }
-
-    // TODO:P0 Implement ESP32 version (see timeout wait loop below).
-
-#elif defined(ESP8266)
-    // 1 (WIFI_MODE_STA) and 3 (WIFI_MODE_APSTA) have STA enabled
+    //1 and 3 have STA enabled
     if((wifi_get_opmode() & 1) == 0) {
         return WL_DISCONNECTED;
     }
@@ -136,7 +80,6 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
             return WiFi.status();
         }
     }
-#endif
     return -1; // -1 indicates timeout
 }
 
@@ -192,40 +135,17 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
     //set static IP or zeros if undefined    
     WiFi.config(ip, gw, sub, dns);
 
-#ifdef ESP32        
-    bool hasNetworkMismatch = 
-        // operator uint32_t() const
-        ip != configManager.internal.ip || 
-        dns != configManager.internal.dns;
-#elif defined(ESP8266)
-    bool hasNetworkMismatch = 
-        ip.v4() != configManager.internal.ip || 
-        dns.v4() != configManager.internal.dns;
-#endif
-
     //fix for auto connect racing issue
-    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || hasNetworkMismatch)
+    if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip  || dns.v4() != configManager.internal.dns)
     {          
         //trying to fix connection in progress hanging
-#ifdef ESP32        
-        WiFi.disconnect(false);
-#elif defined(ESP8266)
         ETS_UART_INTR_DISABLE();
         wifi_station_disconnect();
         ETS_UART_INTR_ENABLE();
-#endif
 
         //store old data in case new network is wrong
-#ifdef ESP32        
-        // ESP32 PITA workaround configured persisted SSID not being restored to WiFi.SSID() 
-        wifi_config_t conf;
-        esp_wifi_get_config(WIFI_IF_STA, &conf);
-        String oldSSID = F(conf.sta.ssid);
-        String oldPSK = F(conf.sta.password);
-#elif defined(ESP8266)
         String oldSSID = WiFi.SSID();
         String oldPSK = WiFi.psk();
-#endif
 
         if (hostName != NULL && strlen(hostName) > 0) {
 #ifdef ESP32
@@ -235,44 +155,17 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 #endif            
         }
         
-        Serial.print(PSTR("WiFi.begin, connectNewWifi, hostName: "));
-        Serial.print(hostName);
-#if defined(ESP8266)
-        Serial.print(", persistent: ");
-        Serial.print(WiFi.getPersistent());
-#endif
-        Serial.print(", SSID: ");
-        Serial.println(newSSID.c_str());
-
         WiFi.begin(newSSID.c_str(), newPass.c_str(), 0, NULL, true);
         delay(2000);
 
-        // TODO:P0 Implement ESP32 version,
-        // ESP32 doesn't have timeout param for WiFi.waitForConnectResult, times out after 10s, so either live with that or create wrapper...
-#ifdef ESP32
-        if (WiFi.waitForConnectResult() != WL_CONNECTED)
-#elif defined(ESP8266)
         if (WiFi.waitForConnectResult(timeout) != WL_CONNECTED)
-#endif            
         {
+            
             Serial.println(PSTR("New connection unsuccessful"));
             if (!inCaptivePortal)
             {
-                Serial.print(PSTR("WiFi.begin, !inCaptivePortal, hostName: "));
-                Serial.println(hostName);
-
-                WiFi.begin(
-                    oldSSID.c_str(), // ssid
-                    oldPSK.c_str(),  // passphrase
-                    0,               // channel
-                    NULL,            // BSSID / MAC of AP
-                    true);           // connect
-
-#ifdef ESP32
-                if (WiFi.waitForConnectResult() != WL_CONNECTED)
-#elif defined(ESP8266)
+                WiFi.begin(oldSSID, oldPSK, 0, NULL, true);
                 if (WiFi.waitForConnectResult(timeout) != WL_CONNECTED)
-#endif
                 {
                     Serial.println(PSTR("Reconnection failed too"));
                     startCaptivePortal(captivePortalName);
@@ -296,6 +189,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 
             //store IP address in EEProm
             storeToEEPROM();
+
         }
     }
 }
@@ -317,7 +211,6 @@ void WifiManager::startCaptivePortal(char const *apName)
     dnsServer->setErrorReplyCode(DNSReplyCode::NoError);
     dnsServer->start(53, "*", WiFi.softAPIP());
 
-    // TODO: Consider "4.3.2.1" or something else that's easier to remember...
     Serial.println(PSTR("Opened a captive portal"));
     Serial.println(PSTR("192.168.4.1"));
     inCaptivePortal = true;
@@ -386,25 +279,9 @@ void WifiManager::loop()
 //update IP address in EEPROM
 void WifiManager::storeToEEPROM()
 {
-#ifdef ESP32
-    configManager.internal.ip = ip;
-    configManager.internal.gw = gw;
-    configManager.internal.sub = sub;
-    configManager.internal.dns = dns;
-#elif defined(ESP8266)
     configManager.internal.ip = ip.v4();
     configManager.internal.gw = gw.v4();
     configManager.internal.sub = sub.v4();
     configManager.internal.dns = dns.v4();
-#endif            
     configManager.save();
-}
-
-bool WifiManager::isIPAddressSet(IPAddress ip)
-{
-#if defined(ESP8266)
-    return ip.isSet();
-#else
-    return ip.toString() == "0.0.0.0";
-#endif
 }

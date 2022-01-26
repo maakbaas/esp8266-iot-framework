@@ -1,142 +1,16 @@
 [
     {
-        "name": "hostName",
-        "label": "Host Name",
-        "type": "char",
-        "length": 32,
-        "value": "Haptic-01"
-    },
-    {
         "name": "projectName",
         "label": "Project Name",
         "type": "char",
         "length": 32,
-        "value": "Haptic Light ESP8266"
+        "value": "ESP8266 IoT Framework"
     },
     {
-        "name": "mode",
-        "label": "Mode",
+        "name": "language",        
         "type": "char",
-        "length": 20,
-        "inputControl": "select",
-        "value": "Aurora",
-        "options": [
-            "Aurora",
-            "Blue",
-            "Blue Wave",
-            "Custom Color",
-            "Custom Wave",
-            "Sunset",
-            "Ocean",
-            "Rainbow",
-            "White",
-            "White Wave"
-        ]
-    },
-    {
-        "name": "brightness",
-        "label": "Brightness",
-        "type": "uint8_t",
-        "inputControl": "slider",
-        "value": 50,
-        "min": 1,
-        "max": 100
-    },
-    {
-        "name": "nightBrightness",
-        "label": "Night Brightness",
-        "type": "uint8_t",
-        "inputControl": "slider",
-        "value": 20,
-        "min": 1,
-        "max": 100
-    },
-    {
-        "name": "isActive",
-        "label": "Is Active",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "isPlaying",
-        "label": "Is Animated",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "color",
-        "label": "Custom Color",
-        "type": "char",
-        "length": 11,
-        "inputControl": "color",
-        "value": "#ff00ff"
-    },
-    {
-        "name": "speed",
-        "label": "Speed",
-        "type": "uint8_t",
-        "inputControl": "slider",
-        "value": 23,
-        "min": 1,
-        "max": 200
-    },
-    {
-        "name": "audioLevel",
-        "label": "Audio FX Intensity",
-        "type": "uint8_t",
-        "inputControl": "slider",
-        "value": 50,
-        "min": 0,
-        "max": 100
-    },
-    {
-        "name": "isPirSensorEnabled",
-        "label": "Auto Motion detection",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "pirActiveTimeoutSecs",
-        "label": "Auto light timeout secs",
-        "type": "uint16_t",
-        "inputControl": "slider",
-        "value": 60,
-        "min": 10,
-        "max": 300
-    },
-    {
-        "name": "isLuxSensorEnabled",
-        "label": "Auto LUX brightness",
-        "type": "bool",
-        "value": true
-    },
-    {
-        "name": "isTempSensorEnabled",
-        "label": "Detect Temp/Humidity",
-        "type": "bool",
-        "value": false
-    },
-    {
-        "name": "pixelCount",
-        "label": "LED count",
-        "type": "uint16_t",
-        "value": 30,
-        "min": 10,
-        "max": 300
-    },
-    {
-        "name": "dummyFloat",
-        "type": "float",
-        "hidden": true,
-        "min": 1,
-        "max": 10,
-        "value": 1.2345
-    },
-    {
-        "name": "dummyString",
-        "type": "char",
-        "length": 11,
-        "hidden": true,
-        "value": "invisible!"
+        "length": 3,
+        "value": "en",
+        "hidden": true
     }
 ]

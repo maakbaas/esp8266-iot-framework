@@ -27,8 +27,6 @@ private:
     void connectNewWifi(String newSSID, String newPass);    
     void storeToEEPROM();
     int8_t waitForConnectResult(unsigned long timeoutLength);
-    bool isIPAddressSet(IPAddress ip);
-
 
 public : 
     void begin(char const *apName, unsigned long newTimeout = 60000, char const *hostName = NULL);
