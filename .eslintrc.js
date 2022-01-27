@@ -25,7 +25,7 @@ module.exports = { // eslint-disable-line no-undef
         ],
         "linebreak-style": [
             "error",
-            "unix",
+            (require("os").EOL === "\r\n" ? "windows" : "unix"),
         ],
         curly: [
             "error",
