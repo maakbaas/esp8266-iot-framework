@@ -1,6 +1,12 @@
 #include "webServer.h"
 #include "ArduinoJson.h"
+
+#ifdef ESP32
+// TODO: Implement ESP32 version
+#elif defined(ESP8266)
 #include "LittleFS.h"
+#endif
+
 
 // Include the header file we create with webpack
 #include "generated/html.h"
@@ -13,13 +19,20 @@
 
 void webServer::begin()
 {
+#ifdef ESP32
+    // TODO: Remove enter/exit traces after ESP32 build stable.  Experienced frequent crashing
+    // during initial port when TCP stack not initialized before starting webserver instance.
+    Serial.println("webServer::begin enter");
+#endif
+
     //to enable testing and debugging of the interface
     DefaultHeaders::Instance().addHeader(PSTR("Access-Control-Allow-Origin"), PSTR("*"));
 
-    server.addHandler(&ws);
-    server.begin();
-
+#ifdef ESP32
+    // TODO: Implement ESP32 version
+#elif defined(ESP8266)
     server.serveStatic("/download", LittleFS, "/");
+#endif
 
     server.onNotFound(requestHandler);
 
@@ -27,6 +40,17 @@ void webServer::begin()
     server.on(PSTR("/upload"), HTTP_POST, [](AsyncWebServerRequest *request) {}, handleFileUpload);
 
     bindAll();
+
+#ifdef ESP32
+    Serial.println("Calling server.begin();  Will fail on ESP32 if tcp stack not initialized.  Ensure WiFiManager was called first.");
+#endif
+
+    server.addHandler(&ws);
+    server.begin();
+
+#ifdef ESP32
+   Serial.println("webServer::begin done.");
+#endif
 }
 
 void webServer::bindAll()
@@ -72,6 +96,12 @@ void webServer::bindAll()
 
     //get file listing
     server.on(PSTR("/api/files/get"), HTTP_GET, [](AsyncWebServerRequest *request) {
+
+#ifdef ESP32
+        // TODO: Implement ESP32 version
+        request->send(501, PSTR("text/html"), "TODO: Implement ESP32 version");
+#elif defined(ESP8266)
+
         String JSON;
         StaticJsonDocument<1000> jsonBuffer;
         JsonArray files = jsonBuffer.createNestedArray("files");
@@ -90,12 +120,18 @@ void webServer::bindAll()
         serializeJson(jsonBuffer, JSON);
 
         request->send(200, PSTR("text/html"), JSON);
+#endif
     });
 
     //remove file
     server.on(PSTR("/api/files/remove"), HTTP_POST, [](AsyncWebServerRequest *request) {
+#ifdef ESP32
+    // TODO: Implement ESP32 version
+    request->send(501, PSTR("text/html"), "TODO: Implement ESP32 version");
+#elif defined(ESP8266)
         LittleFS.remove("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
+#endif        
     });
 
     //update from LittleFS
@@ -172,6 +208,12 @@ void webServer::serveProgmem(AsyncWebServerRequest *request)
 
 void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
 {
+#ifdef ESP32
+
+    // TODO: Implement ESP32 version
+
+#elif defined(ESP8266)
+
     static File fsUploadFile;
 
     if (!index)
@@ -201,6 +243,7 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
         request->send(200, PSTR("text/html"), JSON);
         fsUploadFile.close();        
     }
+#endif
 }
 
 webServer GUI;

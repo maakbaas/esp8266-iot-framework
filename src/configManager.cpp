@@ -78,7 +78,7 @@ void config::save()
     }
 }
 
-void config::setConfigSaveCallback( std::function<void()> func ) {
+void config::setConfigSaveCallback(std::function<void()> func) {
   _configsavecallback = func;
 }
 
