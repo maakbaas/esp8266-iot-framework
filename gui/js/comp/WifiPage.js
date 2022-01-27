@@ -91,9 +91,9 @@ export function WifiPage(props) {
         connectedTo = loc.wifiCP;
     } else if (state.captivePortal === false) {
         connectedTo = <>{loc.wifiConn} {state.ssid} (<a onClick={() => setForgetModal(true)}>{loc.wifiForget}</a>)
-        <li>{state.hostName}</li>
-        <li>{state.ipAddress}</li>
-        <li>{state.macAddress}</li>
+            <li>{state.hostName}</li>
+            <li>{state.ipAddress}</li>
+            <li>{state.macAddress}</li>
         </>;
     }
     
