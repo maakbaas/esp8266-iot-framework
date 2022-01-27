@@ -48,14 +48,12 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout, char const
     esp_wifi_get_config(WIFI_IF_STA, &conf);
     String configSsid = F(conf.sta.ssid);
     String configPsk = F(conf.sta.password);
-    // if (WiFi.SSID() != configSsid)
-    // {
-    //     WiFi.SSID = configSsid
-    // }
+
+    Serial.println("configSsid=");
+    Serial.println(configSsid);
 #elif defined(ESP8266)
     String configSsid = WiFi.SSID();
 #endif
-
 
     if (configSsid == "")
     {
@@ -119,6 +117,7 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLengthMs) {
 #ifdef ESP32
     // 1 (WIFI_MODE_STA) and 3 (WIFI_MODE_APSTA) have STA enabled
     if((WiFiGenericClass::getMode() & WIFI_MODE_STA) == 0) {
+        Serial.print(PSTR("STA mode not enabled, returning WL_DISCONNECTED."));
         return WL_DISCONNECTED;
     }
 
@@ -126,12 +125,23 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLengthMs) {
     unsigned long now = millis();
     unsigned long start = now;
     unsigned long timeout = now + timeoutLengthMs;
+    int loopCount = 0;
     while((now = millis()) < timeout && now >= start) {
         delay(1);
-        if(WiFi.status() != WL_DISCONNECTED && WiFi.status() != WL_NO_SSID_AVAIL) {
-            return WiFi.status();
+        wl_status_t wifiStatus = WiFi.status();
+        if(wifiStatus != WL_DISCONNECTED &&     // Disconnected from a networ
+            wifiStatus != WL_NO_SSID_AVAIL &&   // When no SSID are available
+            wifiStatus != WL_IDLE_STATUS)       // Temporary status assigned when WiFi.begin() called
+        {
+            Serial.print(PSTR("WiFi.status()="));
+            Serial.print(wifiStatus);
+            return wifiStatus;
         }
+        loopCount++;
     }
+
+    Serial.print(PSTR("Loop count="));
+    Serial.print(loopCount);
 
 #elif defined(ESP8266)
     // 1 (WIFI_MODE_STA) and 3 (WIFI_MODE_APSTA) have STA enabled
