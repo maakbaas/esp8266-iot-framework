@@ -57,11 +57,12 @@ void loop()
         //in this case make sure you set all values
         configData newData =
         {
-            "Generic ESP8266 Firmware",
-            configManager.data.dummyInt + 1,
-            true,
-            1.2345,
-            "invisible!"
+            {.projectName2 = "Generic ESP8266 Firmware"},
+            {.hostName = "ESP8266-01"},
+            .dummyInt = configManager.data.dummyInt + 1,
+            .dummyBool = true,
+            .dummyFloat = 1.2345,
+            .dummyString = "invisible!"
         };
 
         ///The saveExternal function copies the object to EEPROM
