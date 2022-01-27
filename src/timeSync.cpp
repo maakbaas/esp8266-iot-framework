@@ -37,7 +37,7 @@ bool NTPSync::isSynced()
     return synced; 
 }
 
-int8_t NTPSync::waitForSyncResult(unsigned long timeoutLength)
+int8_t NTPSync::waitForSyncResult(unsigned long timeoutLengthMs)
 {
     if (synced)
     {
@@ -45,10 +45,23 @@ int8_t NTPSync::waitForSyncResult(unsigned long timeoutLength)
     }
 
 #ifdef ESP32
-    // TODO: Implement ESP32 version
+
+    // Wait to become connected, or timeout expiration.  Bail if clock rollover detected.
+    unsigned long now = millis();
+    unsigned long start = now;
+    unsigned long timeout = now + timeoutLengthMs;
+    while((now = millis()) < timeout && now >= start)
+    {
+        delay(1);
+        if(synced)
+        {
+            return 0;
+        }
+    }
+
 #elif defined(ESP8266)
     using esp8266::polledTimeout::oneShot;
-    oneShot timeout(timeoutLength);
+    oneShot timeout(timeoutLengthMs);
     while(!timeout)
     {
         yield();
@@ -57,7 +70,8 @@ int8_t NTPSync::waitForSyncResult(unsigned long timeoutLength)
             return 0;
         }
     }
-#endif    
+#endif
+
     return -1;
 }
 

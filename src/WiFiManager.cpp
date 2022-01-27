@@ -115,13 +115,23 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout, char const
 }
 
 //Upgraded default waitForConnectResult function to incorporate WL_NO_SSID_AVAIL, fixes issue #122
-int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
+int8_t WifiManager::waitForConnectResult(unsigned long timeoutLengthMs) {
 #ifdef ESP32
+    // 1 (WIFI_MODE_STA) and 3 (WIFI_MODE_APSTA) have STA enabled
     if((WiFiGenericClass::getMode() & WIFI_MODE_STA) == 0) {
         return WL_DISCONNECTED;
     }
 
-    // TODO:P0 Implement ESP32 version (see timeout wait loop below).
+    // Wait to become connected, or timeout expiration.  Bail if clock rollover detected.
+    unsigned long now = millis();
+    unsigned long start = now;
+    unsigned long timeout = now + timeoutLengthMs;
+    while((now = millis()) < timeout && now >= start) {
+        delay(1);
+        if(WiFi.status() != WL_DISCONNECTED && WiFi.status() != WL_NO_SSID_AVAIL) {
+            return WiFi.status();
+        }
+    }
 
 #elif defined(ESP8266)
     // 1 (WIFI_MODE_STA) and 3 (WIFI_MODE_APSTA) have STA enabled
@@ -129,7 +139,7 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
         return WL_DISCONNECTED;
     }
     using esp8266::polledTimeout::oneShot;
-    oneShot timeout(timeoutLength); // number of milliseconds to wait before returning timeout error
+    oneShot timeout(timeoutLengthMs); // number of milliseconds to wait before returning timeout error
     while(!timeout) {
         yield();
         if(WiFi.status() != WL_DISCONNECTED && WiFi.status() != WL_NO_SSID_AVAIL) {
@@ -137,6 +147,7 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
         }
     }
 #endif
+
     return -1; // -1 indicates timeout
 }
 

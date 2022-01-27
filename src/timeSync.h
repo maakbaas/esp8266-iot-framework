@@ -11,7 +11,7 @@ public:
     void begin(const char* tz);
     void begin(const char* tz, const char* server1, const char* server2 = nullptr, const char* server3 = nullptr);
     bool isSynced();
-    int8_t waitForSyncResult(unsigned long timeoutLength = 10000);
+    int8_t waitForSyncResult(unsigned long timeoutLengthMs = 10000);
 
 private : 
     bool synced = false;

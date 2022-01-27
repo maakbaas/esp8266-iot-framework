@@ -26,7 +26,7 @@ private:
     void stopCaptivePortal();
     void connectNewWifi(String newSSID, String newPass);    
     void storeToEEPROM();
-    int8_t waitForConnectResult(unsigned long timeoutLength);
+    int8_t waitForConnectResult(unsigned long timeoutLengthMs);
     bool isIPAddressSet(IPAddress ip);
 
 
