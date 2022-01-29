@@ -14,9 +14,6 @@
 
 #define SIZE_INTERNAL 32 //allocate 32 bytes to have room for future expansion
 
-//TODO: Implement ESP32 version (or remove)
-// typedef void (*configSaveCallback)(void); 
-
 struct internalData
 {
     uint32_t ip;

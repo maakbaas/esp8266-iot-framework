@@ -9,7 +9,9 @@
 
 #ifdef ESP32
 // TODO: Implement ESP32 version
+#include <WiFiClientSecure.h>
 #elif defined(ESP8266)
+// https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/bearssl-client-secure-class.html
 #include <BearSSLHelpers.h>
 #include <bearssl/bearssl.h>
 #include <CertStoreBearSSL.h>
@@ -42,7 +44,7 @@ class CertStoreP: public CertStoreBase {
     // These need to be static as they are callbacks from BearSSL C code
     static const br_x509_trust_anchor *findHashedTA(void *ctx, void *hashed_dn, size_t len);
     static void freeHashedTA(void *ctx, const br_x509_trust_anchor *ta);
-#endif    
+#endif
 };
 
 };

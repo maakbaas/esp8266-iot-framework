@@ -6,6 +6,7 @@
 #ifdef ESP32
     #include <WiFi.h>
     #include <HTTPClient.h>
+    #include <WiFiClientSecure.h>
 #elif defined(ESP8266)
     #include <ESP8266HTTPClient.h>
 #endif
@@ -47,6 +48,7 @@ private :
     WiFiClient *client;
 #ifdef ESP32
     // TODO: Implement ESP32 version
+    WiFiClientSecure *httpsClient;
 #elif defined(ESP8266)
     BearSSL::WiFiClientSecure *httpsClient;
 #endif

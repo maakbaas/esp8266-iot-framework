@@ -2,9 +2,10 @@
 #include "ArduinoJson.h"
 
 #ifdef ESP32
-// TODO: Implement ESP32 version
+    #include "LITTLEFS.h"
+    #define LittleFS LITTLEFS
 #elif defined(ESP8266)
-#include "LittleFS.h"
+    #include "LittleFS.h"
 #endif
 
 
@@ -28,11 +29,7 @@ void webServer::begin()
     //to enable testing and debugging of the interface
     DefaultHeaders::Instance().addHeader(PSTR("Access-Control-Allow-Origin"), PSTR("*"));
 
-#ifdef ESP32
-    // TODO: Implement ESP32 version
-#elif defined(ESP8266)
     server.serveStatic("/download", LittleFS, "/");
-#endif
 
     server.onNotFound(requestHandler);
 
@@ -97,41 +94,59 @@ void webServer::bindAll()
     //get file listing
     server.on(PSTR("/api/files/get"), HTTP_GET, [](AsyncWebServerRequest *request) {
 
-#ifdef ESP32
-        // TODO: Implement ESP32 version
-        request->send(501, PSTR("text/html"), "TODO: Implement ESP32 version");
-#elif defined(ESP8266)
-
         String JSON;
         StaticJsonDocument<1000> jsonBuffer;
         JsonArray files = jsonBuffer.createNestedArray("files");
 
+#ifdef ESP32
+        //get file listing
+
+        // Dir and LittleFS.openDir not supported on ESP32, so... 
+        // - Doc/example @ https://github.com/lorol/ESPAsyncWebServer/blob/8c77d0e63f55160953fda843baa11435b05ae0bd/src/SPIFFSEditor.cpp#L187
+        File dir = LittleFS.open("");
+        File entry = dir.openNextFile();
+        while (entry)
+        {
+            files.add(entry.name());
+            entry = dir.openNextFile();
+        }
+#elif defined(ESP8266)
         //get file listing
         Dir dir = LittleFS.openDir("");
         while (dir.next())
             files.add(dir.fileName());
+#endif
 
+#ifdef ESP32
+        //get used and total data
+
+        // NOTE: esp_littlefs_info called twice, paying file block traversal each time.  Meh, that's
+        // OK for small # of files.
+        jsonBuffer["used"] = String(LittleFS.usedBytes()); 
+        jsonBuffer["max"] = String(LittleFS.totalBytes());
+#elif defined(ESP8266)
         //get used and total data
         FSInfo fs_info;
         LittleFS.info(fs_info);
         jsonBuffer["used"] = String(fs_info.usedBytes);
         jsonBuffer["max"] = String(fs_info.totalBytes);
+#endif
 
         serializeJson(jsonBuffer, JSON);
 
         request->send(200, PSTR("text/html"), JSON);
-#endif
     });
 
     //remove file
     server.on(PSTR("/api/files/remove"), HTTP_POST, [](AsyncWebServerRequest *request) {
+
 #ifdef ESP32
-    // TODO: Implement ESP32 version
-    request->send(501, PSTR("text/html"), "TODO: Implement ESP32 version");
+        LittleFS.remove("/" + request->arg("filename"));
+        request->send(200, PSTR("text/html"), "");
 #elif defined(ESP8266)
         LittleFS.remove("/" + request->arg("filename"));
         request->send(200, PSTR("text/html"), "");
-#endif        
+#endif
     });
 
     //update from LittleFS
@@ -208,12 +223,6 @@ void webServer::serveProgmem(AsyncWebServerRequest *request)
 
 void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
 {
-#ifdef ESP32
-
-    // TODO: Implement ESP32 version
-
-#elif defined(ESP8266)
-
     static File fsUploadFile;
 
     if (!index)
@@ -236,14 +245,16 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
     {
         String JSON;
         StaticJsonDocument<100> jsonBuffer;
-
+#ifdef ESP32
+        jsonBuffer["success"] = LittleFS.exists(filename);
+#elif defined(ESP8266)
         jsonBuffer["success"] = fsUploadFile.isFile();
+#endif
         serializeJson(jsonBuffer, JSON);
 
         request->send(200, PSTR("text/html"), JSON);
-        fsUploadFile.close();        
+        fsUploadFile.close();
     }
-#endif
 }
 
 webServer GUI;

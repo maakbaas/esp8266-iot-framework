@@ -45,7 +45,6 @@ int8_t NTPSync::waitForSyncResult(unsigned long timeoutLengthMs)
     }
 
 #ifdef ESP32
-
     // Wait to become connected, or timeout expiration.  Bail if clock rollover detected.
     unsigned long now = millis();
     unsigned long start = now;
@@ -58,7 +57,6 @@ int8_t NTPSync::waitForSyncResult(unsigned long timeoutLengthMs)
             return 0;
         }
     }
-
 #elif defined(ESP8266)
     using esp8266::polledTimeout::oneShot;
     oneShot timeout(timeoutLengthMs);

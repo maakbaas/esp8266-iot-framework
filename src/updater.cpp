@@ -1,13 +1,12 @@
 #include "updater.h"
 
 #ifdef ESP32
+    #include "LITTLEFS.h"   // https://github.com/lorol/LITTLEFS/tree/master/examples/LITTLEFS_PlatformIO
+    #include "Update.h"     // https://github.com/espressif/arduino-esp32/blob/master/libraries/Update/src/Update.h
 
-// TODO: Implement ESP32 version
-
+    #define LittleFS LITTLEFS
 #elif defined(ESP8266)
-
-#include "LittleFS.h"
-
+    #include "LittleFS.h"
 #endif
 
 void LittleFSUpdater::requestStart(String filenameIn)
@@ -33,12 +32,6 @@ uint8_t LittleFSUpdater::getStatus()
 
 void LittleFSUpdater::flash(String filename)
 {    
-#ifdef ESP32
-
-// TODO: Implement ESP32 version
-
-#elif defined(ESP8266)
-
     bool answer = 0;
     File file = LittleFS.open(filename, "r");
 
@@ -77,9 +70,6 @@ void LittleFSUpdater::flash(String filename)
     }
     
     status = answer;
-
-#endif
-
 }
 
 LittleFSUpdater updater;
