@@ -70,8 +70,10 @@ void LittleFSUpdater::flash(String filename)
         }
         else
         {
+            Serial.println(PSTR("Update.writeStream..."));
             Update.writeStream(file);
 
+            Serial.println(PSTR("Update.end..."));
             if (Update.end())
             {
                 Serial.println(PSTR("Successful update"));
@@ -84,6 +86,7 @@ void LittleFSUpdater::flash(String filename)
             }
         }
 
+        Serial.println(PSTR("file.close..."));
         file.close();
     }
     
