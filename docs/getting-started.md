@@ -32,6 +32,7 @@ void setup()
 
     LittleFS.begin();
     GUI.begin();
+    updater.begin();        // Required for ESP32
     configManager.begin();
     WiFiManager.begin(configManager.data.projectName);
     timeSync.begin();

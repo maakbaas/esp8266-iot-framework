@@ -134,7 +134,7 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLengthMs) {
             wifiStatus != WL_IDLE_STATUS)       // Temporary status assigned when WiFi.begin() called
         {
             Serial.print(PSTR("WiFi.status()="));
-            Serial.print(wifiStatus);
+            Serial.println(wifiStatus);
             return wifiStatus;
         }
         loopCount++;

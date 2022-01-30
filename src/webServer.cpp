@@ -23,7 +23,7 @@ void webServer::begin()
 #ifdef ESP32
     // TODO: Remove enter/exit traces after ESP32 build stable.  Experienced frequent crashing
     // during initial port when TCP stack not initialized before starting webserver instance.
-    Serial.println("webServer::begin enter");
+    Serial.println(PSTR("webServer::begin enter"));
 #endif
 
     //to enable testing and debugging of the interface
@@ -39,14 +39,14 @@ void webServer::begin()
     bindAll();
 
 #ifdef ESP32
-    Serial.println("Calling server.begin();  Will fail on ESP32 if tcp stack not initialized.  Ensure WiFiManager was called first.");
+    Serial.println(PSTR("Calling server.begin();  Will fail on ESP32 if tcp stack not initialized.  Ensure WiFiManager was called first."));
 #endif
 
     server.addHandler(&ws);
     server.begin();
 
 #ifdef ESP32
-   Serial.println("webServer::begin done.");
+   Serial.println(PSTR("webServer::begin done."));
 #endif
 }
 
@@ -101,13 +101,21 @@ void webServer::bindAll()
 #ifdef ESP32
         //get file listing
 
-        // Dir and LittleFS.openDir not supported on ESP32, so... 
-        // - Doc/example @ https://github.com/lorol/ESPAsyncWebServer/blob/8c77d0e63f55160953fda843baa11435b05ae0bd/src/SPIFFSEditor.cpp#L187
-        File dir = LittleFS.open("");
+        // 'Dir' and 'LittleFS.openDir' not implemented in ESP32, instead dir and 
+        // files are represented as 'File'.  See docs/example:
+        // https://github.com/lorol/ESPAsyncWebServer/blob/8c77d0e63f55160953fda843baa11435b05ae0bd/src/SPIFFSEditor.cpp#L187
+        File dir = LittleFS.open("/");
         File entry = dir.openNextFile();
+        
+        // Copy enumerated filenames to temp array until serialized.  Reason... String mem refs 
+        // returned by entry.name() could be reused, resulting in garbage chars returned to clients.
+        StringArray strFiles;
+
         while (entry)
         {
-            files.add(entry.name());
+            String fileName = String(entry.name());
+            strFiles.add(fileName);
+            files.add((strFiles.nth(strFiles.length() - 1))->c_str());
             entry = dir.openNextFile();
         }
 #elif defined(ESP8266)
@@ -133,6 +141,10 @@ void webServer::bindAll()
 #endif
 
         serializeJson(jsonBuffer, JSON);
+
+#ifdef ESP32
+        strFiles.free();
+#endif
 
         request->send(200, PSTR("text/html"), JSON);
     });
@@ -227,13 +239,22 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
 
     if (!index)
     {
-        Serial.println(PSTR("Start file upload"));
-        Serial.println(filename);
-
         if (!filename.startsWith("/"))
             filename = "/" + filename;
 
+        Serial.print(PSTR("Start file upload, filename="));
+        Serial.println(filename);
+
         fsUploadFile = LittleFS.open(filename, "w");
+
+#ifdef ESP32
+        // Open write fail?
+        if (!LittleFS.exists(filename))
+        {
+            Serial.println(PSTR("[E] LittleFS.open() failed.  Is LittleFS initialized?  Was updater.begin() called?"));
+        }
+#endif
+
     }
 
     for (size_t i = 0; i < len; i++)
@@ -246,6 +267,9 @@ void webServer::handleFileUpload(AsyncWebServerRequest *request, String filename
         String JSON;
         StaticJsonDocument<100> jsonBuffer;
 #ifdef ESP32
+        if (!filename.startsWith("/"))
+            filename = "/" + filename;
+
         jsonBuffer["success"] = LittleFS.exists(filename);
 #elif defined(ESP8266)
         jsonBuffer["success"] = fsUploadFile.isFile();

@@ -14,6 +14,7 @@ private:
 
 public:
     void requestStart(String filename);
+    void begin();
     void loop();
     uint8_t getStatus();
 };

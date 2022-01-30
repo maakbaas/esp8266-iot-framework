@@ -26,6 +26,7 @@ void setup()
 
     LittleFS.begin();
     GUI.begin();
+    updater.begin();
     configManager.begin();
     configManager.setConfigSaveCallback(saveCallback);
     WiFiManager.begin(configManager.data.projectName);

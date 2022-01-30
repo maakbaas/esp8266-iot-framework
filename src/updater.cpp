@@ -16,8 +16,26 @@ void LittleFSUpdater::requestStart(String filenameIn)
     requestFlag = true;
 }
 
+void LittleFSUpdater::begin()
+{
+#ifdef ESP32
+    // Ensure LITTLEFS is formatted on first use.  Default base path is /littlefs
+    // See https://github.com/lorol/LITTLEFS/blob/f0817ca5264745acce697092de2bf218b3aa5b2e/examples/LITTLEFS_test/LITTLEFS_test.ino#L5
+    Serial.println(PSTR("[D] LITTLEFS.begin(), calling"));
+    if (!LITTLEFS.begin(false)) {
+        Serial.println(PSTR("[I] LITTLEFS, unable to open, retry with formatting.."));
+
+        if(!LITTLEFS.begin(/* formatOnFail */ true)){
+            Serial.println(PSTR("[E] LITTLEFS Mount Failed"));
+            return;
+        }
+    }
+#endif
+}
+
 void LittleFSUpdater::loop()
 {
+
     if (requestFlag==true)
     {
         requestFlag = false;
