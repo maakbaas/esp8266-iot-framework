@@ -193,6 +193,10 @@ void WifiManager::startCaptivePortal(char const *apName)
     Serial.println(PSTR("Opened a captive portal"));
     Serial.println(PSTR("192.168.4.1"));
     inCaptivePortal = true;
+
+    if ( _captiveportalstartcallback != NULL) {
+        _captiveportalstartcallback();
+    } 
 }
 
 //function to stop the captive portal
@@ -201,7 +205,19 @@ void WifiManager::stopCaptivePortal()
     WiFi.mode(WIFI_STA);
     delete dnsServer;
 
-    inCaptivePortal = false;    
+    inCaptivePortal = false;
+    
+    if ( _captiveportalstopcallback != NULL) {
+        _captiveportalstopcallback();
+    }    
+}
+
+void WifiManager::stoppedCaptivePortal( std::function<void()> func ) {
+  _captiveportalstopcallback = func;
+}
+
+void WifiManager::startedCaptivePortal( std::function<void()> func ) {
+  _captiveportalstartcallback = func;
 }
 
 //return captive portal state
@@ -242,3 +258,4 @@ void WifiManager::storeToEEPROM()
     configManager.internal.dns = dns.v4();
     configManager.save();
 }
+
