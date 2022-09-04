@@ -58,8 +58,9 @@ export function ConfigPage(props) {
                     break;
                 
                 default:
-                    if (Config[i].type != "separator" && Config[i].type != "label" && Config[i].type != "header")
+                    if (Config[i].type != "separator" && Config[i].type != "label" && Config[i].type != "header") {
                         newData[Config[i].name] = document.getElementById(Config[i].name).value;
+                    }
             }
         }
         
