@@ -301,7 +301,8 @@ export const Form = styled.form`
 
     input[type=number],
     input[type=checkbox],
-    input[type=text] {
+    input[type=text],
+    input[type=password] {
         width:450px;
         max-width:100%;
         box-sizing: border-box;

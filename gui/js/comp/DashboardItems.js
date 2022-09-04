@@ -47,6 +47,7 @@ const Display = styled.p`
 
 const Control = styled.p`
     input[type=number],    
+    input[type=password],
     input[type=text] {
         margin-right:0.3em;
         width:410px;
