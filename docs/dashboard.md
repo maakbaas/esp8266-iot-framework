@@ -115,6 +115,21 @@ For `control` items, `"control": "slider",` will turn them into a slider, the `m
 
 `"control": "password",` will turn the item into a hidden field.
 
+The fields below can be used for purposes of the HTML page and will have no functional impact:
+```json
+{
+    "type": "separator"
+},
+{
+    "type": "header",
+    "text": "Header text here"
+},
+{
+    "type": "label",
+    "text": "Label text here"
+},
+```
+
 For this example, the pre-build python script `preBuildDash.py` will generate the files `dash.h` containing the type definition. This should be fairly self explanatory and show how the JSON file is translated into a C struct.
 
 **Important:** After you have changed the JSON file, you also need to regenerate the web interface to reflect the latest changes by enabling the REBUILD_HTML build flag, otherwise the web interface will show the old dashboard data. Refer to [this section](https://github.com/maakbaas/esp8266-iot-framework/blob/master/docs/getting-started.md#editing-the-web-interface) for more details.

@@ -56,9 +56,10 @@ export function ConfigPage(props) {
                 case "bool":
                     newData[Config[i].name] = document.getElementById(Config[i].name).checked;
                     break;
-
+                
                 default:
-                    newData[Config[i].name] = document.getElementById(Config[i].name).value;
+                    if (Config[i].type != "separator" && Config[i].type != "label" && Config[i].type != "header")
+                        newData[Config[i].name] = document.getElementById(Config[i].name).value;
             }
         }
         

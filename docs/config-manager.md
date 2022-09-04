@@ -136,6 +136,21 @@ Adding the field `"control": "slider",` will turn the itemm into a slider, the `
 
 Adding the field  `"control": "password",` will turn the item into a hidden field.
 
+The fields below can be used for purposes of the HTML page and will have no functional impact:
+```json
+{
+    "type": "separator"
+},
+{
+    "type": "header",
+    "text": "Header text here"
+},
+{
+    "type": "label",
+    "text": "Label text here"
+},
+```
+
 There are a few unique parameters:
 
 * The configuration parameter `projectName` is unique in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
