@@ -45,13 +45,19 @@ void setNewWifi(String newSSID, String newPass, String newIp, String newSub, Str
 ```
 Tries to connect to the WiFi network with SSID `newSSID` and password `newPass`. If this fails a reconnect to the known network will be attempted. If this also fails or if no previous network was known, a captive portal will be started. Alternatively the function can also be called with inputs for a static IP address if DHCP is not available.
 
-#### forgetWiFiFunctionCallback() and newWiFiFunctionCallback
+#### forgetWiFiFunctionCallback()
 
 ```c++
 void forgetWiFiFunctionCallback( std::function<void()> func );
+```
+This function is called at the end of forget WiFi This would be helpful to execute your code after you delete a WiFi configuration from your device
+
+#### newWiFiFunctionCallback()
+
+```c++
 void newWiFiFunctionCallback( std::function<void()> func );
 ```
-This functions is called at the end of forget WiFi or after new WiFi is configured. This would be helpful to execute your code after a WiFi configuration or after you delete a WiFi configuration from Devices
+This functions is called after new WiFi is configured. This would be helpful to execute your code after a WiFi configuration change
 
 ## Web interface
 
