@@ -28,7 +28,8 @@ private:
     void storeToEEPROM();
     int8_t waitForConnectResult(unsigned long timeoutLengthMs);
     bool isIPAddressSet(IPAddress ip);
-
+    std::function<void()> _forgetwificallback;
+    std::function<void()> _newwificallback;    
 
 public : 
     void begin(char const *apName, unsigned long newTimeout = 60000, char const *hostName = NULL);
@@ -41,6 +42,8 @@ public :
     String getMacAddress();    
     void setNewWifi(String newSSID, String newPass);
     void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw, String newDns);
+    void forgetWiFiFunctionCallback( std::function<void()> func );
+    void newWiFiFunctionCallback( std::function<void()> func );
 };
 
 extern WifiManager WiFiManager;

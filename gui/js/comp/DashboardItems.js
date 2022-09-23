@@ -47,6 +47,7 @@ const Display = styled.p`
 
 const Control = styled.p`
     input[type=number],    
+    input[type=password],
     input[type=text] {
         margin-right:0.3em;
         width:410px;
@@ -55,6 +56,14 @@ const Control = styled.p`
 
     button {        
         padding:0.4em 0.5em;
+    }
+`;
+
+const Layout = styled.div`
+    * {
+        width:calc(660px + 3em);
+        margin-left:0px;
+        max-width:calc(100% - 40px);
     }
 `;
 
@@ -127,6 +136,21 @@ export function DashboardItems(props) {
     } else {
         for (let i = 0; i < props.items.length; i++) {
             if (props.items[i].hidden) {
+                continue;
+            }
+
+            if (props.items[i].type == "separator") {
+                confItems = <>{confItems}<Layout><hr /></Layout></>;
+                continue;
+            }            
+
+            if (props.items[i].type == "header") {
+                confItems = <>{confItems}<Layout><h3>{props.items[i].text}</h3></Layout></>;
+                continue;
+            }            
+
+            if (props.items[i].type == "label") {
+                confItems = <>{confItems}<Layout><p>{props.items[i].text}</p></Layout></>;
                 continue;
             }
 
