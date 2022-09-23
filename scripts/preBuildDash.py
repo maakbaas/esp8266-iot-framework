@@ -21,14 +21,15 @@ def preBuildDashFun():
 
     #loop through variables
     for item in data:        
-        if item['type'] == 'char':
-            h.write("\tchar " + item['name'] + "[" + str(item['length']) + "];\n")
-        elif item['type'] == 'color':
-            h.write("\tuint8_t " + item['name'] +"[3];\n")
-        elif item['type'] == 'bool':
-            h.write("\t" + item['type'] + " " + item['name'] +";\n")
-        else:
-            h.write("\t" + item['type'] + " " + item['name'] +";\n")
+        if item['type'] != 'separator' and item['type'] != 'label' and item['type'] != 'header': 
+            if item['type'] == 'char':
+                h.write("\tchar " + item['name'] + "[" + str(item['length']) + "];\n")
+            elif item['type'] == 'color':
+                h.write("\tuint8_t " + item['name'] +"[3];\n")
+            elif item['type'] == 'bool':
+                h.write("\t" + item['type'] + " " + item['name'] +";\n")
+            else:
+                h.write("\t" + item['type'] + " " + item['name'] +";\n")
 
     #footers    
     h.write("};\n\n#endif")

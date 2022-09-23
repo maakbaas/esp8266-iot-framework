@@ -134,7 +134,24 @@ Adding the field `"control": "select",` will turn the item into a drop down menu
 
 Adding the field `"control": "slider",` will turn the itemm into a slider, the `min`, `max` and `step` properties will also apply to the slider. This is only valid for numeric types.
 
-There are a few special parameters:
+Adding the field  `"control": "password",` will turn the item into a hidden field.
+
+The fields below can be used for purposes of the HTML page and will have no functional impact:
+```json
+{
+    "type": "separator"
+},
+{
+    "type": "header",
+    "text": "Header text here"
+},
+{
+    "type": "label",
+    "text": "Label text here"
+},
+```
+
+There are a few unique parameters:
 
 * The configuration parameter `projectName` is special in this framework. You can remove it, but if you use a parameter with this name, it will be shown as the header title in the web interface :).
 * The parameter named `language` is also special and can be used to change the language of the web interface. Supported languages are placed in the folder `gui/js/lang`. Change the language code and rebuild the HTML interface to change the language. If your language is not yet supported, feel free to create a pull request for it.

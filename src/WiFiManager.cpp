@@ -98,6 +98,10 @@ void WifiManager::forget()
     //make EEPROM empty
     storeToEEPROM();
 
+    if ( _forgetwificallback != NULL) {
+        _forgetwificallback();
+    } 
+
     Serial.println(PSTR("Requested to forget WiFi. Started Captive portal."));
 }
 
@@ -190,6 +194,10 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
             //store IP address in EEProm
             storeToEEPROM();
 
+            if ( _newwificallback != NULL) {
+                _newwificallback();
+            }
+
         }
     }
 }
@@ -214,6 +222,7 @@ void WifiManager::startCaptivePortal(char const *apName)
     Serial.println(PSTR("Opened a captive portal"));
     Serial.println(PSTR("192.168.4.1"));
     inCaptivePortal = true;
+
 }
 
 //function to stop the captive portal
@@ -222,7 +231,15 @@ void WifiManager::stopCaptivePortal()
     WiFi.mode(WIFI_STA);
     delete dnsServer;
 
-    inCaptivePortal = false;    
+    inCaptivePortal = false;
+}
+
+void  WifiManager::forgetWiFiFunctionCallback( std::function<void()> func ) {
+  _forgetwificallback = func;
+}
+
+void WifiManager::newWiFiFunctionCallback( std::function<void()> func ) {
+  _newwificallback = func;
 }
 
 //return captive portal state
@@ -285,3 +302,4 @@ void WifiManager::storeToEEPROM()
     configManager.internal.dns = dns.v4();
     configManager.save();
 }
+
