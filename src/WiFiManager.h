@@ -20,7 +20,6 @@ private:
     bool inCaptivePortal = false;
     char const *captivePortalName;
     unsigned long timeout = 60000;
-    char const *hostName;
     
     void startCaptivePortal(char const *apName);
     void stopCaptivePortal();
@@ -32,14 +31,11 @@ private:
     std::function<void()> _newwificallback;    
 
 public : 
-    void begin(char const *apName, unsigned long newTimeout = 60000, char const *hostName = NULL);
+    void begin(char const *apName, unsigned long newTimeout = 60000);
     void loop();
     void forget();
     bool isCaptivePortal();
     String SSID();
-    String getHostName();
-    String getIPAddress();
-    String getMacAddress();    
     void setNewWifi(String newSSID, String newPass);
     void setNewWifi(String newSSID, String newPass, String newIp, String newSub, String newGw, String newDns);
     void forgetWiFiFunctionCallback( std::function<void()> func );

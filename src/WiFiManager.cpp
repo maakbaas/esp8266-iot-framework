@@ -16,15 +16,11 @@
 WifiManager WiFiManager;
 
 //function to call in setup
-void WifiManager::begin(char const *apName, unsigned long newTimeout, char const *hostName)
+void WifiManager::begin(char const *apName, unsigned long newTimeout)
 {
     captivePortalName = apName;
     timeout = newTimeout;
     
-    if (hostName != NULL) {
-        this->hostName = hostName;
-    }
-
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
     
@@ -70,36 +66,17 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout, char const
         ETS_UART_INTR_ENABLE();
 #endif
 
-        if (hostName != NULL && strlen(hostName) > 0) {
-#ifdef ESP32
-            WiFi.setHostname(hostName);
-#elif defined(ESP8266)
-            WiFi.hostname(hostName);
-#endif
-        }
-
         Serial.print(PSTR("WiFi.begin(), WifiManager::begin(), SSID: "));
         Serial.print(configSsid);
-        Serial.print(PSTR(", hostName: "));
-        Serial.println(hostName);
 
         WiFi.begin();
 
-        if (hostName != NULL && strlen(hostName) > 0) {
-#ifdef ESP32
-            // NOTE: https://github.com/espressif/arduino-esp32/issues/2537
-            WiFi.setHostname(hostName);
-#elif defined(ESP8266)
-            WiFi.hostname(hostName);
-#endif
-        }        
     }
 
     if (waitForConnectResult(timeout) == WL_CONNECTED)
     {
         //connected
-        Serial.print(PSTR("Connected to stored WiFi details, hostName: "));
-        Serial.print(hostName);
+        Serial.print(PSTR("Connected to stored WiFi details"));
         Serial.print(PSTR(", localIP: "));
         Serial.println(WiFi.localIP());
     }
@@ -252,16 +229,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
         String oldPSK = WiFi.psk();
 #endif
 
-        if (hostName != NULL && strlen(hostName) > 0) {
-#ifdef ESP32
-            WiFi.setHostname(hostName);
-#elif defined(ESP8266)
-            WiFi.hostname(hostName);
-#endif            
-        }
-        
-        Serial.print(PSTR("WiFi.begin, connectNewWifi, hostName: "));
-        Serial.print(hostName);
+        Serial.print(PSTR("WiFi.begin, connectNewWifi"));
 #if defined(ESP8266)
         Serial.print(", persistent: ");
         Serial.print(WiFi.getPersistent());
@@ -283,8 +251,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
             Serial.println(PSTR("New connection unsuccessful"));
             if (!inCaptivePortal)
             {
-                Serial.print(PSTR("WiFi.begin, !inCaptivePortal, hostName: "));
-                Serial.println(hostName);
+                Serial.print(PSTR("WiFi.begin, !inCaptivePortal"));
 
                 WiFi.begin(
                     oldSSID.c_str(), // ssid
@@ -381,28 +348,6 @@ bool WifiManager::isCaptivePortal()
 String WifiManager::SSID()
 {    
     return WiFi.SSID();
-}
-
-//return current Host Name
-String WifiManager::getHostName()
-{    
-#ifdef ESP32
-    return WiFi.getHostname();
-#elif defined(ESP8266)
-    return WiFi.hostname();
-#endif            
-}
-
-//return current IP Address
-String WifiManager::getIPAddress()
-{    
-    return WiFi.localIP().toString();
-}
-
-//return current MAC Address
-String WifiManager::getMacAddress()
-{    
-    return WiFi.macAddress();
 }
 
 //captive portal loop

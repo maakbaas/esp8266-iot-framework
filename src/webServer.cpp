@@ -83,9 +83,6 @@ void webServer::bindAll()
 
         jsonBuffer["captivePortal"] = WiFiManager.isCaptivePortal();
         jsonBuffer["ssid"] = WiFiManager.SSID();
-        jsonBuffer["hostName"] = WiFiManager.getHostName();
-        jsonBuffer["ipAddress"] = WiFiManager.getIPAddress();
-        jsonBuffer["macAddress"] = WiFiManager.getMacAddress();
         serializeJson(jsonBuffer, JSON);
 
         request->send(200, PSTR("text/html"), JSON);

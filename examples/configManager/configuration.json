@@ -7,13 +7,6 @@
         "value": "ESP8266 IoT Framework"
     },
     {
-        "name": "hostName",
-        "label": "Host Name",
-        "type": "char",
-        "length": 32,
-        "value": "ESP8266-01"
-    },    
-    {
         "name": "dummyInt",
         "label": "Dummy Int",
         "type": "uint16_t",
