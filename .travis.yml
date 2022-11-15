@@ -111,13 +111,14 @@ jobs:
       script:
           - platformio ci --lib="." --board=nodemcuv2 --project-option="lib_deps=https://github.com/lorol/ESPAsyncWebServer, ArduinoJSON" --project-option="build_flags = -DDASHBOARD_PATH=src/dashboard.json -DREBUILD_DASHBOARD"
 
-    - stage: GUI
-      name: "Webpack Build"
-      language: node_js
-      node_js: 12
-      env:
-      script: 
-        - npm run build
+    # Disable webpack test until openssl issue is resolved by upgrading
+    # - stage: GUI
+    #   name: "Webpack Build"
+    #   language: node_js
+    #   node_js: 12
+    #   env:
+    #   script: 
+    #     - npm run build
 
     - stage: GUI
       name: "ESLint"
