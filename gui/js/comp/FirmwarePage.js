@@ -105,7 +105,7 @@ export function FirmwarePage(props) {
     </>;  
     
     function startFlashing() {        
-        fetch(`${props.API}/api/update?filename=${filename}`, { method: "POST" })
+        fetch(`${props.API}/api/update?filename=${encodeURIComponent(filename)}`, { method: "POST" })
             .then((response) => { return response.status; })
             .then((status) => {
                 if (status == 200) {

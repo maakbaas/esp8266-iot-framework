@@ -30,9 +30,9 @@ export function WifiPage(props) {
 
     function changeWifi() {
         if (dhcpForm) {
-            fetch(`${props.API}/api/wifi/set?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}`, { method: "POST" });
+            fetch(`${props.API}/api/wifi/set?ssid=${encodeURIComponent(document.getElementById("ssid").value.trim())}&pass=${encodeURIComponent(document.getElementById("pass").value.trim())}`, { method: "POST" });
         } else {
-            fetch(`${props.API}/api/wifi/setStatic?ssid=${escape(document.getElementById("ssid").value.trim())}&pass=${escape(document.getElementById("pass").value.trim())}&ip=${escape(document.getElementById("ip").value.trim())}&sub=${escape(document.getElementById("sub").value.trim())}&gw=${escape(document.getElementById("gw").value.trim())}&dns=${escape(document.getElementById("dns").value.trim())}`, { method: "POST" });
+            fetch(`${props.API}/api/wifi/setStatic?ssid=${encodeURIComponent(document.getElementById("ssid").value.trim())}&pass=${encodeURIComponent(document.getElementById("pass").value.trim())}&ip=${encodeURIComponent(document.getElementById("ip").value.trim())}&sub=${encodeURIComponent(document.getElementById("sub").value.trim())}&gw=${encodeURIComponent(document.getElementById("gw").value.trim())}&dns=${encodeURIComponent(document.getElementById("dns").value.trim())}`, { method: "POST" });
             document.getElementById("ip").value = "";
             document.getElementById("gw").value = "";
             document.getElementById("sub").value = "";

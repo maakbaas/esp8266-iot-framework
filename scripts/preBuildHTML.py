@@ -9,7 +9,7 @@ def preBuildHTMLFun():
 
     if webpackInst == False:
         print("Running npm ci...")
-        call("npm ci", shell=True)
+        call("npm ci --legacy-peer-deps", shell=True)
         print("Running npx browserslist@latest --update-db...")
         call("npx browserslist@latest --update-db", shell=True)
 
