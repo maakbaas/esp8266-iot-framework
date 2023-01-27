@@ -18,6 +18,7 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
     
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
+    WiFi.setAutoReconnect(true);
     
     //set static IP if entered
     ip = IPAddress(configManager.internal.ip);
