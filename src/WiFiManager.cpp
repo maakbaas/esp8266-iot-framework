@@ -1,4 +1,4 @@
-//inspired by https://github.com/tzapu/WiFiManager but 
+//inspired by https://github.com/tzapu/WiFiManager but
 //- with more flexibility to add your own web server setup
 //= state machine for changing wifi settings on the fly
 
@@ -15,10 +15,10 @@ void WifiManager::begin(char const *apName, unsigned long newTimeout)
 {
     captivePortalName = apName;
     timeout = newTimeout;
-    
+
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
-    
+
     //set static IP if entered
     ip = IPAddress(configManager.internal.ip);
     gw = IPAddress(configManager.internal.gw);
@@ -72,7 +72,7 @@ int8_t WifiManager::waitForConnectResult(unsigned long timeoutLength) {
 
 //function to forget current WiFi details and start a captive portal
 void WifiManager::forget()
-{ 
+{
     WiFi.disconnect();
     startCaptivePortal(captivePortalName);
 
@@ -87,14 +87,14 @@ void WifiManager::forget()
 
     if ( _forgetwificallback != NULL) {
         _forgetwificallback();
-    } 
+    }
 
     Serial.println(PSTR("Requested to forget WiFi. Started Captive portal."));
 }
 
 //function to request a connection to new WiFi credentials
 void WifiManager::setNewWifi(String newSSID, String newPass)
-{    
+{
     ssid = newSSID;
     pass = newPass;
     ip = IPAddress();
@@ -123,12 +123,12 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 {
     delay(1000);
 
-    //set static IP or zeros if undefined    
+    //set static IP or zeros if undefined
     WiFi.config(ip, gw, sub, dns);
 
     //fix for auto connect racing issue
     if (!(WiFi.status() == WL_CONNECTED && (WiFi.SSID() == newSSID)) || ip.v4() != configManager.internal.ip  || dns.v4() != configManager.internal.dns)
-    {          
+    {
         //trying to fix connection in progress hanging
         ETS_UART_INTR_DISABLE();
         wifi_station_disconnect();
@@ -143,7 +143,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
 
         if (WiFi.waitForConnectResult(timeout) != WL_CONNECTED)
         {
-            
+
             Serial.println(PSTR("New connection unsuccessful"));
             if (!inCaptivePortal)
             {
@@ -153,7 +153,7 @@ void WifiManager::connectNewWifi(String newSSID, String newPass)
                     Serial.println(PSTR("Reconnection failed too"));
                     startCaptivePortal(captivePortalName);
                 }
-                else 
+                else
                 {
                     Serial.println(PSTR("Reconnection successful"));
                     Serial.println(WiFi.localIP());
@@ -206,7 +206,7 @@ void WifiManager::startCaptivePortal(char const *apName)
 
 //function to stop the captive portal
 void WifiManager::stopCaptivePortal()
-{    
+{
     WiFi.mode(WIFI_STA);
     delete dnsServer;
 
@@ -229,7 +229,7 @@ bool WifiManager::isCaptivePortal()
 
 //return current SSID
 String WifiManager::SSID()
-{    
+{
     return WiFi.SSID();
 }
 
@@ -247,7 +247,20 @@ void WifiManager::loop()
         connectNewWifi(ssid, pass);
         reconnect = false;
     }
-    
+
+    // check WiFi status every minute
+    if (millis() - last_wifi_check > 60000) {
+        last_wifi_check = millis();
+        if ((last_wifi_status == WL_IDLE_STATUS) && (WiFi.status() == WL_IDLE_STATUS)) {
+            // try to fix stuck WiFi
+            Serial.println(PSTR("WiFi status is WL_IDLE_STATUS for 1 minute, try to restart."));
+            ETS_UART_INTR_DISABLE();
+            wifi_station_disconnect();
+            ETS_UART_INTR_ENABLE();
+            WiFi.begin();
+        }
+        last_wifi_status = WiFi.status();
+    }
 }
 
 //update IP address in EEPROM
