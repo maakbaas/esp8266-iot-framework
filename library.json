@@ -1,6 +1,6 @@
 {
     "name": "ESP8266 IoT Framework",
-    "version": "1.11.1",
+    "version": "1.12.0",
     "description": "Framework for IoT projects implementing HTTPS requests, a React web interface, WiFi manager, configuration manager, file manager and OTA updates.",
     "keywords": "esp8266,react,ota-updates,wifi-manager,https,file-manager",
     "frameworks": "arduino",
@@ -12,7 +12,8 @@
     "dependencies":
     [
         {
-            "name": "https://github.com/lorol/ESPAsyncWebServer"
+            "name": "ESPAsyncWebServer",
+            "version": "https://github.com/lorol/ESPAsyncWebServer"
         },
         {
             "name": "ArduinoJson"
