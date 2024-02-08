@@ -20,7 +20,7 @@ except:
 import inspect, os.path
 
 import socket
-from ssl import wrap_socket, CERT_NONE, PROTOCOL_SSLv23
+# from ssl import wrap_socket, CERT_NONE, PROTOCOL_SSLv23
 from ssl import SSLContext  # Modern SSL?
 from ssl import HAS_SNI  # Has SNI?
 
