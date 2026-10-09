@@ -1,4 +1,4 @@
-# ESP8266 IoT Framework ![Status](https://travis-ci.com/maakbaas/esp8266-iot-framework.svg?branch=master) ![PlatformIO Registry](https://badges.registry.platformio.org/packages/maakbaas/library/ESP8266%20IoT%20Framework.svg)
+# ESP8266 IoT Framework ![PlatformIO Registry](https://badges.registry.platformio.org/packages/maakbaas/library/ESP8266%20IoT%20Framework.svg)
 
 > [!IMPORTANT]  
 > ### Archive notice
